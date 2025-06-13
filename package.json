@@ -1,0 +1,25 @@
+{
+  "name": "kosand",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.7.1",
+    "@preline/dropdown": "^3.1.0",
+    "@tailwindcss/cli": "^4.1.8",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^3.1.10",
+    "preline": "^3.1.0",
+    "tailwindcss": "^4.1.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10"
+  }
+}

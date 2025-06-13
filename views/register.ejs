@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <!-- Preline UI CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center" style="background-image: url('/images/bg.jpg'); background-size: cover;">
+  
+  <!-- Form Container with Responsive Layout -->
+  <div class="relative bg-white bg-opacity-0 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full sm:w-96 md:w-96 lg:w-96 xl:w-96">
+    <h2 class="text-2xl font-semibold text-center mb-6">Create an Account</h2>
+
+    <form action="/register" method="POST">
+      <!-- Name Input -->
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <input type="text" id="name" name="name" class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
+      </div>
+
+      <!-- Email Input -->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" name="email" class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
+      </div>
+
+      <!-- Phone Input -->
+      <div class="mb-4">
+        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+        <input type="text" id="phone" name="phone" class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
+      </div>
+
+      <!-- Password Input -->
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" name="password" class="w-full p-4 mt-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
+      </div>
+
+      <!-- Register Button -->
+      <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition duration-200">Register</button>
+    </form>
+
+    <!-- 'OR' Text -->
+    <div class="mt-6 text-center text-sm text-gray-600">
+      <span>or</span>
+    </div>
+
+    <!-- Social Register Buttons as Circular Icons -->
+    <div class="mt-6 flex justify-center space-x-4">
+      <!-- Google Register -->
+      <button class="w-12 h-12 relative text-white rounded-full flex items-center justify-center">
+        <img src="/images/google.png" alt="Google" class="w-6 h-6">
+      </button>
+
+      <!-- Apple ID Register -->
+      <button class="w-12 h-12 relative text-white rounded-full flex items-center justify-center">
+        <img src="/images/apple-black-logo.png" alt="Apple" class="w-6 h-6">
+      </button>
+
+      <!-- Facebook Register -->
+      <button class="w-12 h-12 relative text-white rounded-full flex items-center justify-center">
+        <img src="/images/facebook.png" alt="Facebook" class="w-6 h-6">
+      </button>
+    </div>
+
+    <p class="mt-6 text-center text-sm text-gray-600">
+      Already have an account? <a href="/login" class="text-blue-500 hover:underline">Login here</a>
+    </p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+
+</body>
+</html>
