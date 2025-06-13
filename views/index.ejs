@@ -1,135 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beranda - KOSAND</title>
-  <!-- Preline UI CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
-  <!-- Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - KOSAND</title>
+    <!-- Preline UI CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100">
 
-  <!-- Navbar -->
-<header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-800">
-    <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
-        <a class="sm:order-1 flex-none text-xl font-semibold dark:text-white focus:outline-hidden focus:opacity-80" href="#">Brand</a>
+    <!-- Navbar -->
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-700 text-sm py-3 dark:bg-neutral-800">
+      <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+        <a class="sm:order-1 flex-none text-xl font-semibold text-white focus:outline-hidden focus:opacity-80" href="#">Brand</a>
         <div class="sm:order-3 flex items-center gap-x-2">
-        <button type="button" class="sm:hidden hs-collapse-toggle relative size-9 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10" id="hs-navbar-alignment-collapse" aria-expanded="false" aria-controls="hs-navbar-alignment" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-alignment">
+          <button type="button" class="sm:hidden hs-collapse-toggle relative size-9 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10" id="hs-navbar-alignment-collapse" aria-expanded="false" aria-controls="hs-navbar-alignment" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-alignment">
             <svg class="hs-collapse-open:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
             <svg class="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             <span class="sr-only">Toggle</span>
-        </button>
-        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-            Button
-        </button>
+          </button>
+          <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-2xs hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+            Login
+          </button>
+          <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-2xs hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+            Register
+          </button>
         </div>
         <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
-        <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-            <a class="font-medium text-blue-500 focus:outline-hidden" href="#" aria-current="page">Landing</a>
-            <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-hidden focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="#">Account</a>
-            <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-hidden focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="#">Work</a>
-            <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-hidden focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="#">Blog</a>
+          <div class="text-white flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
+            <button type="button" class="bg-white text-blue-700 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Beranda</button>
+            <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
+            <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
+            <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
+          </div>
         </div>
+      </nav>
+  </header>
+
+    <!-- Search and Filter Section -->
+    <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-semibold mb-4">Pencarian Kos</h2>
+
+        <!-- Search Box and Filters -->
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <!-- Pencarian Kos -->
+            <div class="mb-4 md:mb-0 md:w-2/3">
+                <input type="text" class="w-full p-4 border border-gray-300 rounded-md" placeholder="Cari kos di sini..." />
+            </div>
+
+            <!-- Filter -->
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <select class="p-4 border border-gray-300 rounded-md">
+                    <option value="">Pilih Kota</option>
+                    <option value="jakarta">Jakarta</option>
+                    <option value="bandung">Bandung</option>
+                    <option value="surabaya">Surabaya</option>
+                </select>
+
+                <select class="p-4 border border-gray-300 rounded-md">
+                    <option value="">Pilih Harga</option>
+                    <option value="1000000">Rp 1.000.000</option>
+                    <option value="2000000">Rp 2.000.000</option>
+                    <option value="3000000">Rp 3.000.000</option>
+                </select>
+
+                <select class="p-4 border border-gray-300 rounded-md">
+                    <option value="">Pilih Fasilitas</option>
+                    <option value="ac">AC</option>
+                    <option value="wifi">WiFi</option>
+                    <option value="tv">TV Kabel</option>
+                </select>
+            </div>
         </div>
-    </nav>
-</header>
 
-  <!-- Search and Filter Section -->
-  <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-semibold mb-4">Pencarian Kos</h2>
-
-    <!-- Search Box and Filters -->
-    <div class="flex flex-col md:flex-row justify-between items-center">
-      <!-- Pencarian Kos -->
-      <div class="mb-4 md:mb-0 md:w-2/3">
-        <input type="text" class="w-full p-4 border border-gray-300 rounded-md" placeholder="Cari kos di sini..." />
-      </div>
-
-      <!-- Filter -->
-      <div class="flex space-x-4 mt-4 md:mt-0">
-        <select class="p-4 border border-gray-300 rounded-md">
-          <option value="">Pilih Kota</option>
-          <option value="jakarta">Jakarta</option>
-          <option value="bandung">Bandung</option>
-          <option value="surabaya">Surabaya</option>
-        </select>
-
-        <select class="p-4 border border-gray-300 rounded-md">
-          <option value="">Pilih Harga</option>
-          <option value="1000000">Rp 1.000.000</option>
-          <option value="2000000">Rp 2.000.000</option>
-          <option value="3000000">Rp 3.000.000</option>
-        </select>
-
-        <select class="p-4 border border-gray-300 rounded-md">
-          <option value="">Pilih Fasilitas</option>
-          <option value="ac">AC</option>
-          <option value="wifi">WiFi</option>
-          <option value="tv">TV Kabel</option>
-        </select>
-      </div>
+        <!-- Search Button -->
+        <div class="mt-4 flex justify-center">
+            <button class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">Cari Kos</button>
+        </div>
     </div>
 
-    <!-- Search Button -->
-    <div class="mt-4 flex justify-center">
-      <button class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">Cari Kos</button>
+    <!-- Available Kos List -->
+    <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
+        <h3 class="text-2xl font-semibold mb-6">Daftar Kos Tersedia</h3>
+
+        <!-- Kos Card List -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Kos 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/images/kos1.jpg" alt="Kos 1" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h4 class="font-semibold text-lg">Kos Jakarta</h4>
+                    <p class="text-sm text-gray-600">Harga: Rp 2.000.000 / bulan</p>
+                    <p class="text-sm text-gray-600">Fasilitas: AC, WiFi</p>
+                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
+                </div>
+            </div>
+
+            <!-- Kos 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/images/kos2.jpg" alt="Kos 2" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h4 class="font-semibold text-lg">Kos Bandung</h4>
+                    <p class="text-sm text-gray-600">Harga: Rp 1.500.000 / bulan</p>
+                    <p class="text-sm text-gray-600">Fasilitas: WiFi</p>
+                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
+                </div>
+            </div>
+
+            <!-- Kos 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/images/kos3.jpg" alt="Kos 3" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h4 class="font-semibold text-lg">Kos Surabaya</h4>
+                    <p class="text-sm text-gray-600">Harga: Rp 3.000.000 / bulan</p>
+                    <p class="text-sm text-gray-600">Fasilitas: AC, TV Kabel</p>
+                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
+                </div>
+            </div>
+
+            <!-- Kos 4 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="/images/kos4.jpg" alt="Kos 4" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h4 class="font-semibold text-lg">Kos Bali</h4>
+                    <p class="text-sm text-gray-600">Harga: Rp 2.500.000 / bulan</p>
+                    <p class="text-sm text-gray-600">Fasilitas: AC, WiFi</p>
+                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Available Kos List -->
-  <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
-    <h3 class="text-2xl font-semibold mb-6">Daftar Kos Tersedia</h3>
-
-    <!-- Kos Card List -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <!-- Kos 1 -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img src="/images/kos1.jpg" alt="Kos 1" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h4 class="font-semibold text-lg">Kos Jakarta</h4>
-          <p class="text-sm text-gray-600">Harga: Rp 2.000.000 / bulan</p>
-          <p class="text-sm text-gray-600">Fasilitas: AC, WiFi</p>
-          <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
-        </div>
-      </div>
-
-      <!-- Kos 2 -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img src="/images/kos2.jpg" alt="Kos 2" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h4 class="font-semibold text-lg">Kos Bandung</h4>
-          <p class="text-sm text-gray-600">Harga: Rp 1.500.000 / bulan</p>
-          <p class="text-sm text-gray-600">Fasilitas: WiFi</p>
-          <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
-        </div>
-      </div>
-
-      <!-- Kos 3 -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img src="/images/kos3.jpg" alt="Kos 3" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h4 class="font-semibold text-lg">Kos Surabaya</h4>
-          <p class="text-sm text-gray-600">Harga: Rp 3.000.000 / bulan</p>
-          <p class="text-sm text-gray-600">Fasilitas: AC, TV Kabel</p>
-          <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
-        </div>
-      </div>
-
-      <!-- Kos 4 -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img src="/images/kos4.jpg" alt="Kos 4" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h4 class="font-semibold text-lg">Kos Bali</h4>
-          <p class="text-sm text-gray-600">Harga: Rp 2.500.000 / bulan</p>
-          <p class="text-sm text-gray-600">Fasilitas: AC, WiFi</p>
-          <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<script src="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.js"></script>
 </body>
+
 </html>
