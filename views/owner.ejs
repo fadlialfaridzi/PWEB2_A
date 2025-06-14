@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kos Saya - KOSAND</title>
+    <!-- Preline UI CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-700 text-sm py-3 dark:bg-neutral-800">
+        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+            <a class="sm:order-1 flex-none text-xl font-semibold text-white focus:outline-hidden focus:opacity-80" href="#">Brand</a>
+            <div class="sm:order-3 flex items-center gap-x-2">
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-2xs hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
+                    Logout
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Daftar Kos Pemilik -->
+    <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
+        <h3 class="text-2xl font-semibold mb-6">Daftar Kos Saya</h3>
+
+        <!-- Daftar Kos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="#" alt="#" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h4 class="font-semibold text-lg">Nama Kos</h4>
+                    <p class="text-sm text-gray-600">Harga:</p>
+                    <p class="text-sm text-gray-600">Fasilitas:</p>
+                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tombol Tambah Kos -->
+        <div class="mt-8 flex justify-center">
+            <a href="/owner/add-kos" class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">Tambah Kos</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.js"></script>
+    <!-- Footer -->
+<footer class="bg-gray-800 text-white py-4 mt-8">
+    <div class="max-w-[85rem] w-full mx-auto text-center">
+        <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+
+
+
+</html>
