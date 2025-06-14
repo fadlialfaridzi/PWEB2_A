@@ -32,11 +32,11 @@
           </button>
         </div>
         <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
-          <div class="text-white flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
+          <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
             <button type="button" class="bg-white text-blue-700 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Beranda</button>
-            <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
-            <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
-            <button type="button" class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
+            <button type="button" class="text-white py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:text-blue-700 focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
+            <button type="button" class="text-white py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:text-blue-700 focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
+            <button type="button" class="text-white py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:text-blue-700 focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
           </div>
         </div>
       </nav>
@@ -44,7 +44,7 @@
 
     <!-- Search and Filter Section -->
     <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-semibold mb-4">Pencarian Kos</h2>
+        <h2 class="text-4xl  font-semibold mb-4">Pencarian Kos</h2>
 
         <!-- Search Box and Filters -->
         <div class="flex flex-col md:flex-row justify-between items-center">
@@ -54,27 +54,84 @@
             </div>
 
             <!-- Filter -->
-            <div class="flex space-x-4 mt-4 md:mt-0">
-                <select class="p-4 border border-gray-300 rounded-md">
-                    <option value="">Pilih Kota</option>
-                    <option value="jakarta">Jakarta</option>
-                    <option value="bandung">Bandung</option>
-                    <option value="surabaya">Surabaya</option>
+            <div class="mb-4 ml-10 md:mb-0 md:w-2/3">
+                <select class="p-4 border border-gray-300 rounded-md w-full sm:w-auto">
+                    <option value="" disabled selected>Tipe Pembayaran</option>
+                    <option value="bulan">Perbulan</option>
+                    <option value="tahun">Pertahun</option>
                 </select>
 
-                <select class="p-4 border border-gray-300 rounded-md">
-                    <option value="">Pilih Harga</option>
-                    <option value="1000000">Rp 1.000.000</option>
-                    <option value="2000000">Rp 2.000.000</option>
-                    <option value="3000000">Rp 3.000.000</option>
+                <select class="p-4 border border-gray-300 rounded-md w-full sm:w-auto">
+                    <option value="" disabled selected>Pilih Harga</option>
+                    <option value="1000000">Rp 100.000 - 500.000</option>
+                    <option value="2000000">Rp 500.000 - 1000.000</option>
+                    <option value="3000000">Rp 1.000.000 - 5.000.000</option>
+                    <option value="3000000">Rp 5.000.000 - 10.000.000</option>
+                    <option value="3000000">Rp > 10.000.000</option>
                 </select>
+            </div>
+        </div>
 
-                <select class="p-4 border border-gray-300 rounded-md">
-                    <option value="">Pilih Fasilitas</option>
-                    <option value="ac">AC</option>
-                    <option value="wifi">WiFi</option>
-                    <option value="tv">TV Kabel</option>
-                </select>
+        <!-- Fasilitas Checkbox Group -->
+        <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4">Fasilitas</h2>
+
+            <!-- Checkbox Group -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Wifi</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">AC</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Kamar Mandi dalam</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Dapur</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Ruang Tamu</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">CCTV</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Token Perkamar</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Air Gratis</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Kasur</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Lemari</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Meja Belajar</span>
+                </label>
             </div>
         </div>
 
@@ -82,7 +139,16 @@
         <div class="mt-4 flex justify-center">
             <button class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">Cari Kos</button>
         </div>
+
+        <!-- Button "Cari dengan Google Map" -->
+        <div class="mt-6 flex justify-center">
+            <button class="bg-green-600 text-white py-3 px-6 w-full sm:w-auto rounded-md hover:bg-green-700">
+                Cari dengan Google Map
+            </button>
+        </div>
+
     </div>
+
 
     <!-- Available Kos List -->
     <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
@@ -92,7 +158,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <!-- Kos 1 -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="/images/kos1.jpg" alt="Kos 1" class="w-full h-40 object-cover">
+                <img src="/images/bg.jpg" alt="Kos 1" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h4 class="font-semibold text-lg">Kos Jakarta</h4>
                     <p class="text-sm text-gray-600">Harga: Rp 2.000.000 / bulan</p>
@@ -138,5 +204,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.js"></script>
 </body>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-4 mt-8">
+    <div class="max-w-[85rem] w-full mx-auto text-center">
+        <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
+    </div>
+</footer>
 
 </html>
