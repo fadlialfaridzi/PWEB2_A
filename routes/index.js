@@ -21,4 +21,9 @@ router.get('/role', function(req, res, next) {
   res.render('role', { title: 'Register - Kosand' });
 });
 
+/* GET owner page. */
+router.get('/owner', function(req, res, next) {
+  res.render('owner', { title: 'Register - Kosand' });
+});
+
 module.exports = router;

@@ -23,6 +23,7 @@ app.use('/', indexRouter);
 app.use('/login', indexRouter);
 app.use('/register', indexRouter);
 app.use('/role', indexRouter);
+app.use('/owner', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
