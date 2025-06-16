@@ -22,7 +22,11 @@ async function login(req, res) {
     return res.status(400).send('Invalid credentials');
   }
 
-  req.session.user = user; // Store user info in session
+req.session.user = {
+  id: user.id,       // Ambil ID user dari database yang login
+  name: user.name,   // Nama user
+};
+
   if (user.role === 'pencari') {
     return res.redirect('/indexpencarikos');
   } else if (user.role === 'pemilik') {

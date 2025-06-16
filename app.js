@@ -5,16 +5,20 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 const authRoutes = require('./routes/authRoutes');
+const ownerController = require('./controllers/ownerController');  // Import ownerController
 var indexRouter = require('./routes/index');
 
 var app = express();
 
-// Middleware for session
+// Middleware static files
+app.use(express.static('public'));
+
+// Middleware session
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { secure: false } // set secure: true jika menggunakan HTTPS
 }));
 
 // Middleware for POST data
@@ -37,18 +41,31 @@ app.use('/', indexRouter);
 // Routes for role-based page rendering
 app.get('/indexpencarikos', (req, res) => {
     if (req.session.user && req.session.user.role === 'pencari') {
-        res.render('indexpencarikos', { user: req.session.user }); // Pass user to EJS template
-    } else {
-        res.redirect('/login');  // Redirect to login if no session or role mismatch
-    }
-});
-
-app.get('/indexpemilikkos', (req, res) => {
-    if (req.session.user && req.session.user.role === 'pemilik') {
-        res.render('indexpemilikkos');
+        res.render('indexpencarikos', { user: req.session.user });
     } else {
         res.redirect('/login');
     }
+});
+
+// Route untuk menampilkan halaman pemilik kos
+app.get('/indexpemilikkos', (req, res) => {
+    if (req.session.user && req.session.user.role === 'pemilik') {
+        // Mengambil kos yang dimiliki pemilik berdasarkan user_id
+        ownerController.ownerDashboard(req, res);  // Memanggil controller untuk menghandle data kos
+    } else {
+        res.redirect('/login');
+    }
+});
+
+// Route untuk logout
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send("Gagal logout");
+        }
+        // Redirect ke halaman index setelah logout
+        res.redirect('/');
+    });
 });
 
 // Handle 404 errors
