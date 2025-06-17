@@ -38,25 +38,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', authRoutes);
 app.use('/', indexRouter);
 
-// Routes for role-based page rendering
-app.get('/indexpencarikos', (req, res) => {
-    if (req.session.user && req.session.user.role === 'pencari') {
-        res.render('indexpencarikos', { user: req.session.user });
-    } else {
-        res.redirect('/login');
-    }
-});
-
-// Route untuk menampilkan halaman pemilik kos
-app.get('/indexpemilikkos', (req, res) => {
-    if (req.session.user && req.session.user.role === 'pemilik') {
-        // Mengambil kos yang dimiliki pemilik berdasarkan user_id
-        ownerController.ownerDashboard(req, res);  // Memanggil controller untuk menghandle data kos
-    } else {
-        res.redirect('/login');
-    }
-});
-
 // Route untuk logout
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {

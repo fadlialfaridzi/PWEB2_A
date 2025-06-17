@@ -5,12 +5,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Pemilik Kos - KOSAND</title>
+
+  <!-- TailwindCSS -->
+   <link rel="stylesheet" href="/public/stylesheets/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!----preline --->
   <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+  <style>
+    /* Untuk switch toggle saat status tersedia */
+    input:checked + .bg-gray-300 {
+      background-color: #38a169; /* Warna hijau */
+    }
+
+    /* Geser dot ke kanan ketika checked */
+    input:checked + .bg-gray-300 .dot {
+      transform: translateX(1.5rem); /* Geser bulatan ke kanan */
+    }
+
+    /* Background switch memiliki transisi halus */
+    .bg-gray-300 {
+      transition: background-color 0.3s ease; /* Halus saat berubah warna */
+    }
+
+    /* Dot memiliki transisi halus saat bergerak */
+    .dot {
+      transition: transform 0.3s ease; /* Halus saat bergerak */
+      position: absolute;
+      left: 0.25rem; /* Posisi awal (kiri) */
+    }
+  </style>
 </head>
 
-<body class="bg-white">
+<body>
   <!-- Navbar -->
   <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-sm py-3">
     <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
@@ -27,7 +55,6 @@
                 <li class="block px-4 py-2">User ID: <%= user.id %></li>
                 <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
                 <li>
-                  <!-- Tombol Logout -->
                   <a href="/logout" class="block px-4 py-2 text-red-500">Logout</a>
                 </li>
               </ul>
@@ -38,56 +65,29 @@
     </nav>
   </header>
 
+  <!-- Pesan Sukses -->
+   <% if (success) { %>
+       <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
+         <span class="font-bold">Success:</span> Data Kos Berhasil Ditambahkan!
+         <!-- Button Close -->
+         <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+           Close
+         </button>
+       </div>
+     <% } %>
+
+
   <!-- Available Kos List -->
   <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
     <h3 class="text-2xl font-semibold mb-6">Daftar Kos Tersedia</h3>
 
+    
+
     <!-- Tombol Tambah Kos -->
     <div class="mb-6 flex justify-end">
-      <button onclick="toggleModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <a href="/formTambahKos" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
         Tambah Kos
-      </button>
-    </div>
-
-    <!-- Alert Success & Error -->
-    <div id="alertSuccess" class="hidden space-y-5">
-      <div class="bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert">
-        <div class="flex">
-          <div class="shrink-0">
-            <!-- Icon -->
-            <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-                <path d="m9 12 2 2 4-4"></path>
-              </svg>
-            </span>
-          </div>
-          <div class="ms-3 bg-teal-200">
-            <h3 class="text-gray-800 font-semibold dark:text-white">Status Kos Berhasil Diperbarui</h3>
-            <p class="text-sm text-gray-700 dark:text-neutral-400">Status kos telah berhasil diubah.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="alertError" class="hidden space-y-5">
-      <div class="bg-red-50 border-s-4 border-red-500 p-4 dark:bg-red-800/30" role="alert">
-        <div class="flex">
-          <div class="shrink-0">
-            <!-- Icon -->
-            <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800 dark:border-red-900 dark:bg-red-800 dark:text-red-400">
-              <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 6 6 18"></path>
-                <path d="m6 6 12 12"></path>
-              </svg>
-            </span>
-          </div>
-          <div class="ms-3">
-            <h3 class="text-gray-800 font-semibold dark:text-white">Gagal Memperbarui Status</h3>
-            <p class="text-sm text-gray-700 dark:text-neutral-400">Terjadi kesalahan saat memperbarui status kos.</p>
-          </div>
-        </div>
-      </div>
+      </a>
     </div>
 
     <!-- Kos Card List -->
@@ -106,45 +106,26 @@
               <p class="text-sm text-gray-600">Alamat: <%= kosItem.address %></p>
 
               <!-- Switch Toggle untuk Status Ketersediaan -->
-             <div class="flex items-center mt-4">
+              <div class="flex items-center mt-4">
                 <label for="statusToggle<%= kosItem.id %>" class="mr-2 text-sm">Status:</label>
                 <label class="relative inline-flex items-center cursor-pointer">
-                    <!-- Tombol switch -->
-                    <input type="checkbox" id="statusToggle<%= kosItem.id %>" 
-                    <% if (kosItem.status === 'available') { %> checked <% } %> 
-                    class="hidden" 
-                    onchange="updateKosStatus('<%= kosItem.id %>', this.checked ? 'available' : 'not_available')" />
-                    <!-- Bagian background switch -->
-                    <span class="w-11 h-6 bg-gray-300 rounded-full transition-colors duration-300"></span>
-                    <!-- Bulatan (dot) yang berpindah -->
-                    <span class="dot w-4 h-4 bg-white rounded-full absolute left-1 top-1 transition-transform duration-300"></span>
+                  <!-- Tombol switch -->
+                  <input type="checkbox" id="statusToggle<%= kosItem.id %>" 
+                  <% if (kosItem.status === 'available') { %> checked <% } %> 
+                  class="hidden" 
+                  onchange="updateKosStatus('<%= kosItem.id %>', this.checked ? 'available' : 'not_available')" />
+                  <!-- Bagian background switch -->
+                  <span class="w-11 h-6 bg-gray-300 rounded-full transition-colors duration-300"></span>
+                  <!-- Dot (bulatan) yang berpindah -->
+                  <span class="dot w-4 h-4 bg-white rounded-full absolute left-1 top-1 transition-transform duration-300"></span>
                 </label>
-            </div>
+              </div>
             </div>
           </div>
         <% }) %>
       <% } else { %>
         <p class="text-gray-600">Belum ada kos terdaftar.</p>
       <% } %>
-    </div>
-  </div>
-
-  <!-- Modal Tambah Kos -->
-  <div id="modalKos" class="fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
-      <h3 class="text-xl font-semibold mb-4">Tambah Kos</h3>
-      <form id="formKos" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Nama Kos" class="w-full border mb-3 px-3 py-2 rounded" required />
-        <input type="number" name="price" placeholder="Harga" class="w-full border mb-3 px-3 py-2 rounded" required />
-        <textarea name="address" placeholder="Alamat" class="w-full border mb-3 px-3 py-2 rounded" required></textarea>
-        <input type="text" name="latitude" placeholder="Latitude" class="w-full border mb-3 px-3 py-2 rounded" />
-        <input type="text" name="longitude" placeholder="Longitude" class="w-full border mb-3 px-3 py-2 rounded" />
-        <input type="file" name="photos" multiple accept="image/*" class="w-full border mb-3 px-3 py-2 rounded" />
-        <div class="flex justify-end gap-2">
-          <button type="button" onclick="toggleModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Batal</button>
-          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
-        </div>
-      </form>
     </div>
   </div>
 
@@ -191,50 +172,39 @@
 
     // Fungsi untuk memperbarui status kos (tersedia/tidak tersedia)
     function updateKosStatus(kosId, status) {
-        fetch(`/kos/${kosId}/status`, {
+    const switchButton = document.getElementById(`statusToggle${kosId}`);
+    const dot = switchButton.nextElementSibling.querySelector('.dot');
+    
+    // Mengirim status baru ke server
+    fetch(`/kos/${kosId}/status`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ status: status })
-        })
-        .then(response => response.json())
-        .then(data => {
-        if (data.success) {
-            // Tampilkan alert success
-            document.getElementById('alertSuccess').classList.remove('hidden');
-            document.getElementById('alertError').classList.add('hidden');
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Geser dot ke kanan saat status diubah
+          if (status === 'available') {
+              dot.style.transform = 'translateX(1.5rem)';  // Dot bergerak ke kanan
+          } else {
+              dot.style.transform = 'translateX(0)';  // Dot kembali ke kiri
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
 
-            // Menyembunyikan alert setelah 3 detik dan refresh halaman
-            setTimeout(function() {
-            document.getElementById('alertSuccess').classList.add('hidden');
-            location.reload(); // Refresh halaman setelah alert sukses
-            }, 3000);  // Delay selama 3 detik
-        } else {
-            // Tampilkan alert error
-            document.getElementById('alertError').classList.remove('hidden');
-            document.getElementById('alertSuccess').classList.add('hidden');
-
-            // Menyembunyikan alert error setelah 3 detik
-            setTimeout(function() {
-            document.getElementById('alertError').classList.add('hidden');
-            }, 3000);  // Delay selama 3 detik
-        }
-        })
-        .catch(error => {
-        console.error('Error:', error);
-        // Tampilkan alert error jika terjadi kesalahan
-        document.getElementById('alertError').classList.remove('hidden');
-        document.getElementById('alertSuccess').classList.add('hidden');
-
-        // Menyembunyikan alert error setelah 3 detik
-        setTimeout(function() {
-            document.getElementById('alertError').classList.add('hidden');
-        }, 3000); // Delay selama 3 detik
-        });
+  // Menyembunyikan pesan sukses setelah 3 detik
+    function closeSuccessMessage() {
+      const successMessage = document.getElementById('successMessage');
+      if (successMessage) {
+        successMessage.style.display = 'none'; // Menyembunyikan pesan
+      }
     }
   </script>
-<script src="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.js"></script>
 </body>
 
 </html>

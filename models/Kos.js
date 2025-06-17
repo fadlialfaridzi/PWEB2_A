@@ -22,6 +22,12 @@ const Kos = {
         });
     },
 
+    // Menambahkan fasilitas kos ke tabel fasilitas_kos
+    addFasilitasKos: (kosId, fasilitas, callback) => {
+    const query = `INSERT INTO fasilitas_kos (kos_id, fasilitas) VALUES (?, ?)`;
+    db.query(query, [kosId, fasilitas], callback);
+    },
+
     // Update status kos
     updateKosStatus: (kosId, status, callback) => {
         const query = `UPDATE kos SET status = ? WHERE id = ?`;

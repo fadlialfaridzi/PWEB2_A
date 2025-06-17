@@ -13,23 +13,25 @@ const ownerDashboard = (req, res) => {
             return res.status(500).send('Gagal mengambil data kos');
         }
 
-        res.render('indexPemilikKos', { kos, user: req.session.user });
+        res.render('indexPemilikKos', { kos,
+            user: req.session.user,
+            success: req.query.success || null });
     });
 };
 
-// Menambahkan data kos baru + upload banyak foto
 const tambahKos = (req, res) => {
     const userId = req.session.user?.id;
     if (!userId) return res.status(401).json({ success: false, message: 'Tidak ada sesi user' });
 
-    const { name, price, address, latitude, longitude } = req.body;
+    const { name, price, paymentType, address, facilities,latitude, longitude } = req.body;
     const kosData = {
         user_id: userId,
         name,
         price,
+        payment_type: paymentType,
         address,
         latitude,
-        longitude
+        longitude,
     };
 
     Kos.addKos(kosData, (err, result) => {
@@ -39,8 +41,20 @@ const tambahKos = (req, res) => {
         }
 
         const kosId = result.insertId;
+
+        // Menyimpan fasilitas ke database
+        if (facilities && facilities.length > 0) {
+            facilities.forEach(fasilitas => {
+                Kos.addFasilitasKos(kosId, fasilitas, (err) => {
+                    if (err) {
+                        console.error('Gagal menyimpan fasilitas:', err);
+                    }
+                });
+            });
+        }
         const files = req.files;
 
+        //menyimpan foto
         if (files && files.length > 0) {
             files.forEach(file => {
                 FotoKos.addFoto(kosId, file.filename, (err) => {
@@ -50,8 +64,7 @@ const tambahKos = (req, res) => {
                 });
             });
         }
-
-        res.json({ success: true });
+        res.redirect('/indexPemilikKos?success=true');
     });
 };
 

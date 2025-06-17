@@ -9,7 +9,7 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
   const user = await userModel.findUserByEmail(email);
 
   if (!user) {
@@ -24,7 +24,8 @@ async function login(req, res) {
 
 req.session.user = {
   id: user.id,       // Ambil ID user dari database yang login
-  name: user.name,   // Nama user
+  name: user.name,
+  role: user.role   // Nama user
 };
 
   if (user.role === 'pencari') {

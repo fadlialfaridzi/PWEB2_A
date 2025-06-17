@@ -11,18 +11,18 @@ router.get('/role', (req, res) => {
 router.get('/register/pemilik', (req, res) => {
   res.render('register', { role: 'pemilik' });
 });
+
 router.get('/register/pencari', (req, res) => {
   res.render('register', { role: 'pencari' });
 });
-
-// POST route for registration
-router.post('/register', authController.register);
 
 // Route for login form
 router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// POST route for registration
+router.post('/register', authController.register);
 // POST route for login
 router.post('/login', authController.login);
 
