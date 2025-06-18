@@ -4,8 +4,8 @@ const Kos = {
     // Menambahkan kos ke database
     addKos: (kosData, callback) => {
         const query = `
-            INSERT INTO kos (user_id, name, price, address, latitude, longitude, description)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO kos (user_id, name, price, address, latitude, longitude, description, payment_type)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
         const params = [
             kosData.user_id,
@@ -14,7 +14,8 @@ const Kos = {
             kosData.address,
             kosData.latitude,
             kosData.longitude,
-            kosData.description
+            kosData.description,
+            kosData.payment_type
         ];
 
         db.query(query, params, (err, result) => {
@@ -41,7 +42,7 @@ const Kos = {
     // Mendapatkan semua kos dan foto berdasarkan user_id
     getAllWithFoto: (userId, callback) => {
         const query = `
-            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename
+            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type
             FROM kos k
             LEFT JOIN foto_kos f ON f.kos_id = k.id
             WHERE k.user_id = ?
@@ -60,7 +61,8 @@ const Kos = {
                         address: row.address,
                         latitude: row.latitude,
                         longitude: row.longitude,
-                        photos: []
+                        photos: [],
+                        payment_type: row.payment_type
                     };
                 }
                 if (row.filename) {
@@ -70,6 +72,27 @@ const Kos = {
 
             callback(null, Object.values(grouped));
         });
+    },
+
+    // Fungsi untuk memperbarui data kos
+    updateKos: (kosId, kosData, callback) => {
+        const query = `
+            UPDATE kos 
+            SET name = ?, price = ?, payment_type = ?, address = ?, latitude = ?, longitude = ?, description = ?
+            WHERE id = ?
+        `;
+        const params = [
+            kosData.name,
+            kosData.price,
+            kosData.payment_type,
+            kosData.address,
+            kosData.latitude,
+            kosData.longitude,
+            kosData.description,
+            kosId
+        ];
+
+        db.query(query, params, callback);
     },
 
     // Mendapatkan detail kos berdasarkan ID
@@ -96,7 +119,20 @@ const Kos = {
             if (err) return callback(err, null);
             callback(null, result);
         });
+    },
+    // Fungsi untuk menghapus kos dari database
+    deleteKos: (kosId, callback) => {
+        const query = `DELETE FROM kos WHERE id = ?`;
+        db.query(query, [kosId], callback);
+    },
+
+    // Menghapus fasilitas kos berdasarkan kos_id
+    deleteFasilitasKos: (kosId, callback) => {
+        const query = `DELETE FROM fasilitas_kos WHERE kos_id = ?`;
+        db.query(query, [kosId], callback);
     }
 };
+
+
 
 module.exports = Kos;
