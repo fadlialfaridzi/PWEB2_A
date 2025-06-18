@@ -47,6 +47,10 @@ router.get('/indexPemilikKos', ownerController.ownerDashboard);  // Mengarahkan 
 router.post('/tambahKos', upload.array('photos'), ownerController.tambahKos);
 // Route untuk memperbarui status kos (tombol)
 router.post('/kos/:id/status', ownerController.updateKosStatus);
+// Route untuk halaman detail kos
+router.get('/detailKos/:id', ownerController.detailKos);
+// Route untuk menambah foto ke detail kos
+router.post('/detailKos/:id/addPhotos', upload.array('photos'), ownerController.addPhotos);
 
 //logout
 // Route untuk logout
@@ -58,6 +62,33 @@ router.get('/logout', (req, res) => {
         }
         // Redirect ke halaman index setelah logout
         res.redirect('/');
+    });
+});
+
+// Route untuk halaman edit kos
+router.get('/editKos/:id', (req, res) => {
+    const kosId = req.params.id;
+
+    // Ambil data kos dari database
+    Kos.getKosById(kosId, (err, kos) => {
+        if (err) {
+            console.error('Error fetching kos details for editing:', err);
+            return res.status(500).send('Gagal mengambil data kos untuk edit');
+        }
+
+        // Ambil fasilitas kos untuk ditampilkan
+        Kos.getFasilitasKos(kosId, (err, fasilitas) => {
+            if (err) {
+                console.error('Error fetching facilities for editing:', err);
+                return res.status(500).send('Gagal mengambil fasilitas kos');
+            }
+
+            res.render('editKos', {
+                kos: kos,
+                fasilitas: fasilitas,
+                user: req.session.user,
+            });
+        });
     });
 });
 

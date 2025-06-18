@@ -23,7 +23,7 @@ const tambahKos = (req, res) => {
     const userId = req.session.user?.id;
     if (!userId) return res.status(401).json({ success: false, message: 'Tidak ada sesi user' });
 
-    const { name, price, paymentType, address, facilities,latitude, longitude } = req.body;
+    const { name, price, paymentType, address, facilities,latitude, longitude, description  } = req.body;
     const kosData = {
         user_id: userId,
         name,
@@ -32,6 +32,7 @@ const tambahKos = (req, res) => {
         address,
         latitude,
         longitude,
+        description
     };
 
     Kos.addKos(kosData, (err, result) => {
@@ -87,8 +88,59 @@ const updateKosStatus = (req, res) => {
     });
 };
 
+// Fungsi untuk menampilkan detail kos
+const detailKos = (req, res) => {
+    const kosId = req.params.id;
+
+    // Ambil data kos dari database
+    Kos.getKosById(kosId, (err, kosItem) => {
+        if (err) {
+            console.error('Error fetching kos details:', err);
+            return res.status(500).send('Gagal mengambil detail kos');
+        }
+
+        // Ambil fasilitas kos dari database
+        Kos.getFasilitasKos(kosId, (err, fasilitas) => {
+            if (err) {
+                console.error('Error fetching facilities:', err);
+                return res.status(500).send('Gagal mengambil fasilitas kos');
+            }
+
+            // Kirim data kos dan fasilitas ke view
+            res.render('detailkos', {
+                kos: kosItem, // kosItem sudah berisi kos dan photos
+                fasilitas: fasilitas,
+                user: req.session.user,
+            });
+        });
+    });
+};
+
+// Fungsi untuk menambah foto carousel
+const addPhotos = (req, res) => {
+    const kosId = req.params.id;
+    const files = req.files;
+
+    if (files.length < 3) {
+        return res.status(400).json({ success: false, message: 'Minimal 3 foto harus diunggah untuk carousel' });
+    }
+
+    files.forEach(file => {
+        FotoKos.addFoto(kosId, file.filename, (err) => {
+            if (err) {
+                console.error('Gagal menyimpan foto:', err);
+            }
+        });
+    });
+
+    // Redirect kembali ke halaman detail kos setelah foto ditambahkan
+    res.redirect(`/detailKos/${kosId}`);
+};
+
 module.exports = {
     ownerDashboard,
     tambahKos,
-    updateKosStatus
+    updateKosStatus,
+    detailKos,
+    addPhotos
 };

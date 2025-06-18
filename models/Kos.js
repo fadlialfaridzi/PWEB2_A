@@ -4,8 +4,8 @@ const Kos = {
     // Menambahkan kos ke database
     addKos: (kosData, callback) => {
         const query = `
-            INSERT INTO kos (user_id, name, price, address, latitude, longitude)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO kos (user_id, name, price, address, latitude, longitude, description)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
         const params = [
             kosData.user_id,
@@ -13,7 +13,8 @@ const Kos = {
             kosData.price,
             kosData.address,
             kosData.latitude,
-            kosData.longitude
+            kosData.longitude,
+            kosData.description
         ];
 
         db.query(query, params, (err, result) => {
@@ -68,6 +69,32 @@ const Kos = {
             });
 
             callback(null, Object.values(grouped));
+        });
+    },
+
+    // Mendapatkan detail kos berdasarkan ID
+    getKosById: (kosId, callback) => {
+        const query = `
+            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, k.description, k.payment_type, f.filename
+            FROM kos k
+            LEFT JOIN foto_kos f ON f.kos_id = k.id
+            WHERE k.id = ?
+        `;
+        db.query(query, [kosId], (err, result) => {
+            if (err) return callback(err, null);
+            const kosItem = result[0];
+            // Menyusun array foto
+            const photos = result.map(row => row.filename).filter(filename => filename);
+            callback(null, { ...result[0], photos });  // Ambil hasil pertama karena ID unik
+        });
+    },
+
+    // Mendapatkan fasilitas kos berdasarkan ID kos
+    getFasilitasKos: (kosId, callback) => {
+        const query = `SELECT fasilitas FROM fasilitas_kos WHERE kos_id = ?`;
+        db.query(query, [kosId], (err, result) => {
+            if (err) return callback(err, null);
+            callback(null, result);
         });
     }
 };

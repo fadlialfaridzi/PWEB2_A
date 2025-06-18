@@ -91,43 +91,49 @@
     </div>
 
     <!-- Kos Card List -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <% if (kos && kos.length > 0) { %>
-        <% kos.forEach(kosItem => { %>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <% if (kosItem.photos.length > 0) { %>
-              <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
-            <% } else { %>
-              <img src="/images/default-kos.jpg" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
-            <% } %>
-            <div class="p-4">
-              <h4 class="font-semibold text-lg"><%= kosItem.name %></h4>
-              <p class="text-sm text-gray-600">Harga: Rp <%= kosItem.price %> / bulan</p>
-              <p class="text-sm text-gray-600">Alamat: <%= kosItem.address %></p>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <% if (kos && kos.length > 0) { %>
+    <% kos.forEach(kosItem => { %>
+      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <% if (kosItem.photos.length > 0) { %>
+          <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
+        <% } else { %>
+          <img src="/images/default-kos.jpg" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
+        <% } %>
+        <div class="p-4">
+          <h4 class="font-semibold text-lg"><%= kosItem.name %></h4>
+          <p class="text-sm text-gray-600">Harga: Rp <%= kosItem.price %> / bulan</p>
+          <p class="text-sm text-gray-600">Alamat: <%= kosItem.address %></p>
 
-              <!-- Switch Toggle untuk Status Ketersediaan -->
-              <div class="flex items-center mt-4">
-                <label for="statusToggle<%= kosItem.id %>" class="mr-2 text-sm">Status:</label>
-                <label class="relative inline-flex items-center cursor-pointer">
-                  <!-- Tombol switch -->
-                  <input type="checkbox" id="statusToggle<%= kosItem.id %>" 
-                  <% if (kosItem.status === 'available') { %> checked <% } %> 
-                  class="hidden" 
-                  onchange="updateKosStatus('<%= kosItem.id %>', this.checked ? 'available' : 'not_available')" />
-                  <!-- Bagian background switch -->
-                  <span class="w-11 h-6 bg-gray-300 rounded-full transition-colors duration-300"></span>
-                  <!-- Dot (bulatan) yang berpindah -->
-                  <span class="dot w-4 h-4 bg-white rounded-full absolute left-1 top-1 transition-transform duration-300"></span>
-                </label>
-              </div>
-            </div>
+          <!-- Switch Toggle untuk Status Ketersediaan -->
+          <div class="flex items-center mt-4">
+            <label for="statusToggle<%= kosItem.id %>" class="mr-2 text-sm">Status:</label>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <!-- Tombol switch -->
+              <input type="checkbox" id="statusToggle<%= kosItem.id %>" 
+              <% if (kosItem.status === 'available') { %> checked <% } %> 
+              class="hidden" 
+              onchange="updateKosStatus('<%= kosItem.id %>', this.checked ? 'available' : 'not_available')" />
+              <!-- Bagian background switch -->
+              <span class="w-11 h-6 bg-gray-300 rounded-full transition-colors duration-300"></span>
+              <!-- Dot (bulatan) yang berpindah -->
+              <span class="dot w-4 h-4 bg-white rounded-full absolute left-1 top-1 transition-transform duration-300"></span>
+            </label>
           </div>
-        <% }) %>
-      <% } else { %>
-        <p class="text-gray-600">Belum ada kos terdaftar.</p>
-      <% } %>
-    </div>
-  </div>
+
+          <!-- Tombol Detail Kos -->
+          <div class="mt-4 text-center">
+            <a href="/detailKos/<%= kosItem.id %>" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
+              Detail Kos
+            </a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p class="text-gray-600">Belum ada kos terdaftar.</p>
+  <% } %>
+</div>
 
   <script>
     // Menangani toggle dropdown pada navbar
