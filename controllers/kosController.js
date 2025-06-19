@@ -17,3 +17,15 @@ exports.lihatListRating = (req, res) => {
   ];
   res.render("kos/listRating", { title: "List Rating Kos", ratings });
 };
+
+exports.formBooking = (req, res) => {
+  res.render("kos/formBooking", { title: "Booking Kos" });
+};
+
+exports.prosesBooking = (req, res) => {
+  const { nama, tanggal, durasi } = req.body;
+  console.log("Booking atas nama:", nama);
+  console.log("Tanggal:", tanggal);
+  console.log("Durasi:", durasi, "bulan");
+  res.redirect("/booking");
+};
