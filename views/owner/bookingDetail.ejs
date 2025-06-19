@@ -1,0 +1,30 @@
+<!-- views/owner/bookingDetail.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Pemesanan</title>
+</head>
+<body class="p-6">
+  <h1 class="text-2xl font-bold mb-4">Detail Pemesanan</h1>
+
+  <p><strong>Nama Pencari:</strong> <%= booking.userName %></p>
+  <p><strong>Nama Kos:</strong> <%= booking.kosName %></p>
+  <p><strong>Tanggal Booking:</strong> <%= booking.bookingDate %></p>
+  <p><strong>Status:</strong> <%= booking.status %></p>
+
+  <% if (booking.status === 'pending') { %>
+    <form action="/owner/booking/<%= booking._id %>/confirm" method="POST" class="inline-block">
+      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Konfirmasi</button>
+    </form>
+    <form action="/owner/booking/<%= booking._id %>/reject" method="POST" class="inline-block">
+      <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Tolak</button>
+    </form>
+  <% } else { %>
+    <p class="text-gray-600 mt-4">Pemesanan telah <%= booking.status %></p>
+  <% } %>
+
+  <br><br>
+  <a href="/owner/bookings" class="text-blue-600 underline">← Kembali ke daftar booking</a>
+</body>
+</html>
