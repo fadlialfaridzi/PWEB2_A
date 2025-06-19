@@ -25,10 +25,10 @@
             <span class="sr-only">Toggle</span>
           </button>
           <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-2xs hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-            Login
+            <a href="login">Login</a>
           </button>
           <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-2xs hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-            Register
+            <a href="role">Register</a>
           </button>
         </div>
         <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
@@ -42,26 +42,25 @@
       </nav>
   </header>
 
-    <!-- Search and Filter Section -->
+    <!-- Example of your content structure -->
     <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
-        <h2 class="text-4xl  font-semibold mb-4">Pencarian Kos</h2>
-
+        <h2 class="text-4xl font-semibold mb-4">Pencarian Kos</h2>
         <!-- Search Box and Filters -->
         <div class="flex flex-col md:flex-row justify-between items-center">
             <!-- Pencarian Kos -->
             <div class="mb-4 md:mb-0 md:w-2/3">
-                <input type="text" class="w-full p-4 border border-gray-300 rounded-md" placeholder="Cari kos di sini..." />
+                <input type="text" class="w-full p-4 border-4 border-yellow-300 rounded-md shadow-lg" placeholder="Cari kos di sini..." />
             </div>
 
             <!-- Filter -->
-            <div class="mb-4 ml-10 md:mb-0 md:w-2/3">
-                <select class="p-4 border border-gray-300 rounded-md w-full sm:w-auto">
+            <div class="mb-4 ml-2 md:mb-0 md:w-2/3">
+                <select class="p-4 rounded-md w-full sm:w-auto shadow-lg border-4 border-yellow-300">
                     <option value="" disabled selected>Tipe Pembayaran</option>
                     <option value="bulan">Perbulan</option>
                     <option value="tahun">Pertahun</option>
                 </select>
 
-                <select class="p-4 border border-gray-300 rounded-md w-full sm:w-auto">
+                <select class="p-4 rounded-md w-full sm:w-auto shadow-lg border-4 border-yellow-300">
                     <option value="" disabled selected>Pilih Harga</option>
                     <option value="1000000">Rp 100.000 - 500.000</option>
                     <option value="2000000">Rp 500.000 - 1000.000</option>
@@ -137,16 +136,15 @@
 
         <!-- Search Button -->
         <div class="mt-4 flex justify-center">
-            <button class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700">Cari Kos</button>
+            <button class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 shadow-lg">Cari Kos</button>
         </div>
 
         <!-- Button "Cari dengan Google Map" -->
         <div class="mt-6 flex justify-center">
-            <button class="bg-green-600 text-white py-3 px-6 w-full sm:w-auto rounded-md hover:bg-green-700">
+            <button class="relative border-2 border-blue-400 text-blue-400 py-3 px-6 w-full sm:w-auto rounded-md hover:bg-blue-50 shadow-lg">
                 Cari dengan Google Map
             </button>
         </div>
-
     </div>
 
 
@@ -163,7 +161,7 @@
                     <h4 class="font-semibold text-lg">Kos Jakarta</h4>
                     <p class="text-sm text-gray-600">Harga: Rp 2.000.000 / bulan</p>
                     <p class="text-sm text-gray-600">Fasilitas: AC, WiFi</p>
-                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
+                    <a href="/detailkos" class="text-blue-500 hover:underline">Lihat Detail</a>
                 </div>
             </div>
 

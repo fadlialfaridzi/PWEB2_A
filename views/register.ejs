@@ -17,6 +17,8 @@
     <h2 class="text-gray-50 text-3xl font-semibold text-center mb-6">Create an Account</h2>
 
     <form action="/register" method="POST">
+      <!-- Hidden input untuk role -->
+      <input type="hidden" name="role" value="<%= role %>">  <!-- Kirim role yang dipilih -->
       <!-- Name Input -->
       <div class="mb-4">
         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - KOSAND</title>
+    <!-- Preline UI CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-white">
+
+    <!-- Navbar -->
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-sm py-3 dark:bg-neutral-800">
+        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+            <a class="sm:order-1 flex-none text-xl font-semibold text-white focus:outline-hidden focus:opacity-80" href="#">Brand</a>
+
+            <div class="sm:order-3 flex items-center gap-x-2">
+                <!-- Check if user is logged in -->
+                <% if (user) { %>
+                    <!-- User avatar and name with dropdown -->
+                    <div class="text-white  relative rounded-full hover:bg-white hover:text-blue-800">
+                        <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
+                            <!-- User Avatar (replace with actual image URL or path) -->
+                            <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white">
+                            <span class="uppercase"><%= user.name %></span>
+                        </button>
+
+                        <!-- Dropdown content (hidden by default) -->
+                        <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
+                            <ul class="text-sm text-gray-700">
+                                <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
+                                <li><a href="/logout" class="block px-4 py-2">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <!-- If no user logged in, show nothing (i.e., remove login/register buttons) -->
+                <% } %>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Rest of the content remains unchanged, you can add your content below -->
+    
+    <!-- Example of your content structure -->
+    <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
+        <h2 class="text-4xl font-semibold mb-4">Pencarian Kos</h2>
+        <!-- Search Box and Filters -->
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <!-- Pencarian Kos -->
+            <div class="mb-4 md:mb-0 md:w-2/3">
+                <input type="text" class="w-full p-4 border-4 border-yellow-300 rounded-md shadow-lg" placeholder="Cari kos di sini..." />
+            </div>
+
+            <!-- Filter -->
+            <div class="mb-4 ml-2 md:mb-0 md:w-2/3">
+                <select class="p-4 rounded-md w-full sm:w-auto shadow-lg border-4 border-yellow-300">
+                    <option value="" disabled selected>Tipe Pembayaran</option>
+                    <option value="bulan">Perbulan</option>
+                    <option value="tahun">Pertahun</option>
+                </select>
+
+                <select class="p-4 rounded-md w-full sm:w-auto shadow-lg border-4 border-yellow-300">
+                    <option value="" disabled selected>Pilih Harga</option>
+                    <option value="1000000">Rp 100.000 - 500.000</option>
+                    <option value="2000000">Rp 500.000 - 1000.000</option>
+                    <option value="3000000">Rp 1.000.000 - 5.000.000</option>
+                    <option value="3000000">Rp 5.000.000 - 10.000.000</option>
+                    <option value="3000000">Rp > 10.000.000</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Fasilitas Checkbox Group -->
+        <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4">Fasilitas</h2>
+
+            <!-- Checkbox Group -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Wifi</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">AC</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Kamar Mandi dalam</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Dapur</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Ruang Tamu</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">CCTV</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Token Perkamar</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Air Gratis</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Kasur</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Lemari</span>
+                </label>
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox text-blue-600" />
+                    <span class="ml-2 text-sm">Meja Belajar</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Search Button -->
+        <div class="mt-4 flex justify-center">
+            <button class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 shadow-lg">Cari Kos</button>
+        </div>
+
+        <!-- Button "Cari dengan Google Map" -->
+        <div class="mt-6 flex justify-center">
+            <button class="relative border-2 border-blue-400 text-blue-400 py-3 px-6 w-full sm:w-auto rounded-md hover:bg-blue-50 shadow-lg">
+                Cari dengan Google Map
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to toggle the dropdown visibility
+        const dropdownButton = document.getElementById('userDropdownButton');
+        const dropdownMenu = document.getElementById('userDropdownMenu');
+
+        dropdownButton.addEventListener('click', () => {
+            // Toggle the visibility of the dropdown menu
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        // Optionally, close the dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden'); // Hide dropdown if clicked outside
+            }
+        });
+    </script>
+
+</body>
+
+<!-- Footer -->
+<footer class="bg-gray-200 text-gray-500 py-4 mt-8">
+    <div class="max-w-[85rem] w-full mx-auto text-center">
+        <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
+    </div>
+</footer>
+
+</html>
