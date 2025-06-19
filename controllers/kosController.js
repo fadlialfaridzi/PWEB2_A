@@ -8,3 +8,12 @@ exports.kasihRating = (req, res) => {
   console.log("Komentar:", komentar);
   res.redirect("/rating");
 };
+
+exports.lihatListRating = (req, res) => {
+  const ratings = [
+    { rating: 5, komentar: "Kos nyaman banget" },
+    { rating: 4, komentar: "Lumayan oke, bersih" },
+    { rating: 3, komentar: "Agak berisik, tapi fasilitas oke" }
+  ];
+  res.render("kos/listRating", { title: "List Rating Kos", ratings });
+};
