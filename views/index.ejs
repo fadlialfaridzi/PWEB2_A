@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -7,207 +7,408 @@
     <title>Beranda - KOSAND</title>
     <!-- Preline UI CSS -->
     <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-50">
 
     <!-- Navbar -->
-    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-700 text-sm py-3 dark:bg-neutral-800">
-      <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
-        <a class="sm:order-1 flex-none text-xl font-semibold text-white focus:outline-hidden focus:opacity-80" href="#">Brand</a>
-        <div class="sm:order-3 flex items-center gap-x-2">
-          <button type="button" class="sm:hidden hs-collapse-toggle relative size-9 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10" id="hs-navbar-alignment-collapse" aria-expanded="false" aria-controls="hs-navbar-alignment" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-alignment">
-            <svg class="hs-collapse-open:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
-            <svg class="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            <span class="sr-only">Toggle</span>
-          </button>
-          <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-2xs hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-            <a href="login">Login</a>
-          </button>
-          <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-2xs hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-            <a href="role">Register</a>
-          </button>
-        </div>
-        <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
-          <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-            <button type="button" class="bg-white text-blue-700 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Beranda</button>
-            <button type="button" class="text-white py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:text-blue-700 focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
-            <button type="button" class="text-white py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:text-blue-700 focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
-            <button type="button" class="text-white py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full border border-transparent hover:bg-white hover:text-blue-700 focus:outline-hidden focus:text-blue-700 focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Button</button>
-          </div>
-        </div>
-      </nav>
-  </header>
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-500 text-sm py-3 shadow-lg sticky top-0 z-50">
+        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="bg-white text-blue-700 p-2 rounded-lg">
+                    <i class="fas fa-home text-xl"></i>
+                </div>
+                <a class="sm:order-1 flex-none text-xl font-bold text-white focus:outline-hidden focus:opacity-80" href="#">KOSAND</a>
+            </div>
+            
+            <div class="sm:order-3 flex items-center gap-x-2">
+                <button type="button" class="sm:hidden hs-collapse-toggle relative size-9 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" id="hs-navbar-alignment-collapse" aria-expanded="false" aria-controls="hs-navbar-alignment" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-alignment">
+                    <svg class="hs-collapse-open:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+                    <svg class="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    <span class="sr-only">Toggle</span>
+                </button>
+                <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-sm hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <a href="login">Login</a>
+                </button>
+                <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-800 text-white hover:bg-blue-900 focus:outline-hidden focus:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                    <i class="fas fa-user-plus"></i>
+                    <a href="role">Register</a>
+                </button>
+            </div>
+            
+            <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
+                <div class="flex flex-col gap-3 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
+                    <a href="#home" class="bg-white text-blue-700 py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-blue-50 transition-colors">
+                        <i class="fas fa-home"></i>
+                        Beranda
+                    </a>
+                    <a href="#katalog" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-list"></i>
+                        Katalog
+                    </a>
+                    <a href="#tentang" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-info-circle"></i>
+                        Tentang
+                    </a>
+                    <a href="#kontak" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-phone"></i>
+                        Kontak
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Example of your content structure -->
-    <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
-        <h2 class="text-4xl font-semibold mb-4">Pencarian Kos</h2>
-        <!-- Search Box and Filters -->
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <!-- Pencarian Kos -->
-            <div class="mb-4 md:mb-0 md:w-2/3">
-                <input type="text" class="w-full p-4 border-4 border-yellow-300 rounded-md shadow-lg" placeholder="Cari kos di sini..." />
+    <!-- Hero Section -->
+    <section id="home" class="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-16">
+        <div class="max-w-[85rem] mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                Temukan Kost Impianmu di <span class="text-blue-100">Unand</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+                Platform terpercaya untuk mencari kost berkualitas di sekitar Universitas Andalas
+            </p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-8 mt-8 relative z-10">
+        <div class="bg-white p-8 mx-auto w-full max-w-6xl rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">
+                <i class="fas fa-search text-blue-600 mr-2"></i>
+                Pencarian Kost
+            </h2>
+            
+            <!-- Search Box and Filters -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <!-- Search Input -->
+                <div class="md:col-span-1">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Kost</label>
+                    <div class="relative">
+                        <i class="fas fa-map-marker-alt absolute left-3 top-4 text-gray-400"></i>
+                        <input type="text" class="w-full pl-10 pr-4 py-3 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="Cari kost di sini..." />
+                    </div>
+                </div>
+
+                <!-- Payment Type Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Pembayaran</label>
+                    <select class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                        <option value="" disabled selected>Pilih Tipe Pembayaran</option>
+                        <option value="bulan">Per Bulan</option>
+                        <option value="tahun">Per Tahun</option>
+                    </select>
+                </div>
+
+                <!-- Price Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rentang Harga</label>
+                    <select class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                        <option value="" disabled selected>Pilih Rentang Harga</option>
+                        <option value="1">Rp 100.000 - 500.000</option>
+                        <option value="2">Rp 500.000 - 1.000.000</option>
+                        <option value="3">Rp 1.000.000 - 2.000.000</option>
+                        <option value="4">Rp 2.000.000 - 5.000.000</option>
+                        <option value="5">Rp > 5.000.000</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- Filter -->
-            <div class="mb-4 ml-2 md:mb-0 md:w-2/3">
-                <select class="p-4 rounded-md w-full sm:w-auto shadow-lg border-4 border-yellow-300">
-                    <option value="" disabled selected>Tipe Pembayaran</option>
-                    <option value="bulan">Perbulan</option>
-                    <option value="tahun">Pertahun</option>
-                </select>
+            <!-- Facilities Section -->
+            <div class="bg-blue-50 p-6 rounded-xl mb-6">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                    <i class="fas fa-cogs text-blue-600 mr-2"></i>
+                    Fasilitas
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-wifi text-blue-600"></i>
+                        <span class="text-sm font-medium">WiFi</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-snowflake text-blue-600"></i>
+                        <span class="text-sm font-medium">AC</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-bath text-blue-600"></i>
+                        <span class="text-sm font-medium">Kamar Mandi Dalam</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-utensils text-blue-600"></i>
+                        <span class="text-sm font-medium">Dapur</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-couch text-blue-600"></i>
+                        <span class="text-sm font-medium">Ruang Tamu</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-video text-blue-600"></i>
+                        <span class="text-sm font-medium">CCTV</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-plug text-blue-600"></i>
+                        <span class="text-sm font-medium">Token Per Kamar</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-tint text-blue-600"></i>
+                        <span class="text-sm font-medium">Air Gratis</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-bed text-blue-600"></i>
+                        <span class="text-sm font-medium">Kasur</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-archive text-blue-600"></i>
+                        <span class="text-sm font-medium">Lemari</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                        <i class="fas fa-desk text-blue-600"></i>
+                        <span class="text-sm font-medium">Meja Belajar</span>
+                    </label>
+                </div>
+            </div>
 
-                <select class="p-4 rounded-md w-full sm:w-auto shadow-lg border-4 border-yellow-300">
-                    <option value="" disabled selected>Pilih Harga</option>
-                    <option value="1000000">Rp 100.000 - 500.000</option>
-                    <option value="2000000">Rp 500.000 - 1000.000</option>
-                    <option value="3000000">Rp 1.000.000 - 5.000.000</option>
-                    <option value="3000000">Rp 5.000.000 - 10.000.000</option>
-                    <option value="3000000">Rp > 10.000.000</option>
-                </select>
+            <!-- Search Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                    <i class="fas fa-search"></i>
+                    <span>Cari Kost</span>
+                </button>
+                <button class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Cari dengan Google Maps</span>
+                </button>
             </div>
         </div>
-
-        <!-- Fasilitas Checkbox Group -->
-        <div class="bg-white p-6 mt-6 mx-auto w-full sm:w-4/5 lg:w-3/4 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold mb-4">Fasilitas</h2>
-
-            <!-- Checkbox Group -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Wifi</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">AC</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Kamar Mandi dalam</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Dapur</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Ruang Tamu</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">CCTV</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Token Perkamar</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Air Gratis</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Kasur</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Lemari</span>
-                </label>
-
-                <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox text-blue-600" />
-                    <span class="ml-2 text-sm">Meja Belajar</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Search Button -->
-        <div class="mt-4 flex justify-center">
-            <button class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 shadow-lg">Cari Kos</button>
-        </div>
-
-        <!-- Button "Cari dengan Google Map" -->
-        <div class="mt-6 flex justify-center">
-            <button class="relative border-2 border-blue-400 text-blue-400 py-3 px-6 w-full sm:w-auto rounded-md hover:bg-blue-50 shadow-lg">
-                Cari dengan Google Map
-            </button>
-        </div>
-    </div>
-
+    </section>
 
     <!-- Available Kos List -->
-    <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
-        <h3 class="text-2xl font-semibold mb-6">Daftar Kos Tersedia</h3>
-
-        <!-- Kos Card List -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Kos 1 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="/images/bg.jpg" alt="Kos 1" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h4 class="font-semibold text-lg">Kos Jakarta</h4>
-                    <p class="text-sm text-gray-600">Harga: Rp 2.000.000 / bulan</p>
-                    <p class="text-sm text-gray-600">Fasilitas: AC, WiFi</p>
-                    <a href="/detailkos" class="text-blue-500 hover:underline">Lihat Detail</a>
-                </div>
+    <section id="katalog" class="py-12 bg-gray-50">
+        <div class="max-w-[85rem] mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Daftar Kost Tersedia</h3>
+                <p class="text-lg text-gray-600">Pilihan kost terbaik di sekitar Universitas Andalas</p>
             </div>
 
-            <!-- Kos 2 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="/images/kos2.jpg" alt="Kos 2" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h4 class="font-semibold text-lg">Kos Bandung</h4>
-                    <p class="text-sm text-gray-600">Harga: Rp 1.500.000 / bulan</p>
-                    <p class="text-sm text-gray-600">Fasilitas: WiFi</p>
-                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
-                </div>
-            </div>
+            <!-- Kos Card List -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <% if (kos && kos.length > 0) { %>
+                    <% kos.forEach((kosItem, index) => { %>
+                        <a href="/login" class="block w-full">
+                        <div class="kos-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                            <% if (index >= 4) { %> style="display: none;" <% } %> >
+                            <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                                <% if (kosItem.photos && kosItem.photos.length > 0) { %>
+                                    <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-full object-cover">
+                                <% } else { %>
+                                    <i class="fas fa-home text-white text-6xl"></i>
+                                <% } %>
+                            </div>
+                            <div class="p-6">
+                                <h4 class="font-bold text-xl text-gray-800 mb-2"><%= kosItem.name %></h4>
+                                <div class="mb-4">
+                                    <p class="text-gray-600 mb-2 flex items-center">
+                                        <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+                                        <%= kosItem.address %>
+                                    </p>
+                                </div>
+                                <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400 mr-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm">(4.5)</span>
+                                </div>
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <% if (kosItem.facilities && kosItem.facilities.length > 0) { %>
+                                        <% kosItem.facilities.forEach(facility => { %>
+                                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"><%= facility %></span>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <span class="text-gray-600 text-xs">No facilities available</span>
+                                    <% } %>
+                                </div>
 
-            <!-- Kos 3 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="/images/kos3.jpg" alt="Kos 3" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h4 class="font-semibold text-lg">Kos Surabaya</h4>
-                    <p class="text-sm text-gray-600">Harga: Rp 3.000.000 / bulan</p>
-                    <p class="text-sm text-gray-600">Fasilitas: AC, TV Kabel</p>
-                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
-                </div>
+                                <!-- Tipe Kos -->
+                                <p class="text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kosItem.tipe_kos %></span></p>
+                            </div>
+                        </div>
+                        </a>
+                    <% }); %>
+                <% } else { %>
+                    <p class="text-gray-600">Belum ada kos terdaftar.</p>
+                <% } %>
             </div>
+        </div>
+    </section>
 
-            <!-- Kos 4 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="/images/kos4.jpg" alt="Kos 4" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <h4 class="font-semibold text-lg">Kos Bali</h4>
-                    <p class="text-sm text-gray-600">Harga: Rp 2.500.000 / bulan</p>
-                    <p class="text-sm text-gray-600">Fasilitas: AC, WiFi</p>
-                    <a href="#" class="text-blue-500 hover:underline">Lihat Detail</a>
+    <div class="flex justify-center items-center mt-8">
+        <% if (kos.length > 4) { %>
+            <div class="text-center">
+                <button id="showMoreButton" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+                    Tampilkan Semua
+                </button>
+                <button id="showLessButton" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 mt-4" style="display: none;">
+                    Tampilkan Lebih Sedikit
+                </button>
+            </div>
+        <% } %>
+    </div>
+    <!-- Show More and Show Less Button -->
+
+    <!-- About Section -->
+    <section id="tentang" class="py-16 bg-white">
+        <div class="max-w-[85rem] mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Tentang KOSAND</h3>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    KOSAND adalah platform digital yang memudahkan mahasiswa Universitas Andalas dalam mencari 
+                    tempat tinggal yang nyaman, aman, dan terjangkau di sekitar kampus.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-search text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Pencarian Mudah</h4>
+                    <p class="text-gray-600">Temukan kost dengan filter lokasi, harga, dan fasilitas sesuai kebutuhan Anda</p>
+                </div>
+                
+                <div class="text-center p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Terpercaya</h4>
+                    <p class="text-gray-600">Semua kost telah diverifikasi untuk memastikan kualitas dan keamanan</p>
+                </div>
+                
+                <div class="text-center p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marked-alt text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Dekat Kampus</h4>
+                    <p class="text-gray-600">Kost-kost pilihan yang strategis dan mudah diakses dari Universitas Andalas</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-<script src="https://cdn.jsdelivr.net/npm/preline@latest/dist/preline.min.js"></script>
+    <!-- CTA Section -->
+    <section class="py-16 bg-blue-600">
+        <div class="max-w-[85rem] mx-auto px-4 text-center text-white">
+            <h3 class="text-3xl md:text-4xl font-bold mb-4">
+                Temukan Kost Idealmu Sekarang Juga!
+            </h3>
+            <p class="text-lg md:text-xl mb-6 max-w-3xl mx-auto">
+                Jelajahi berbagai pilihan kost yang tersedia di sekitar Universitas Andalas, dengan harga yang terjangkau dan fasilitas yang memadai. Cari sekarang dan temukan tempat tinggal yang nyaman!
+            </p>
+
+            <!-- Button Call to Action -->
+            <div class="flex justify-center gap-6">
+                <a href="#katalog" class="bg-white text-blue-600 hover:bg-blue-100 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+                    Lihat Katalog Kost
+                </a>
+                <a href="#contact" class="bg-transparent border-2 border-white text-white hover:bg-blue-700 hover:text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <!-- Footer Section -->
+        <footer class="bg-gray-200 text-gray-500 py-4 mt-8">
+            <div class="max-w-[85rem] w-full mx-auto text-center">
+                <p class="text-sm">&copy; 2025 KOSAND. All rights reserved.</p>
+                <div class="flex justify-center gap-6 mt-4">
+                    <a href="#home" class="text-blue-600 hover:text-blue-700">Beranda</a>
+                    <a href="#katalog" class="text-blue-600 hover:text-blue-700">Katalog</a>
+                    <a href="#tentang" class="text-blue-600 hover:text-blue-700">Tentang</a>
+                    <a href="#kontak" class="text-blue-600 hover:text-blue-700">Kontak</a>
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm text-gray-600">Follow us on:</p>
+                    <div class="flex justify-center gap-4 mt-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const showMoreButton = document.getElementById("showMoreButton");
+            const showLessButton = document.getElementById("showLessButton");
+            const hiddenCards = document.querySelectorAll(".kos-card[style='display: none;']");
+
+            // Show More functionality
+            showMoreButton.addEventListener("click", function() {
+                hiddenCards.forEach(card => {
+                    card.style.display = "block";  // Remove the "display: none" style
+                });
+
+                // Hide "Tampilkan Semua" button and show "Tampilkan Lebih Sedikit"
+                showMoreButton.style.display = "none";
+                showLessButton.style.display = "inline-block";
+            });
+
+            // Show Less functionality
+            showLessButton.addEventListener("click", function() {
+                hiddenCards.forEach(card => {
+                    card.style.display = "none";  // Add the "display: none" style
+                });
+
+                // Show "Tampilkan Semua" button and hide "Tampilkan Lebih Sedikit"
+                showLessButton.style.display = "none";
+                showMoreButton.style.display = "inline-block";
+            });
+        });
+    </script>
 </body>
-
-<!-- Footer -->
-<footer class="bg-gray-800 text-white py-4 mt-8">
-    <div class="max-w-[85rem] w-full mx-auto text-center">
-        <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
-    </div>
-</footer>
-
 </html>
