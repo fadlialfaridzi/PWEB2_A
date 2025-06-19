@@ -21,4 +21,10 @@ router.get('/role', function(req, res, next) {
   res.render('role', { title: 'Register - Kosand' });
 });
 
+/* GET role page. */
+router.get('/editlocation', function(req, res, next) {
+  res.render('editlocation', { title: 'Register - Kosand' });
+});
+
+
 module.exports = router;
