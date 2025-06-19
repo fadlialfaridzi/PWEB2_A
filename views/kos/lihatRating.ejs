@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link href="/css/tailwind.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <nav class="bg-blue-600 p-4 text-white">
+    <div class="container mx-auto">
+      <h1 class="text-lg font-bold">Website Kos UNAND</h1>
+    </div>
+  </nav>
+
+  <main class="container mx-auto mt-5">
+    <div class="max-w-xl mx-auto mt-10 p-4 bg-white rounded shadow">
+      <h1 class="text-2xl font-bold mb-4">Kasih Rating Kos</h1>
+      <form action="/rating" method="POST" class="space-y-4">
+        <input type="number" name="rating" placeholder="Beri rating 1-5" class="border p-2 w-full" required>
+        <textarea name="komentar" placeholder="Komentar" class="border p-2 w-full" required></textarea>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Kirim</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+    &copy; 2025 Website Kos UNAND
+  </footer>
+</body>
+</html>
