@@ -42,7 +42,7 @@ router.get('/role', function(req, res, next) {
   res.render('role', { title: 'Register - Kosand' });
 });
 
-HEAD
+
 /* GET owner page. */
 router.get('/owner', function(req, res, next) {
   res.render('owner', { title: 'Register - Kosand' });
@@ -81,5 +81,5 @@ router.get('/logout', (req, res) => {
 
 
 
-a333f5cf24612528c710580b10dadc65498233dc
+
 module.exports = router;

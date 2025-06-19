@@ -7,6 +7,7 @@ var session = require('express-session');
 const authRoutes = require('./routes/authRoutes');
 const ownerController = require('./controllers/ownerController');  // Import ownerController
 var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
