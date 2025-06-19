@@ -1,3 +1,7 @@
+const Booking = require('../models/Booking');
+const Review = require('../models/Review');
+
+
 exports.getAllBookings = async (req, res) => {
   const bookings = await Booking.find({ ownerId: req.user.id });
   res.render('owner/bookings', { bookings });
@@ -30,4 +34,3 @@ exports.replyReview = async (req, res) => {
   await Review.findByIdAndUpdate(id, { reply: reply });
   res.redirect('/owner/reviews');
 };
-

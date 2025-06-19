@@ -1,19 +1,17 @@
-<div id="map" class="h-64"></div>
-<form action="/owner/kos/<%= kos._id %>/update-location" method="POST">
-  <input type="hidden" name="lat" id="lat">
-  <input type="hidden" name="lng" id="lng">
-  <button type="submit" class="btn btn-primary mt-4">Simpan Lokasi</button>
-</form>
+<!-- views/owner/editLocation.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Lokasi Kos</title>
+</head>
+<body>
+  <h1>Edit Lokasi Kos - ID: <%= kos._id %></h1>
 
-<script>
-  let map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -0.9148131, lng: 100.460876 }, // UNAND
-    zoom: 15,
-  });
-  let marker = new google.maps.Marker({ position: map.center, map, draggable: true });
-
-  marker.addListener("dragend", () => {
-    document.getElementById("lat").value = marker.getPosition().lat();
-    document.getElementById("lng").value = marker.getPosition().lng();
-  });
-</script>
+  <form action="/owner/kos/<%= kos._id %>/update-location" method="POST">
+    <input type="hidden" name="lat" id="lat" value="-0.9148131">
+    <input type="hidden" name="lng" id="lng" value="100.460876">
+    <button type="submit">Simpan Lokasi</button>
+  </form>
+</body>
+</html>
