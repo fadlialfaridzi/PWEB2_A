@@ -1,0 +1,9 @@
+<% reviews.forEach(r => { %>
+  <div class="bg-gray-100 p-4 mb-2 rounded">
+    <p><strong><%= r.userName %>:</strong> <%= r.content %></p>
+    <form action="/owner/reviews/<%= r._id %>/reply" method="POST">
+      <input type="text" name="reply" class="input" placeholder="Balas review...">
+      <button type="submit" class="btn btn-sm btn-success">Kirim</button>
+    </form>
+  </div>
+<% }) %>

@@ -1,0 +1,11 @@
+<h2 class="text-xl font-bold mb-4">Daftar Bookingan Kos</h2>
+<div class="grid gap-4">
+  <% bookings.forEach(booking => { %>
+    <div class="p-4 bg-white rounded shadow">
+      <p>Kos: <%= booking.kosName %></p>
+      <p>Pemesan: <%= booking.userName %></p>
+      <p>Status: <%= booking.status %></p>
+      <a href="/owner/booking/<%= booking._id %>" class="text-blue-500">Detail</a>
+    </div>
+  <% }) %>
+</div>
