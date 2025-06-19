@@ -7,6 +7,7 @@ router.post("/rating", kosController.kasihRating);
 router.get("/rating-list", kosController.lihatListRating);
 router.get("/booking", kosController.formBooking);
 router.post("/booking", kosController.prosesBooking);
-
+router.get("/favorit", kosController.formFavorit);
+router.post("/favorit", kosController.prosesFavorit);
 
 module.exports = router;

@@ -4,10 +4,17 @@ exports.lihatRating = (req, res) => {
 
 exports.kasihRating = (req, res) => {
   const { rating, komentar } = req.body;
+  
+  // Validasi rating harus 1-5
+  if (rating < 1 || rating > 5) {
+    return res.status(400).send("Rating harus antara 1-5!");
+  }
+
   console.log("Rating:", rating);
   console.log("Komentar:", komentar);
   res.redirect("/rating");
 };
+
 
 exports.lihatListRating = (req, res) => {
   const ratings = [
@@ -28,4 +35,14 @@ exports.prosesBooking = (req, res) => {
   console.log("Tanggal:", tanggal);
   console.log("Durasi:", durasi, "bulan");
   res.redirect("/booking");
+};
+
+exports.formFavorit = (req, res) => {
+  res.render("kos/formFavorit", { title: "Favoritkan Kos" });
+};
+
+exports.prosesFavorit = (req, res) => {
+  const { namaKos } = req.body;
+  console.log("Kos yang difavoritkan:", namaKos);
+  res.redirect("/favorit");
 };
