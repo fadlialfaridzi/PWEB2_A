@@ -21,4 +21,9 @@ router.post('/kos/:id/update-location', ownerController.updateLocation);
 router.get('/reviews', ownerController.getAllReviews);
 router.post('/reviews/:id/reply', ownerController.replyReview);
 
+router.post('/kos/:id/toggle-availability', ownerController.toggleAvailability);
+
+router.get('/kos', ownerController.getKosList);
+
+
 module.exports = router;
