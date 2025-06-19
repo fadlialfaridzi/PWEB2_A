@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const ownerController = require('../controllers/ownerController');
+const ownerController = require('../controllers/ownercontroller');
+
 
 // Daftar Bookingan Kos
 router.get('/bookings', ownerController.getAllBookings);

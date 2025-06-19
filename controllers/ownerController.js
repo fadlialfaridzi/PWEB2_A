@@ -17,3 +17,17 @@ exports.rejectBooking = async (req, res) => {
   await Booking.findByIdAndUpdate(req.params.id, { status: 'rejected' });
   res.redirect('/owner/bookings');
 };
+
+exports.getAllReviews = async (req, res) => {
+  const reviews = await Review.find({ ownerId: req.user.id }); // sesuaikan model jika perlu
+  res.render('owner/reviews', { reviews });
+};
+
+exports.replyReview = async (req, res) => {
+  const { id } = req.params;
+  const { reply } = req.body;
+
+  await Review.findByIdAndUpdate(id, { reply: reply });
+  res.redirect('/owner/reviews');
+};
+

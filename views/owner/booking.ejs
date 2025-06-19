@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daftar Bookingan Kos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-4xl mx-auto bg-white rounded shadow p-6">
+    <h1 class="text-2xl font-bold mb-4">Daftar Bookingan Kos</h1>
+
+    <% if (bookings.length === 0) { %>
+      <p class="text-gray-600">Belum ada bookingan.</p>
+    <% } else { %>
+      <ul class="space-y-4">
+        <% bookings.forEach(booking => { %>
+          <li class="border border-gray-300 p-4 rounded">
+            <p><strong>Nama Kos:</strong> <%= booking.kosName %></p>
+            <p><strong>Nama Pemesan:</strong> <%= booking.userName %></p>
+            <p><strong>Status:</strong> 
+              <span class="<%= booking.status === 'confirmed' ? 'text-green-600' : booking.status === 'rejected' ? 'text-red-600' : 'text-yellow-600' %>">
+                <%= booking.status %>
+              </span>
+            </p>
+            <p><strong>Tanggal Pesan:</strong> <%= booking.tanggal %></p>
+            <a href="/owner/booking/<%= booking._id %>" class="inline-block mt-2 text-blue-600 hover:underline">
+              Lihat Detail →
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+</body>
+</html>
