@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporkan Kos</title>
+  <link href="/css/tailwind.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-4">Laporkan Kos</h1>
+
+    <form action="/kos/report" method="POST" class="space-y-4">
+      <div>
+        <label class="block text-gray-700 font-semibold">Nama Kos</label>
+        <input type="text" name="nama_kos" value="<%= kos.nama %>" readonly class="w-full bg-gray-100 border rounded px-3 py-2 mt-1">
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-semibold">Alasan Laporan</label>
+        <select name="alasan" required class="w-full border rounded px-3 py-2 mt-1">
+          <option value="">Pilih Alasan</option>
+          <option value="Tidak Sesuai Deskripsi">Tidak Sesuai Deskripsi</option>
+          <option value="Kos Fiktif">Kos Fiktif</option>
+          <option value="Harga Tidak Wajar">Harga Tidak Wajar</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-semibold">Keterangan Tambahan</label>
+        <textarea name="keterangan" rows="4" class="w-full border rounded px-3 py-2 mt-1"></textarea>
+      </div>
+
+      <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Kirim Laporan</button>
+    </form>
+
+    <div class="mt-4">
+      <a href="/" class="text-blue-600 hover:underline">← Kembali</a>
+    </div>
+  </div>
+</body>
+</html>

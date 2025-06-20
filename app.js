@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var kosRouter = require('./routes/kos');
 
-
 var app = express();
 
 // view engine setup
@@ -21,12 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Route utama
 app.use('/', indexRouter);
-app.use('/login', indexRouter);
-app.use('/register', indexRouter);
-app.use('/role', indexRouter);
 app.use('/users', usersRouter);
-app.use('/', kosRouter);
+
+// Route untuk fitur kos (dengan prefix /kos)
+app.use('/kos', kosRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

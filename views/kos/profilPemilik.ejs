@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profil Pemilik Kos</title>
+  <link href="/css/tailwind.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <h1 class="text-2xl font-bold mb-4">Profil Pemilik Kos</h1>
+
+    <div class="flex items-center gap-4 mb-4">
+      <img src="/images/facebook.png" alt="Foto Pemilik" class="w-20 h-20 rounded-full object-cover">
+      <div>
+        <h2 class="text-lg font-semibold">Nama Pemilik: <%= pemilik.nama %></h2>
+        <p>Email: <%= pemilik.email %></p>
+        <p>Nomor HP: <%= pemilik.telepon %></p>
+      </div>
+    </div>
+
+    <div class="border-t pt-4">
+      <h3 class="text-md font-semibold mb-2">Deskripsi</h3>
+      <p class="text-gray-700"><%= pemilik.deskripsi %></p>
+    </div>
+
+    <div class="mt-6">
+      <a href="/" class="text-blue-600 hover:underline">← Kembali</a>
+    </div>
+  </div>
+</body>
+</html>
