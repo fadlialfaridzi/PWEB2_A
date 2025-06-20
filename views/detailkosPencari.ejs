@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Kos - KOSAND</title>
+    <!-- Preline UI CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-500 text-sm py-3 shadow-lg sticky top-0 z-50">
+        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="bg-white text-blue-700 p-2 rounded-lg">
+                    <i class="fas fa-home text-xl"></i>
+                </div>
+                <a class="sm:order-1 flex-none text-xl font-bold text-white focus:outline-hidden focus:opacity-80" href="#">KOSAND</a>
+            </div>
+            
+            <div class="sm:order-3 flex items-center gap-x-2">
+                <!-- Check if user is logged in -->
+                <% if (user) { %>
+                    <!-- User avatar and name with dropdown -->
+                    <div class="text-white  relative rounded-full hover:bg-white hover:text-blue-800">
+                        <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
+                            <!-- User Avatar (replace with actual image URL or path) -->
+                            <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white">
+                            <span class="uppercase"><%= user.name %></span>
+                        </button>
+
+                        <!-- Dropdown content (hidden by default) -->
+                        <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
+                            <ul class="text-sm text-gray-700">
+                                <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
+                                <li><a href="/logout" class="block px-4 py-2">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <!-- If no user logged in, show nothing (i.e., remove login/register buttons) -->
+                    <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-sm hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <a href="login">Login</a>
+                    </button>
+                    <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-800 text-white hover:bg-blue-900 focus:outline-hidden focus:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                        <i class="fas fa-user-plus"></i>
+                        <a href="role">Register</a>
+                    </button>
+                <% } %>
+            </div>
+            
+            <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
+                <div class="flex flex-col gap-3 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
+                    <a href="/indexPencariKos" class="bg-white text-blue-700 py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-blue-50 transition-colors">
+                        <i class="fas fa-home"></i>
+                        Beranda
+                    </a>
+                    <a href="#katalog" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-list"></i>
+                        Katalog
+                    </a>
+                    <a href="#tentang" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-info-circle"></i>
+                        Tentang
+                    </a>
+                    <a href="#kontak" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-phone"></i>
+                        Kontak
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Kos Detail Section -->
+    <section class="py-12 bg-white">
+        <div class="max-w-[85rem] mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Detail Kos</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Kos Information -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                        <% if (kos.photos && kos.photos.length > 0) { %>
+                            <img src="/uploads/<%= kos.photos[0] %>" alt="<%= kos.name %>" class="w-full h-full object-cover">
+                        <% } else { %>
+                            <i class="fas fa-home text-white text-6xl"></i>
+                        <% } %>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mt-4"><%= kos.name %></h3>
+                    <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt text-blue-500 mr-2"></i><%= kos.address %></p>
+                    <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kos.price %> / <%= kos.payment_type %></p>
+                    <p class="text-gray-600 mb-4"><%= kos.description %></p>
+
+                    <!-- Facilities List -->
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">Fasilitas</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <% facilities.forEach(facility => { %>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"><%= facility.fasilitas %></span>
+                        <% }); %>
+                    </div>
+                    <!-- Tipe Kos -->
+                    <p class="mt-5 text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kos.tipe_kos %></span></p>
+                    
+                </div>
+
+                <!-- Google Maps Section -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold">Lokasi Kos</h2>
+                    <div id="map" style="height: 400px;"></div> <!-- Container for Google Maps -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-200 text-gray-500 py-4 mt-8">
+        <div class="max-w-[85rem] w-full mx-auto text-center">
+            <p class="text-sm">&copy; 2025 KOSAND. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Inisialisasi Google Maps
+        function initMap() {
+            const location = {
+                lat: <%= kos.latitude ? kos.latitude : 'null' %>,  // Set latitude from database
+                lng: <%= kos.longitude ? kos.longitude : 'null' %>  // Set longitude from database
+            };
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,  // Set the zoom level
+                center: location,  // Set the center of the map based on latitude and longitude
+            });
+
+            // Add marker to the map at the specified location
+            new google.maps.Marker({
+                position: location,
+                map: map,
+                title: "<%= kos.name %>"  // Optional: Set a title for the marker (e.g., the name of the kos)
+            });
+        }
+
+        // Menjalankan peta setelah halaman dimuat
+        window.initMap = initMap;
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx9UJ53-dhtrJQ0d31MAkwXeNozDcrWOA&callback=initMap" async></script>
+</body>
+
+</html>

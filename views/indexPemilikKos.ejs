@@ -1,300 +1,304 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Pemilik Kos - KOSAND</title>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Dashboard Pemilik Kos - KOSAND</title>
 
-  <!-- TailwindCSS -->
-  <link rel="stylesheet" href="/public/stylesheets/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <!----preline --->
-  <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+      <!-- TailwindCSS -->
+      <link rel="stylesheet" href="/public/stylesheets/style.css">
+      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+      <!----preline --->
+      <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet" />
+      <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
 
-  <style>
-    /* Mengubah background menjadi hijau ketika switch aktif (checked) */
-input:checked + .bg-gray-300 {
-  background-color: #38a169; /* Warna hijau */
-}
-
-/* Menggeser dot ke kanan ketika switch aktif */
-input:checked + .bg-gray-300 .dot {
-  transform: translateX(1.5rem); /* Geser bulatan ke kanan */
-}
-
-/* Default background untuk switch (tidak aktif) */
-.bg-gray-300 {
-  background-color: #d1d5db; /* Warna abu-abu untuk status tidak tersedia */
-  transition: background-color 0.3s ease; /* Transisi halus saat background berubah */
-}
-
-/* Dot yang berpindah saat status diubah */
-.dot {
-  transition: transform 0.3s ease; /* Transisi halus saat dot bergerak */
-  position: absolute;
-  left: 0.25rem; /* Posisi awal (kiri) */
-}
-
-/* Jika status adalah available, backgroundnya hijau */
-.bg-green-500 {
-  background-color: #38a169; /* Warna hijau */
-  transition: background-color 0.3s ease;
-}
-</style>
-</head>
-<main class="flex-grow">
-<body class="bg-gray-100 flex flex-col min-h-screen"  >
-  <!-- Navbar -->
-  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-sm py-3">
-    <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
-      <a class="sm:order-1 flex-none text-xl font-semibold text-white" href="#">KosAnd</a>
-      <div class="sm:order-3 flex items-center gap-x-2">
-        
-        <% if (user) { %>
-          <div class="text-white relative">
-            <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
-              <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white" />
-              <span class="uppercase"><%= user.name %></span>
-            </button>
-            <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
-              <ul class="text-sm text-gray-700">
-                <li class="block px-4 py-2">User ID: <%= user.id %></li>
-                <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
-                <li>
-                  <a href="/logout" class="block px-4 py-2 text-red-500">Logout</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        <% } %>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Pesan Sukses -->
-   <% if (success) { %>
-       <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
-         <span class="font-bold">Success:</span> Data Kos Berhasil Ditambahkan!
-         <!-- Button Close -->
-         <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
-           Close
-         </button>
-       </div>
-     <% } %>
-
-    <% if (successEdit) { %>
-        <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
-            <span class="font-bold">Success:</span> Data Kos Berhasil Diedit!
-            <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
-            Close
-            </button>
-        </div>
-    <% } %>
-
-    <% if (successDelete) { %>
-        <div id="successMessage" class="bg-red-400 mt-2 border-4 border-red-200 text-white text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
-            <span class="font-bold">Success:</span> Data Kos Berhasil Dihapus!
-            <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
-            Close
-            </button>
-        </div>
-    <% } %>
-
-
-
-  <!-- Available Kos List -->
-  <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
-    <h3 class="text-2xl font-semibold mb-6">Daftar Kos</h3>
-    <!-- Tombol Tambah Kos -->
-    <div class="mb-6 flex justify-end">
-      <a href="/formTambahKos" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Tambah Kos
-      </a>
-    </div>
-
-    <!-- Kos Card List -->
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-  <% if (kos && kos.length > 0) { %>
-    <% kos.forEach(kosItem => { %>
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <% if (kosItem.photos.length > 0) { %>
-          <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
-        <% } else { %>
-          <img src="/images/default-kos.jpg" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
-        <% } %>
-        <div class="p-4">
-          <h4 class="font-semibold text-lg"><%= kosItem.name %></h4>
-          <p class="text-sm text-gray-600">Harga: Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
-          <p class="text-sm text-gray-600">Alamat: <%= kosItem.address %></p>
-
-          <!-- Switch Toggle untuk Status Ketersediaan -->
-          <div class="flex items-center mt-4">
-            <label for="statusToggle<%= kosItem.id %>" class="mr-2 text-sm">Status:</label>
-            <label class="relative inline-flex items-center cursor-pointer">
-                <!-- Tombol switch -->
-                <input type="checkbox" id="statusToggle<%= kosItem.id %>"
-                    <% if (kosItem.status === 'available') { %> checked <% } %>
-                    class="hidden"
-                    onchange="updateKosStatus('<%= kosItem.id %>', this.checked ? 'available' : 'not_available')" />
-
-                <!-- Bagian background switch -->
-                <span class="w-11 h-6 rounded-full transition-colors duration-300 
-                    <% if (kosItem.status === 'available') { %> bg-green-500 <% } else { %> bg-gray-300 <% } %>">
-                </span>
-
-                <!-- Dot (bulatan) yang berpindah -->
-                <span class="dot w-4 h-4 bg-white rounded-full absolute left-1 top-1 transition-transform duration-300"></span>
-            </label>
-        </div>
-
-          <!-- Tombol Detail Kos -->
-          <div class="mt-4 text-center">
-            <a href="/detailKos/<%= kosItem.id %>" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
-              Detail Kos
-            </a>
-          </div>
-        </div>
-      </div>
-    <% }) %>
-  <% } else { %>
-    <p class="text-gray-600">Belum ada kos terdaftar.</p>
-  <% } %>
-</div>
-</main>
-<!-- Footer -->
-<footer class="bg-gray-200 text-gray-500 py-4 mt-8">
-    <div class="max-w-[85rem] w-full mx-auto text-center">
-        <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
-    </div>
-</footer>
-
-  <script>
-    // Menangani toggle dropdown pada navbar
-    const dropdownButton = document.getElementById('userDropdownButton');
-    const dropdownMenu = document.getElementById('userDropdownMenu');
-
-    dropdownButton?.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('hidden');
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!dropdownButton?.contains(event.target) && !dropdownMenu?.contains(event.target)) {
-        dropdownMenu?.classList.add('hidden');
-        }
-    });
-
-    // Fungsi untuk toggle modal
-    function toggleModal() {
-        const modal = document.getElementById('modalKos');
-        modal.classList.toggle('hidden');
-        modal.classList.toggle('flex');
+      <style>
+        /* Mengubah background menjadi hijau ketika switch aktif (checked) */
+    input:checked + .bg-green {
+      background-color: #38a169; /* Warna hijau */
     }
 
-    // Submit form untuk tambah kos dengan AJAX
-    document.getElementById('formKos').addEventListener('submit', async function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
+    /* Menggeser dot ke kanan ketika switch aktif */
+    input:checked + .bg-gray-300 .dot {
+      transform: translateX(1.5rem); /* Geser bulatan ke kanan */
+    }
 
-        const res = await fetch('/tambahKos', {
-        method: 'POST',
-        body: formData
+    /* Default background untuk switch (tidak aktif) */
+    .bg-gray-300 {
+      background-color: #d1d5db; /* Warna abu-abu untuk status tidak tersedia */
+      transition: background-color 0.3s ease; /* Transisi halus saat background berubah */
+    }
+
+    /* Dot yang berpindah saat status diubah */
+    .dot {
+      transition: transform 0.3s ease; /* Transisi halus saat dot bergerak */
+      position: absolute;
+      right: 0.25rem; /* Posisi awal (kiri) */
+    }
+
+    /* Jika status adalah available, backgroundnya hijau */
+    .bg-green-500 {
+      background-color: #38a169; /* Warna hijau */
+      transition: background-color 0.3s ease;
+    }
+    </style>
+    </head>
+    <main class="flex-grow">
+    <body class="bg-gray-100 flex flex-col min-h-screen"  >
+      <!-- Navbar -->
+      <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-sm py-3">
+        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+          <a class="sm:order-1 flex-none text-xl font-semibold text-white" href="#">KosAnd</a>
+          <div class="sm:order-3 flex items-center gap-x-2">
+            
+            <% if (user) { %>
+              <div class="text-white relative">
+                <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
+                  <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white" />
+                  <span class="uppercase"><%= user.name %></span>
+                </button>
+                <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
+                  <ul class="text-sm text-gray-700">
+                    <li class="block px-4 py-2">User ID: <%= user.id %></li>
+                    <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
+                    <li>
+                      <a href="/logout" class="block px-4 py-2 text-red-500">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            <% } %>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Pesan Sukses -->
+      <% if (success) { %>
+          <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
+            <span class="font-bold">Success:</span> Data Kos Berhasil Ditambahkan!
+            <!-- Button Close -->
+            <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+              Close
+            </button>
+          </div>
+        <% } %>
+
+        <% if (successEdit) { %>
+            <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
+                <span class="font-bold">Success:</span> Data Kos Berhasil Diedit!
+                <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+                Close
+                </button>
+            </div>
+        <% } %>
+
+        <% if (successDelete) { %>
+            <div id="successMessage" class="bg-red-400 mt-2 border-4 border-red-200 text-white text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
+                <span class="font-bold">Success:</span> Data Kos Berhasil Dihapus!
+                <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+                Close
+                </button>
+            </div>
+        <% } %>
+
+
+
+      <!-- Available Kos List -->
+      <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
+        <h3 class="text-2xl font-semibold mb-6">Daftar Kos</h3>
+        <!-- Tombol Tambah Kos -->
+        <div class="mb-6 flex justify-end">
+          <a href="/formTambahKos" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Tambah Kos
+          </a>
+        </div>
+
+        <!-- Kos Card List -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <% if (kos && kos.length > 0) { %>
+        <% kos.forEach(kosItem => { %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <% if (kosItem.photos.length > 0) { %>
+              <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
+            <% } else { %>
+              <img src="/images/default-kos.jpg" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
+            <% } %>
+            <div class="p-4">
+              <h4 class="font-semibold text-lg"><%= kosItem.name %></h4>
+              <p class="text-sm text-gray-600">Harga: Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
+              <p class="text-sm text-gray-600">Alamat: <%= kosItem.address %></p>
+              <p class="text-sm text-gray-600">Tipe Kos: Kos <%= kosItem.tipe_kos %></p>
+
+              <div class="border-2 mt-16 rounded-3xl p-4">
+                <!-- Switch Toggle untuk Status Ketersediaan -->
+                <form action="/kos/<%= kosItem.id  %>/status" method="post">
+                  <input type="text" name="status" value="<%= kosItem.status %>" hidden>
+      
+                  <button class="flex items-center mt-4">
+                    <label for="statusToggle<%= kosItem.id %>" class="mr-2 text-sm">Status:</label>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                      <!-- Tombol switch -->
+                      <input hidden type="checkbox" id="statusToggle<%= kosItem.id %>"
+                      <% if (kosItem.status === 'available') { %> checked <% } %>>
+                      <span class="w-11 h-6 rounded-full transition-colors duration-300 
+                      <% if (kosItem.status === 'available') { %> bg-green-500 <% } else { %> bg-red-300 <% } %>">
+                      </span>
+                      
+                      <!-- Dot (bulatan) yang berpindah -->
+                      <span class="w-4 h-4 bg-white rounded-full absolute top-1  transition-all duration-300 <% if (kosItem.status === 'available') { %> right-1 <% } else { %> left-1 <% } %>"></span>
+                    </label>
+                  </button>
+                </form>
+                <!-- Tombol Detail Kos -->
+                <div class="mt-7 text-center">
+                  <a href="/detailKos/<%= kosItem.id %>" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
+                      Detail Kos
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+            
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="text-gray-600">Belum ada kos terdaftar.</p>
+      <% } %>
+    </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-gray-200 text-gray-500 py-4 mt-8">
+        <div class="max-w-[85rem] w-full mx-auto text-center">
+            <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
+        </div>
+    </footer>
+
+      <script>
+        // Menangani toggle dropdown pada navbar
+        const dropdownButton = document.getElementById('userDropdownButton');
+        const dropdownMenu = document.getElementById('userDropdownMenu');
+
+        dropdownButton?.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
         });
 
-        const result = await res.json();
-        if (result.success) {
-        alert("Kos berhasil ditambahkan!");
-        location.reload();
-        } else {
-        alert("Gagal menambahkan kos.");
-        }
-    });
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton?.contains(event.target) && !dropdownMenu?.contains(event.target)) {
+            dropdownMenu?.classList.add('hidden');
+            }
+        });
 
-    function updateKosStatus(kosId, status) {
-    // Kirim status baru ke server
-    fetch(`/kos/${kosId}/status`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: status })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Geser dot ke kanan saat status diubah
+        // Fungsi untuk toggle modal
+        function toggleModal() {
+            const modal = document.getElementById('modalKos');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        // Submit form untuk tambah kos dengan AJAX
+        document.getElementById('formKos').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            const res = await fetch('/tambahKos', {
+            method: 'POST',
+            body: formData
+            });
+
+            const result = await res.json();
+            if (result.success) {
+            alert("Kos berhasil ditambahkan!");
+            location.reload();
+            } else {
+            alert("Gagal menambahkan kos.");
+            }
+        });
+
+    //     function updateKosStatus(kosId, status) {
+    //     // Kirim status baru ke server
+    //     fetch(`/kos/${kosId}/status`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ status: status })
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         // Geser dot ke kanan saat status diubah
+    //         const switchButton = document.getElementById(`statusToggle${kosId}`);
+    //         const switchBackground = switchButton.nextElementSibling; // Mengambil elemen background switch
+    //         const dot = switchBackground.querySelector('.dot'); // Mengambil elemen dot
+
+    //         if (status === 'available') {
+    //             dot.style.transform = 'translateX(1.5rem)';
+    //             switchBackground.style.backgroundColor = '#38a169';  // Warna hijau
+    //         } else {
+    //             dot.style.transform = 'translateX(0)';
+    //             switchBackground.style.backgroundColor = '#d1d5db';  // Warna abu-abu
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
+    // } 
+
+      // Menyembunyikan pesan sukses setelah 3 detik
+        function closeSuccessMessage() {
+          const successMessage = document.getElementById('successMessage');
+          if (successMessage) {
+            successMessage.style.display = 'none'; // Menyembunyikan pesan
+          }
+        }
+
+        // Fungsi untuk mengubah status switch button
+      function updateSwitchStatus(kosId, status) {
         const switchButton = document.getElementById(`statusToggle${kosId}`);
-        const switchBackground = switchButton.nextElementSibling; // Mengambil elemen background switch
-        const dot = switchBackground.querySelector('.dot'); // Mengambil elemen dot
+        const dot = switchButton.nextElementSibling.querySelector('.dot');
 
-        if (status === 'available') {
-            dot.style.transform = 'translateX(1.5rem)';
-            switchBackground.style.backgroundColor = '#38a169';  // Warna hijau
-        } else {
-            dot.style.transform = 'translateX(0)';
-            switchBackground.style.backgroundColor = '#d1d5db';  // Warna abu-abu
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-} 
-
-  // Menyembunyikan pesan sukses setelah 3 detik
-    function closeSuccessMessage() {
-      const successMessage = document.getElementById('successMessage');
-      if (successMessage) {
-        successMessage.style.display = 'none'; // Menyembunyikan pesan
+        // Mengirim status baru ke server
+        fetch(`/kos/${kosId}/status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: status })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Geser dot ke kanan saat status diubah
+            if (status === 'available') {
+                dot.style.transform = 'translateX(1.5rem)';  // Dot bergerak ke kanan
+            } else {
+                dot.style.transform = 'translateX(0)';  // Dot kembali ke kiri
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
       }
-    }
 
-     // Fungsi untuk mengubah status switch button
-  function updateSwitchStatus(kosId, status) {
-    const switchButton = document.getElementById(`statusToggle${kosId}`);
-    const dot = switchButton.nextElementSibling.querySelector('.dot');
+      // Fungsi untuk menyesuaikan background color switch berdasarkan status dari database
+      window.onload = function() {
+          // Mendapatkan status dari database (misalnya 'available' atau 'not_available')
+          const statusFromDatabase = '<%= kos.status %>'; // Mengambil nilai status dari database pada server-side
+          const switchButton = document.getElementById('statusToggle<%= kos.id %>');
+          const dot = switchButton.nextElementSibling.querySelector('.dot');
+          const switchBackground = switchButton.nextElementSibling; // Mengambil elemen background dari switch
 
-    // Mengirim status baru ke server
-    fetch(`/kos/${kosId}/status`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: status })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Geser dot ke kanan saat status diubah
-        if (status === 'available') {
-            dot.style.transform = 'translateX(1.5rem)';  // Dot bergerak ke kanan
-        } else {
-            dot.style.transform = 'translateX(0)';  // Dot kembali ke kiri
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-  }
-
-  // Fungsi untuk menyesuaikan background color switch berdasarkan status dari database
-  window.onload = function() {
-      // Mendapatkan status dari database (misalnya 'available' atau 'not_available')
-      const statusFromDatabase = '<%= kos.status %>'; // Mengambil nilai status dari database pada server-side
-      const switchButton = document.getElementById('statusToggle<%= kos.id %>');
-      const dot = switchButton.nextElementSibling.querySelector('.dot');
-      const switchBackground = switchButton.nextElementSibling; // Mengambil elemen background dari switch
-
-      // Cek apakah status adalah 'available' dan setel switch sesuai
-      if (statusFromDatabase === 'available') {
-          switchButton.checked = true;
-          dot.style.transform = 'translateX(1.5rem)';  // Geser dot ke kanan
-          switchBackground.style.backgroundColor = '#38a169'; // Warna hijau ketika 'available'
-      } else {
-          switchButton.checked = false;
-          dot.style.transform = 'translateX(0)';  // Geser dot kembali ke kiri
-          switchBackground.style.backgroundColor = '#d1d5db'; // Warna abu-abu ketika 'not_available'
+          // Cek apakah status adalah 'available' dan setel switch sesuai
+          if (statusFromDatabase === 'available') {
+              switchButton.checked = true;
+              dot.style.transform = 'translateX(1.5rem)';  // Geser dot ke kanan
+              switchBackground.style.backgroundColor = '#38a169'; // Warna hijau ketika 'available'
+          } else {
+              switchButton.checked = false;
+              dot.style.transform = 'translateX(0)';  // Geser dot kembali ke kiri
+              switchBackground.style.backgroundColor = '#d1d5db'; // Warna abu-abu ketika 'not_available'
+          }
       }
-  }
-  </script>
-</body>
+      </script>
+    </body>
 
-</html>
+    </html>

@@ -25,8 +25,10 @@ const ownerDashboard = (req, res) => {
 const tambahKos = (req, res) => {
     const userId = req.session.user?.id;
     if (!userId) return res.redirect('/login');
+    
 
-    const { name, price, paymentType, address, facilities,latitude, longitude, description  } = req.body;
+    const { name, price, paymentType, address, facilities,latitude, longitude, description, status, tipe_kos  } = req.body;
+    const statusKos = status || 'available';
     const kosData = {
         user_id: userId,
         name,
@@ -35,7 +37,9 @@ const tambahKos = (req, res) => {
         address,
         latitude,
         longitude,
-        description
+        description,
+        status: statusKos,
+        tipe_kos
     };
 
     Kos.addKos(kosData, (err, result) => {
@@ -109,22 +113,36 @@ const editKos = (req, res) => {
 // Fungsi untuk memperbarui status kos
 const updateKosStatus = (req, res) => {
     const kosId = req.params.id;
-    const status = req.body.status;  // 'available' or 'not_available'
+    let status = req.body.status;  // 'available' or 'not_available'
     const userId = req.session.user?.id;
+    let newStatus;
+
+    if (status == 'available') {
+        newStatus = 'not_available'
+    } else if( status == 'not_available'){
+       newStatus = 'available'
+    }
+
     if (!userId) return res.redirect('/login');
 
     if (!status || (status !== 'available' && status !== 'not_available')) {
         return res.status(400).json({ success: false, message: 'Status tidak valid' });
     }
 
-    Kos.updateKosStatus(kosId, status, (err, result) => {
+    Kos.updateKosStatus(kosId, newStatus, (err, result) => {
         if (err) {
             console.error('Error updating kos status:', err);
             return res.status(500).json({ success: false });
         }
 
-        res.json({ success: true });
     });
+    // res.json({
+    //     kosId,
+    //     status,
+    //     userId,
+    //     newStatus
+    // })
+    ownerDashboard(req, res)
 };
 
 // Fungsi untuk menghapus kos

@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const upload = require('../config/upload');
 const ownerController = require('../controllers/ownerController'); // Pastikan path ke controller benar
+const berandaController = require('../controllers/berandaController')
+const detailKosPencari = require('../controllers/detailKosPencari')
+const berandaPencari = require('../controllers/berandaPencari')
 
 // route  untuk menampilkan form tambah kos
 router.get('/formTambahKos', (req, res) => {
@@ -12,11 +15,13 @@ router.get('/formTambahKos', (req, res) => {
     }
 });
 
-// Routes for role-based page rendering
-router.get('/indexpencarikos', (req, res) => {
+router.get('/indexPencariKos', (req, res) => {
+    // Cek apakah pengguna sudah login dan memiliki role 'pencari'
     if (req.session.user && req.session.user.role === 'pencari') {
-        res.render('indexpencarikos', { user: req.session.user, title: 'Index Pencari Kos' });
+        // Jika sudah login sebagai pencari, tampilkan daftar kos
+        berandaPencari.showAllKosForPencari(req, res);
     } else {
+        // Jika pengguna tidak memiliki role 'pencari', arahkan ke halaman login
         res.redirect('/login');
     }
 });
@@ -32,11 +37,16 @@ router.get('/indexpemilikkos', (req, res) => {
     }
 });
 
-/* GET beranda / index page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home - Kosand' });
+// Route to display all kos cards
+router.get('/', berandaController.showAllKos);  // Show all kos without login
+// Route untuk menampilkan detail kos
+router.get('/detailkospencari/:id', detailKosPencari.showDetailKosPencari, (req, res) => {
+    if (req.session.user && req.session.user.role === 'pencari') {
+        res.render('detailkospencari/:id', { user: req.session.user, title: 'Detail Kos - Pencari' });
+    } else {
+        res.redirect('/login');
+    }
 });
-
 /* GET role page. */
 router.get('/role', function(req, res, next) {
   res.render('role', { title: 'Register - Kosand' });

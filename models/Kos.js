@@ -4,8 +4,8 @@ const Kos = {
     // Menambahkan kos ke database
     addKos: (kosData, callback) => {
         const query = `
-            INSERT INTO kos (user_id, name, price, address, latitude, longitude, description, payment_type)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO kos (user_id, name, price, address, latitude, longitude, description, payment_type, status, tipe_kos)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         const params = [
             kosData.user_id,
@@ -15,8 +15,11 @@ const Kos = {
             kosData.latitude,
             kosData.longitude,
             kosData.description,
-            kosData.payment_type
+            kosData.payment_type,
+            kosData.status,
+            kosData.tipe_kos
         ];
+        
 
         db.query(query, params, (err, result) => {
             if (err) return callback(err, null);
@@ -40,45 +43,52 @@ const Kos = {
     },
 
     // Mendapatkan semua kos dan foto berdasarkan user_id
-    getAllWithFoto: (userId, callback) => {
-        const query = `
-            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type
-            FROM kos k
-            LEFT JOIN foto_kos f ON f.kos_id = k.id
-            WHERE k.user_id = ?
-        `;
+    // Mendapatkan semua kos dan foto tanpa filter user_id
+getAllWithFoto: (userId, callback) => {
+    // Query untuk mengambil semua data kos, tanpa filter user_id
+    const query = `
+        SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type, k.status, k.tipe_kos
+        FROM kos k
+        LEFT JOIN foto_kos f ON f.kos_id = k.id
+    `;
 
-        db.query(query, [userId], (err, results) => {
-            if (err) return callback(err);
+    // Jika `userId` null atau tidak perlu, kita tidak perlu filter berdasarkan user_id
+    const params = userId ? [userId] : [];
 
-            const grouped = {};
-            results.forEach(row => {
-                if (!grouped[row.id]) {
-                    grouped[row.id] = {
-                        id: row.id,
-                        name: row.name,
-                        price: row.price,
-                        address: row.address,
-                        latitude: row.latitude,
-                        longitude: row.longitude,
-                        photos: [],
-                        payment_type: row.payment_type
-                    };
-                }
-                if (row.filename) {
-                    grouped[row.id].photos.push(row.filename);
-                }
-            });
+    db.query(query, params, (err, results) => {
+        if (err) return callback(err);
 
-            callback(null, Object.values(grouped));
+        const grouped = {};
+        results.forEach(row => {
+            if (!grouped[row.id]) {
+                grouped[row.id] = {
+                    id: row.id,
+                    name: row.name,
+                    price: row.price,
+                    address: row.address,
+                    latitude: row.latitude,
+                    longitude: row.longitude,
+                    photos: [],
+                    payment_type: row.payment_type,
+                    status: row.status,
+                    tipe_kos: row.tipe_kos,
+                    facilities: [] 
+                };
+            }
+            if (row.filename) {
+                grouped[row.id].photos.push(row.filename);
+            }
         });
-    },
+
+        callback(null, Object.values(grouped));  // Return all kos data as an array of objects
+    });
+},
 
     // Fungsi untuk memperbarui data kos
     updateKos: (kosId, kosData, callback) => {
         const query = `
             UPDATE kos 
-            SET name = ?, price = ?, payment_type = ?, address = ?, latitude = ?, longitude = ?, description = ?
+            SET name = ?, price = ?, payment_type = ?, address = ?, latitude = ?, longitude = ?, description = ?, tipe_kos = ?
             WHERE id = ?
         `;
         const params = [
@@ -89,6 +99,7 @@ const Kos = {
             kosData.latitude,
             kosData.longitude,
             kosData.description,
+            kosData.tipe_kos,
             kosId
         ];
 
@@ -98,7 +109,7 @@ const Kos = {
     // Mendapatkan detail kos berdasarkan ID
     getKosById: (kosId, callback) => {
         const query = `
-            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, k.description, k.payment_type, f.filename
+            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, k.description, k.payment_type, f.filename, k.status, k.tipe_kos
             FROM kos k
             LEFT JOIN foto_kos f ON f.kos_id = k.id
             WHERE k.id = ?
