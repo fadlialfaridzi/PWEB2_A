@@ -36,17 +36,6 @@ const kosController = {
     res.redirect("/kos/booking");
   },
 
-  bookingKosForm: (req, res) => {
-    const kosId = req.params.id;
-    res.render("kos/bookingKos", { kosId });
-  },
-
-  bookingKosSubmit: (req, res) => {
-    const { nama, telepon, tanggal_masuk, durasi } = req.body;
-    console.log("Booking Kos:", { nama, telepon, tanggal_masuk, durasi });
-    res.redirect('/');
-  },
-
   // ===== FAVORIT =====
   formFavorit: (req, res) => {
     res.render("kos/formFavorit", { title: "Favoritkan Kos" });

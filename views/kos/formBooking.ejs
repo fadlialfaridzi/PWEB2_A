@@ -3,16 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title><%= title %></title>
-  <link href="/css/tailwind.css" rel="stylesheet">
+ <link href="/css/tailwind.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-  <div class="max-w-xl mx-auto mt-10 p-4 bg-white rounded shadow">
-    <h1 class="text-2xl font-bold mb-4">Form Booking Kos</h1>
-    <form action="/booking" method="POST" class="space-y-4">
-      <input type="text" name="nama" placeholder="Nama Lengkap" class="border p-2 w-full" required>
-      <input type="date" name="tanggal" class="border p-2 w-full" required>
-      <input type="number" name="durasi" placeholder="Durasi sewa (bulan)" class="border p-2 w-full" required>
-      <button type="submit" class="bg-blue-500 text-white p-2 rounded">Booking Sekarang</button>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="text-red-500 font-bold">Tes Tailwind</div>
+  <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold text-center mb-6">Form Booking Kos</h1>
+    <form action="/kos/booking" method="POST" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+        <input type="text" name="nama" placeholder="Nama Lengkap"
+               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" required>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Tanggal Masuk</label>
+        <input type="date" name="tanggal"
+               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" required>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Durasi Sewa (bulan)</label>
+        <input type="number" name="durasi" placeholder="Misal: 6"
+               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" required>
+      </div>
+
+      <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+        Booking Sekarang
+      </button>
     </form>
   </div>
 </body>
