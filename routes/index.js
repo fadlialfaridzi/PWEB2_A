@@ -89,6 +89,10 @@ router.get('/logout', (req, res) => {
     });
 });
 
+/* GET Profil Pemi page. */
+router.get('/ProfilPemilik', function(req, res, next) {
+  res.render('ProfilPemilik', { title: 'Profil Pemilik' });
+});
 
 
 
