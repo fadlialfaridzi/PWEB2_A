@@ -103,6 +103,7 @@ const editKos = (req, res) => {
 
             // Kirim data kos dan fasilitas ke view
             res.render('editKos', {
+                title: 'Edit Kos - ' + kosItem.name,
                 kos: { ...kosItem, facilities: facilities },  // Menambahkan fasilitas ke objek kos
                 user: req.session.user
             });
@@ -259,6 +260,7 @@ const detailKos = (req, res) => {
 
             // Kirim data kos dan fasilitas ke view
             res.render('detailkos', {
+                title: 'Detail Kos - ' + kosItem.name,   
                 kos: kosItem, // kosItem sudah berisi kos dan photos
                 fasilitas: fasilitas,
                 user: req.session.user,

@@ -5,7 +5,7 @@ const ownerController = require('../controllers/ownerController'); // Pastikan p
 const berandaController = require('../controllers/berandaController')
 const detailKosPencari = require('../controllers/detailKosPencari')
 const berandaPencari = require('../controllers/berandaPencari')
-
+const mapController = require('../controllers/mapController')
 // route  untuk menampilkan form tambah kos
 router.get('/formTambahKos', (req, res) => {
     if (req.session.user && req.session.user.role === 'pemilik') {
@@ -38,7 +38,9 @@ router.get('/indexpemilikkos', (req, res) => {
 });
 
 // Route to display all kos cards
-router.get('/', berandaController.showAllKos);  // Show all kos without login
+router.get('/', berandaController.showAllKos, function(req, res){
+    res.render('index', {title: 'Kosand'});
+});  // Show all kos without login
 // Route untuk menampilkan detail kos
 router.get('/detailkospencari/:id', detailKosPencari.showDetailKosPencari, (req, res) => {
     if (req.session.user && req.session.user.role === 'pencari') {
@@ -69,11 +71,15 @@ router.get('/editKos/:id', ownerController.editKos);
 router.post('/editKos/:id', upload.array('photos'), ownerController.updateKos);
 // Route untuk menghapus kos
 router.post('/hapusKos/:id', ownerController.hapusKos);
+
+// Route for the map page
+router.get('/map', mapController.showMap);
 //logout
 // Route untuk logout
 router.get('/logout', (req, res) => {
     // Hapus data session user
     req.session.destroy((err) => {
+        let logout
         if (err) {
             return res.status(500).send("Gagal logout");
         }

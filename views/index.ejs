@@ -1,38 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda - KOSAND</title>
-    <!-- Preline UI CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-
+<%- include('Component/headfix.ejs') %>
 <body class="bg-gray-50">
 
     <!-- Navbar -->
@@ -63,7 +32,7 @@
             
             <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
                 <div class="flex flex-col gap-3 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-                    <a href="#home" class="bg-white text-blue-700 py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-blue-50 transition-colors">
+                    <a href="#home" class=" text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-blue-50 hover:text-blue-700 transition-colors">
                         <i class="fas fa-home"></i>
                         Beranda
                     </a>
@@ -212,7 +181,7 @@
                 </button>
                 <button class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
                     <i class="fas fa-map-marked-alt"></i>
-                    <span>Cari dengan Google Maps</span>
+                    <span><a href="login">Cari dengan Google Maps</a></span>
                 </button>
             </div>
         </div>
@@ -357,29 +326,7 @@
         </div>
     </section>
 
-    <section>
-        <!-- Footer Section -->
-        <footer class="bg-gray-200 text-gray-500 py-4 mt-8">
-            <div class="max-w-[85rem] w-full mx-auto text-center">
-                <p class="text-sm">&copy; 2025 KOSAND. All rights reserved.</p>
-                <div class="flex justify-center gap-6 mt-4">
-                    <a href="#home" class="text-blue-600 hover:text-blue-700">Beranda</a>
-                    <a href="#katalog" class="text-blue-600 hover:text-blue-700">Katalog</a>
-                    <a href="#tentang" class="text-blue-600 hover:text-blue-700">Tentang</a>
-                    <a href="#kontak" class="text-blue-600 hover:text-blue-700">Kontak</a>
-                </div>
-                <div class="mt-4">
-                    <p class="text-sm text-gray-600">Follow us on:</p>
-                    <div class="flex justify-center gap-4 mt-2">
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </section>
+    <%- include('Component/footer.ejs') %>
 
 <script>
         document.addEventListener("DOMContentLoaded", function() {

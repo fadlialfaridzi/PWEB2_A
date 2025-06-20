@@ -20,6 +20,7 @@ const showDetailKosPencari = (req, res) => {
 
             // Kirim data kos dan fasilitas ke view detailKosPencari
             res.render('detailKosPencari', {
+                title: 'Detail Kos',
                 user: req.session.user,
                 kos: kosItem,
                 facilities: fasilitas || [],

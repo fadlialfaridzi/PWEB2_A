@@ -42,6 +42,7 @@ const showAllKosForPencari = (req, res) => {
             .then(kosWithFacilities => {
                 // Kirim data kos dengan fasilitas ke view
                 res.render('indexPencariKos', {
+                    title: 'Kosand',
                     kos: kosWithFacilities,
                     user: req.session.user, // Mengirim data user untuk tampilan avatar dan dropdown
                     successMessage: req.query.success || null,

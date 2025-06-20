@@ -37,6 +37,7 @@ const showAllKos = (req, res) => {
             .then(kosWithFacilities => {
                 // Kirim data kos dengan fasilitas ke view
                 res.render('index', {
+                    title: 'Kosand',
                     kos: kosWithFacilities,
                     successMessage: req.query.success || null,
                     successEdit: req.query.successEdit || null,

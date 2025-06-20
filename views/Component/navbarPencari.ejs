@@ -1,0 +1,82 @@
+<!-- Navbar -->
+  <!-- Navbar -->
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-500 text-sm py-3 shadow-lg sticky top-0 z-50">
+        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="bg-white text-blue-700 p-2 rounded-lg">
+                    <i class="fas fa-home text-xl"></i>
+                </div>
+                <a class="sm:order-1 flex-none text-xl font-bold text-white focus:outline-hidden focus:opacity-80" href="#">KOSAND</a>
+            </div>
+            
+            <div class="sm:order-3 flex items-center gap-x-2">
+                <!-- Check if user is logged in -->
+                <% if (user) { %>
+                    <!-- User avatar and name with dropdown -->
+                    <div class="text-white  relative rounded-full hover:bg-white hover:text-blue-800">
+                        <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
+                            <!-- User Avatar (replace with actual image URL or path) -->
+                            <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white">
+                            <span class="uppercase"><%= user.name %></span>
+                        </button>
+
+                        <!-- Dropdown content (hidden by default) -->
+                        <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
+                            <ul class="text-sm text-gray-700">
+                                <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
+                                <li><a href="/logout" class="block px-4 py-2">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <!-- If no user logged in, show nothing (i.e., remove login/register buttons) -->
+                    <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-sm hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <a href="login">Login</a>
+                    </button>
+                    <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-800 text-white hover:bg-blue-900 focus:outline-hidden focus:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                        <i class="fas fa-user-plus"></i>
+                        <a href="role">Register</a>
+                    </button>
+                <% } %>
+            </div>
+            
+            <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
+                <div class="flex flex-col gap-3 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
+                    <a href="/indexPencariKos" class=" text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-home"></i>
+                        Beranda
+                    </a>
+                    <a href="/indexPencarikos#katalog" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-list"></i>
+                        Katalog
+                    </a>
+                    <a href="/indexPencarikos#tentang" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-info-circle"></i>
+                        Tentang
+                    </a>
+                    <a href="/kontak" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-phone"></i>
+                        Kontak
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+<script>
+    // JavaScript to toggle the dropdown visibility
+          const dropdownButton = document.getElementById('userDropdownButton');
+          const dropdownMenu = document.getElementById('userDropdownMenu');
+  
+          dropdownButton.addEventListener('click', () => {
+              // Toggle the visibility of the dropdown menu
+              dropdownMenu.classList.toggle('hidden');
+          });
+  
+          // Optionally, close the dropdown if clicked outside
+          document.addEventListener('click', (event) => {
+              if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                  dropdownMenu.classList.add('hidden'); // Hide dropdown if clicked outside
+              }
+          });
+</script>

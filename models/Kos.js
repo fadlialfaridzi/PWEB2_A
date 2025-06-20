@@ -44,7 +44,7 @@ const Kos = {
 
     // Mendapatkan semua kos dan foto berdasarkan user_id
     // Mendapatkan semua kos dan foto tanpa filter user_id
-getAllWithFoto: (userId, callback) => {
+    getAllWithFoto: (userId, callback) => {
     // Query untuk mengambil semua data kos, tanpa filter user_id
     const query = `
         SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type, k.status, k.tipe_kos
