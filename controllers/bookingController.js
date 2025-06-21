@@ -1,5 +1,6 @@
 const Booking = require('../models/booking');
 const Kos = require('../models/Kos');
+const Rating = require('../models/rating');
 
 // GET route untuk menampilkan halaman booking
 exports.showBookingPage = (req, res) => {
@@ -118,7 +119,7 @@ exports.showMyBookings = (req, res) => {
         return res.redirect('/login');
     }
 
-    // Ambil daftar booking kos berdasarkan userId
+    // Ambil daftar booking kos berdasarkan userId (yang belum complete)
     Booking.getBookingsByUser(userId, (err, bookings) => {
         if (err) {
             console.error('Error fetching bookings:', err);
@@ -128,14 +129,14 @@ exports.showMyBookings = (req, res) => {
         // Ambil kos_id dari setiap booking
         const kosIds = bookings.map(booking => booking.kos_id);
 
-        // Pastikan kosIds bukan array kosong sebelum memanggil getKosByIds
         if (kosIds.length === 0) {
             return res.render('myBookings', {
-                user: req.session.user,  // Kirim data user ke view
+                user: req.session.user,
                 title: 'Daftar Booking Kos',
-                bookings: [],  // Jika tidak ada booking, kirimkan array kosong
-                kosDetails: [], // Kos detail kosong
-                noBookingsMessage: 'Belum ada bookingan'  // Kirimkan pesan "Belum ada bookingan"
+                bookings: [],
+                kosDetails: [],
+                noBookingsMessage: 'Saat ini tidak ada bookingan yang aktif. Semua bookingan Anda sudah selesai atau belum ada bookingan.',
+                successMessage: req.query.success || null
             });
         }
 
@@ -146,36 +147,109 @@ exports.showMyBookings = (req, res) => {
                 return res.status(500).send('Gagal mengambil detail kos');
             }
 
-            console.log(kosDetails); // Debugging: Periksa apakah kosDetails berisi data yang benar
-
-            // Gabungkan data booking dengan detail kos dan kirimkan ke halaman
-            bookings.forEach((booking, index) => {
-                booking.kos = kosDetails[index];
-                booking.booking_date = booking.booking_date;  // Pastikan booking_date ada
+            // Buat mapping kos berdasarkan ID
+            const kosMap = {};
+            kosDetails.forEach(kos => {
+                kosMap[kos.id] = kos;
             });
 
-            // Log untuk memastikan data booking dan kos telah digabung dengan benar
-            console.log(bookings);
-
-            // Kirimkan foto kos ke view bersama detail kos
-            const bookingsWithPhotos = bookings.map((booking, index) => {
+            // Gabungkan data booking dengan detail kos
+            const bookingsWithKosDetails = bookings.map(booking => {
+                const kosDetail = kosMap[booking.kos_id];
                 return {
                     ...booking,
-                    kos: {
-                        ...booking.kos,
-                        photos: booking.kos.photos || [] // Pastikan foto kos ada
-                    }
+                    kos: kosDetail || null
                 };
             });
 
-            // Render halaman myBookings dengan daftar kos yang dibooking
             res.render('myBookings', {
-                user: req.session.user,  // Kirim data user ke view
+                user: req.session.user,
                 title: 'Daftar Booking Kos',
-                bookings: bookingsWithPhotos,  // Kirim data booking yang sudah digabungkan dengan foto
-                kosDetails: kosDetails
+                bookings: bookingsWithKosDetails,
+                kosDetails: bookingsWithKosDetails,
+                noBookingsMessage: null,
+                successMessage: req.query.success || null
             });
         });
     });
 };
 
+// Fungsi untuk menampilkan halaman rating
+exports.showRatingPage = (req, res) => {
+    const userId = req.session.user?.id;
+
+    if (!userId) {
+        return res.redirect('/login');
+    }
+
+    // Ambil data booking yang sudah complete
+    Booking.getCompletedBookingsByUser(userId, (err, completedBookings) => {
+        if (err) {
+            console.error('Error fetching completed bookings:', err);
+            return res.status(500).send('Gagal mengambil data booking');
+        }
+
+        res.render('ratingPage', {
+            user: req.session.user,
+            title: 'Rating Kos',
+            completedBookings: completedBookings || [],
+            successMessage: req.query.success || null
+        });
+    });
+};
+
+// Fungsi untuk menyimpan rating
+exports.saveRating = (req, res) => {
+    const { bookingId, kosId, rating, review } = req.body;
+    const userId = req.session.user?.id;
+
+    console.log('Rating data received:', { bookingId, kosId, rating, review, userId });
+
+    if (!userId) {
+        return res.redirect('/login');
+    }
+
+    // Validasi data yang diperlukan
+    if (!bookingId || !kosId || !rating) {
+        console.error('Missing required data:', { bookingId, kosId, rating });
+        return res.status(400).send('Data rating tidak lengkap');
+    }
+
+    // Validasi rating harus antara 1-5
+    if (rating < 1 || rating > 5) {
+        console.error('Invalid rating value:', rating);
+        return res.status(400).send('Rating harus antara 1-5');
+    }
+
+    // Cek apakah sudah ada rating untuk booking ini
+    Rating.getRatingByBookingId(bookingId, (err, existingRating) => {
+        if (err) {
+            console.error('Error checking existing rating:', err);
+            return res.status(500).send('Gagal menyimpan rating');
+        }
+
+        console.log('Existing rating check result:', existingRating);
+
+        if (existingRating && existingRating.length > 0) {
+            // Update rating yang sudah ada
+            Rating.updateRating(bookingId, rating, review, (err, result) => {
+                if (err) {
+                    console.error('Error updating rating:', err);
+                    return res.status(500).send('Gagal mengupdate rating');
+                }
+                console.log('Rating updated successfully:', result);
+                res.redirect('/ratingPage?success=Rating berhasil diupdate');
+            });
+        } else {
+            // Tambah rating baru
+            Rating.addRating(bookingId, userId, kosId, rating, review, (err, result) => {
+                if (err) {
+                    console.error('Error adding rating:', err);
+                    return res.status(500).send('Gagal menyimpan rating');
+                }
+                console.log('Rating added successfully:', result);
+                res.redirect('/ratingPage?success=Rating berhasil disimpan');
+            });
+        }
+    });
+};

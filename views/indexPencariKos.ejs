@@ -124,10 +124,10 @@
                     <i class="fas fa-search"></i>
                     <span>Cari Kost</span>
                 </button>
-                <button class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                <a href="/map" class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
                     <i class="fas fa-map-marked-alt"></i>
-                    <span><a href="map">Cari dengan Google Maps</a></span>
-                </button>
+                    <span>Cari dengan Google Maps</span>
+                </a>
             </div>
         </div>
     </section>
@@ -185,6 +185,19 @@
 
                                 <!-- Tipe Kos -->
                                 <p class="text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kosItem.tipe_kos %></span></p>
+
+                                <!-- Rating & Jumlah User -->
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="flex items-center">
+                                        <% for(let i = 1; i <= 5; i++) { %>
+                                            <i class="fas fa-star <%= i <= Math.round(parseFloat(kosItem.avg_rating || 0)) ? 'text-yellow-400' : 'text-gray-400' %>"></i>
+                                        <% } %>
+                                    </span>
+                                    <span class="text-sm text-gray-600 ml-2">
+                                        <%= kosItem.avg_rating || '0.0' %> / 5
+                                        (<%= kosItem.total_ratings || 0 %> rating<%= (kosItem.total_ratings || 0) == 1 ? '' : 's' %>)
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         </a>
@@ -197,7 +210,7 @@
     </section>
 
     <div class="flex justify-center items-center mt-8">
-        <% if (kos.length > 4) { %>
+        <% if (kos && kos.length > 4) { %>
             <div class="text-center">
                 <button id="showMoreButton" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
                     Tampilkan Semua

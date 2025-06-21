@@ -91,6 +91,14 @@ router.get('/myBookings', bookingController.showMyBookings);
 // Rute untuk menampilkan daftar booking kos
 router.get('/daftarBookingPemilik', daftarBookingPemilikController.showDaftarBookingPemilik);
 
+// Route untuk menandai booking sebagai complete
+router.post('/completeBooking/:bookingId', daftarBookingPemilikController.completeBooking);
+
+// Route untuk halaman rating
+router.get('/ratingPage', bookingController.showRatingPage);
+
+// Route untuk menyimpan rating
+router.post('/saveRating', bookingController.saveRating);
 // Route untuk logout
 router.get('/logout', (req, res) => {
     // Hapus data session user

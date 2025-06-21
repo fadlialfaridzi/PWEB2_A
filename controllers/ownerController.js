@@ -7,11 +7,50 @@ const ownerDashboard = (req, res) => {
 
     if (!userId) return res.redirect('/login');
 
-    Kos.getAllWithFoto(userId, (err, kos) => {
+    // Custom query to get kos with rating data for owner
+    const query = `
+        SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type, k.status, k.tipe_kos,
+               COALESCE(AVG(r.rating), 0) as avg_rating,
+               COUNT(r.id) as total_ratings
+        FROM kos k
+        LEFT JOIN foto_kos f ON f.kos_id = k.id
+        LEFT JOIN ratings r ON r.kos_id = k.id
+        WHERE k.user_id = ?
+        GROUP BY k.id, k.name, k.price, k.address, k.latitude, k.longitude, k.payment_type, k.status, k.tipe_kos, f.filename
+    `;
+
+    const db = require('../config/db');
+    db.query(query, [userId], (err, results) => {
         if (err) {
             console.error('Error fetching kos:', err);
             return res.status(500).send('Gagal mengambil data kos');
         }
+
+        // Group by kos_id to handle multiple photos
+        const grouped = {};
+        results.forEach(row => {
+            if (!grouped[row.id]) {
+                grouped[row.id] = {
+                    id: row.id,
+                    name: row.name,
+                    price: row.price,
+                    address: row.address,
+                    latitude: row.latitude,
+                    longitude: row.longitude,
+                    photos: [],
+                    payment_type: row.payment_type,
+                    status: row.status,
+                    tipe_kos: row.tipe_kos,
+                    avg_rating: parseFloat(row.avg_rating).toFixed(1),
+                    total_ratings: row.total_ratings
+                };
+            }
+            if (row.filename) {
+                grouped[row.id].photos.push(row.filename);
+            }
+        });
+
+        const kos = Object.values(grouped);
 
         res.render('indexPemilikKos', { kos,
             user: req.session.user,
@@ -182,7 +221,7 @@ const hapusKos = (req, res) => {
 
 const updateKos = (req, res) => {
     const kosId = req.params.id;
-    const { name, price, paymentType, address, latitude, longitude, description, facilities } = req.body;
+    const { name, price, paymentType, address, latitude, longitude, description, facilities, tipe_kos } = req.body;
     const photos = req.files; // Foto yang di-upload
     const userId = req.session.user?.id;
     if (!userId) return res.redirect('/login'); // Pengecekan userId
@@ -194,7 +233,8 @@ const updateKos = (req, res) => {
         address,
         latitude,
         longitude,
-        description
+        description,
+        tipe_kos
     };
 
     // Perbarui data kos di database

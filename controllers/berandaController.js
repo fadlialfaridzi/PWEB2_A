@@ -2,8 +2,8 @@ const Kos = require('../models/Kos');
 
 // Menampilkan semua data kos tanpa login, hanya menampilkan card kos dengan status "available"
 const showAllKos = (req, res) => {
-    // Fetch semua data kos yang tersedia
-    Kos.getAllAvailableKos((err, kos) => {
+    // Fetch semua data kos beserta rating
+    Kos.getAllWithRating((err, kos) => {
         if (err) {
             console.error('Error fetching kos:', err);
             return res.status(500).send('Gagal mengambil data kos');
@@ -19,6 +19,11 @@ const showAllKos = (req, res) => {
                     } else {
                         const facilities = fasilitas || [];
                         kosItem.facilities = facilities.map(facility => facility.fasilitas);
+                        // Ensure photos is always an array
+                        kosItem.photos = kosItem.photos || [];
+                        // Ensure rating data is properly formatted
+                        kosItem.avg_rating = parseFloat(kosItem.average_rating || 0).toFixed(1);
+                        kosItem.total_ratings = parseInt(kosItem.total_ratings || 0);
                         resolve(kosItem);
                     }
                 });
@@ -69,6 +74,8 @@ const showOwnerKos = (req, res) => {
                     } else {
                         const facilities = fasilitas || [];
                         kosItem.facilities = facilities.map(facility => facility.fasilitas);
+                        // Ensure photos is always an array
+                        kosItem.photos = kosItem.photos || [];
                         resolve(kosItem);
                     }
                 });

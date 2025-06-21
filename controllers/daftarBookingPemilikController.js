@@ -7,7 +7,6 @@ exports.showDaftarBookingPemilik = (req, res) => {
         return res.redirect('/login');
     }
 
-    // Ambil daftar booking untuk pemilik kos
     Booking.getBookingsForOwner(ownerId, (err, bookings) => {
         if (err) {
             console.error('Error fetching bookings for owner:', err);
@@ -17,7 +16,27 @@ exports.showDaftarBookingPemilik = (req, res) => {
         res.render('daftarBookingPemilik', {
             user: req.session.user,
             title: 'Daftar Booking Kos',
-            bookings: bookings || []
+            bookings: bookings || [],
+            successMessage: req.query.success || null // Tambahkan ini
         });
+    });
+};
+
+// Controller untuk menandai booking sebagai complete
+exports.completeBooking = (req, res) => {
+    const bookingId = req.params.bookingId;
+    const ownerId = req.session.user?.id;
+
+    if (!ownerId || req.session.user.role !== 'pemilik') {
+        return res.redirect('/login');
+    }
+
+    Booking.completeBooking(bookingId, (err, result) => {
+        if (err) {
+            console.error('Error completing booking:', err);
+            return res.status(500).send('Gagal menandai booking sebagai complete');
+        }
+
+        res.redirect('/daftarBookingPemilik?success=Booking berhasil ditandai sebagai complete');
     });
 };

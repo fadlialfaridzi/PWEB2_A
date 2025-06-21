@@ -10,6 +10,13 @@
     <div class="max-w-[85rem] mx-auto px-4">
         <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Daftar Booking Kos</h2>
 
+        <!-- Menampilkan pesan sukses -->
+        <% if (successMessage) { %>
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-center mb-6">
+                <p><%= successMessage %></p>
+            </div>
+        <% } %>
+
         <!-- Menampilkan pesan jika tidak ada booking -->
         <% if (bookings.length === 0) { %>
             <div class="bg-yellow-200 text-yellow-800 p-4 rounded-lg text-center">
@@ -26,6 +33,19 @@
                             <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
                                 Booking #<%= booking.id %>
                             </span>
+                        </div>
+
+                        <!-- Status Badge -->
+                        <div class="mb-4">
+                            <% if (booking.status === 'pending') { %>
+                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+                                    Pending
+                                </span>
+                            <% } else if (booking.status === 'complete') { %>
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                                    Complete
+                                </span>
+                            <% } %>
                         </div>
 
                         <!-- Informasi Pencari -->
@@ -88,6 +108,17 @@
                                class="flex-1 text-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all">
                                 <i class="fas fa-phone mr-2"></i>Hubungi via Telepon
                             </a>
+                            
+                            <!-- Tombol Complete (hanya untuk status pending) -->
+                            <% if (booking.status === 'pending') { %>
+                                <form action="/completeBooking/<%= booking.id %>" method="POST" class="flex-1">
+                                    <button type="submit" 
+                                            onclick="return confirm('Apakah Anda yakin ingin menandai booking ini sebagai complete?')"
+                                            class="w-full bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600 transition-all">
+                                        <i class="fas fa-check mr-2"></i>Mark as Complete
+                                    </button>
+                                </form>
+                            <% } %>
                         </div>
                     </div>
                 <% }); %>

@@ -139,6 +139,18 @@
               <!-- Tipe Kos -->
               <p class="text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kosItem.tipe_kos %></span></p> 
 
+              <!-- Rating Display -->
+              <div class="flex items-center mt-3 mb-4">
+                <div class="flex items-center">
+                  <i class="fas fa-star text-yellow-400 mr-1"></i>
+                  <span class="font-semibold text-gray-800">
+                    <%= kosItem.avg_rating || '0.0' %>
+                  </span>
+                  <span class="text-gray-500 text-sm ml-1">
+                    (<%= kosItem.total_ratings || 0 %> ulasan)
+                  </span>
+                </div>
+              </div>
 
               <div class="border-2 mt-16 rounded-3xl p-4">
                 <!-- Switch Toggle untuk Status Ketersediaan -->
