@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pemilik Kost - <%= owner ? owner.name : 'Pengguna' %></title>    
+    <title>Profil Pemilik Kost - Pengguna</title>    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,10 +25,11 @@
     <!-- Header -->
     <header class="bg-white shadow-lg border-b-4 border-blue-primary">
         <div class="container mx-auto px-4 py-4">
+            <h1>Profil Pemilik Kost: Pengguna</h1>
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <i class="fas fa-home text-blue-primary text-2xl"></i>
-                    <h1 class="text-2xl font-bold text-blue-primary">KostUnand</h1>
+                    <h1 class="text-2xl font-bold text-blue-primary">KosAnd</h1>
                 </div>
                 <nav class="hidden md:flex space-x-6">
                     <a href="/" class="text-gray-700 hover:text-blue-primary transition duration-300">Beranda</a>
@@ -45,27 +46,25 @@
             <div class="bg-gradient-to-r from-blue-primary to-blue-secondary text-white p-6">
                 <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                     <div class="relative">
-                        <img src="<%= owner.avatar %>" 
-                             alt="Foto Profil" 
-                             class="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover">
+                        <img src="/default-avatar.jpg" alt="Foto Profil" class="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover">
                         <div class="absolute -bottom-2 -right-2 bg-green-500 text-white rounded-full p-1">
                             <i class="fas fa-check text-xs"></i>
                         </div>
                     </div>
                     <div class="text-center md:text-left">
-                        <h2 class="text-3xl font-bold mb-2"><%= owner.name %></h2>
+                        <h2 class="text-3xl font-bold mb-2">Pengguna</h2>
                         <p class="text-blue-100 mb-2">
                             <i class="fas fa-map-marker-alt mr-2"></i>
-                            <%= owner.address %>
+                            Alamat tidak tersedia
                         </p>
                         <div class="flex items-center justify-center md:justify-start space-x-4">
                             <span class="bg-blue-700 px-3 py-1 rounded-full text-sm">
                                 <i class="fas fa-star mr-1"></i>
-                                <%= owner.rating %> (<%= owner.totalReviews %> ulasan)
+                                0 (0 ulasan)
                             </span>
                             <span class="bg-blue-700 px-3 py-1 rounded-full text-sm">
                                 <i class="fas fa-building mr-1"></i>
-                                <%= owner.totalProperties %> Kost
+                                0 Kost
                             </span>
                         </div>
                     </div>
@@ -83,7 +82,7 @@
                         Tentang Pemilik
                     </h3>
                     <p class="text-gray-700 leading-relaxed">
-                        <%= owner.description %>
+                        Deskripsi tidak tersedia
                     </p>
                 </div>
 
@@ -94,31 +93,10 @@
                         Daftar Kost
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <% if (owner.properties && owner.properties.length > 0) { %>
-                            <% owner.properties.forEach(property => { %>
-                                <div class="border border-blue-200 rounded-lg p-4 hover:shadow-md transition duration-300">
-                                    <img src="<%= property.image %>" 
-                                         alt="<%= property.name %>" 
-                                         class="w-full h-32 object-cover rounded-lg mb-3">
-                                    <h4 class="font-semibold text-blue-primary mb-2"><%= property.name %></h4>
-                                    <p class="text-sm text-gray-600 mb-2">
-                                        <i class="fas fa-map-marker-alt mr-1"></i>
-                                        <%= property.address %>
-                                    </p>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-blue-primary font-bold">Rp <%= property.price.toLocaleString('id-ID') %>/bulan</span>
-                                        <a href="/kost/<%= property.id %>" class="text-blue-secondary hover:text-blue-primary text-sm">
-                                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            <% }) %>
-                        <% } else { %>
-                            <div class="col-span-2 text-center py-8 text-gray-500">
-                                <i class="fas fa-building text-4xl mb-4"></i>
-                                <p>Belum ada kost yang terdaftar</p>
-                            </div>
-                        <% } %>
+                        <div class="col-span-2 text-center py-8 text-gray-500">
+                            <i class="fas fa-building text-4xl mb-4"></i>
+                            Belum ada kost yang terdaftar
+                        </div>
                     </div>
                 </div>
 
@@ -128,35 +106,9 @@
                         <i class="fas fa-star mr-2"></i>
                         Ulasan Penyewa
                     </h3>
-                    <div class="space-y-4">
-                        <% if (owner.reviews && owner.reviews.length > 0) { %>
-                            <% owner.reviews.forEach(review => { %>
-                                <div class="border-b border-gray-200 pb-4 last:border-b-0">
-                                    <div class="flex items-start space-x-3">
-                                        <img src="<%= review.avatar %>" 
-                                             alt="<%= review.name %>" 
-                                             class="w-10 h-10 rounded-full object-cover">
-                                        <div class="flex-1">
-                                            <div class="flex items-center justify-between mb-1">
-                                                <h5 class="font-semibold text-gray-800"><%= review.name %></h5>
-                                                <div class="flex items-center text-yellow-500">
-                                                    <% for (let i = 1; i <= 5; i++) { %>
-                                                        <i class="fas fa-star <%= i <= review.rating ? 'text-yellow-500' : 'text-gray-300' %>"></i>
-                                                    <% } %>
-                                                </div>
-                                            </div>
-                                            <p class="text-gray-600 text-sm mb-1"><%= review.date %></p>
-                                            <p class="text-gray-700"><%= review.comment %></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% }) %>
-                        <% } else { %>
-                            <div class="text-center py-8 text-gray-500">
-                                <i class="fas fa-comment text-4xl mb-4"></i>
-                                <p>Belum ada ulasan</p>
-                            </div>
-                        <% } %>
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-comment text-4xl mb-4"></i>
+                        Belum ada ulasan
                     </div>
                 </div>
             </div>
@@ -174,86 +126,33 @@
                             <i class="fas fa-phone text-blue-primary w-5"></i>
                             <div>
                                 <p class="text-sm text-gray-600">Telepon</p>
-                                <p class="font-semibold"><%= owner.phone %></p>
+                                <p class="font-semibold">Tidak tersedia</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-3">
                             <i class="fab fa-whatsapp text-green-500 w-5"></i>
                             <div>
                                 <p class="text-sm text-gray-600">WhatsApp</p>
-                                <a href="https://wa.me/<%= owner.whatsapp %>" 
-                                   class="font-semibold text-green-600 hover:text-green-700">
-                                    <%= owner.phone %>
-                                </a>
+                                <a href="https://wa.me/" class="font-semibold text-green-600 hover:text-green-700">Tidak tersedia</a>
                             </div>
                         </div>
                         <div class="flex items-center space-x-3">
                             <i class="fas fa-envelope text-blue-primary w-5"></i>
                             <div>
                                 <p class="text-sm text-gray-600">Email</p>
-                                <p class="font-semibold"><%= owner.email %></p>
+                                <p class="font-semibold">Tidak tersedia</p>
                             </div>
                         </div>
                     </div>
                     <div class="mt-6 space-y-2">
-                        <a href="https://wa.me/<%= owner.whatsapp %>" 
-                           class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 flex items-center justify-center">
+                        <a href="https://wa.me/" class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 flex items-center justify-center">
                             <i class="fab fa-whatsapp mr-2"></i>
                             Chat WhatsApp
                         </a>
-                        <a href="tel:<%= owner.phone %>" 
-                           class="w-full bg-blue-primary text-white py-2 px-4 rounded-lg hover:bg-blue-dark transition duration-300 flex items-center justify-center">
+                        <a href="tel:" class="w-full bg-blue-primary text-white py-2 px-4 rounded-lg hover:bg-blue-dark transition duration-300 flex items-center justify-center">
                             <i class="fas fa-phone mr-2"></i>
                             Telepon
                         </a>
-                    </div>
-                </div>
-
-                <!-- Stats -->
-                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-secondary">
-                    <h3 class="text-xl font-bold text-blue-primary mb-4 flex items-center">
-                        <i class="fas fa-chart-bar mr-2"></i>
-                        Statistik
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">Bergabung Sejak</span>
-                            <span class="font-semibold"><%= owner.joinDate %></span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">Total Kost</span>
-                            <span class="font-semibold text-blue-primary"><%= owner.totalProperties %></span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">Tingkat Respons</span>
-                            <span class="font-semibold text-green-600"><%= owner.responseRate %></span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600">Waktu Respons</span>
-                            <span class="font-semibold"><%= owner.responseTime %></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Verification -->
-                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
-                    <h3 class="text-xl font-bold text-green-600 mb-4 flex items-center">
-                        <i class="fas fa-shield-alt mr-2"></i>
-                        Verifikasi
-                    </h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-check-circle text-green-500"></i>
-                            <span class="text-gray-700">Identitas Terverifikasi</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-check-circle text-green-500"></i>
-                            <span class="text-gray-700">Nomor Telepon Terverifikasi</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <i class="fas fa-check-circle text-green-500"></i>
-                            <span class="text-gray-700">Email Terverifikasi</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -264,7 +163,7 @@
     <footer class="bg-blue-primary text-white mt-12">
         <div class="container mx-auto px-4 py-8">
             <div class="text-center">
-                <h3 class="text-2xl font-bold mb-2">KostUnand</h3>
+                <h3 class="text-2xl font-bold mb-2">KosAnd</h3>
                 <p class="text-blue-200 mb-4">Platform pencarian kost terpercaya di wilayah Universitas Andalas</p>
                 <div class="flex justify-center space-x-6">
                     <a href="#" class="text-blue-200 hover:text-white transition duration-300">
@@ -277,38 +176,10 @@
                         <i class="fab fa-twitter text-xl"></i>
                     </a>
                 </div>
-                <p class="text-blue-200 text-sm mt-4">&copy; 2024 KostUnand. Semua hak dilindungi.</p>
+                <p class="text-blue-200 text-sm mt-4">&copy; 2024 KosAnd. Semua hak dilindungi.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all cards
-        document.querySelectorAll('.bg-white').forEach((card) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Halaman profil pemilik kost berhasil dimuat');
-        });
-    </script>
 </body>
 </html>

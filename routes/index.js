@@ -89,10 +89,16 @@ router.get('/logout', (req, res) => {
     });
 });
 
-/* GET Profil Pemi page. */
-router.get('/ProfilPemilik', function(req, res, next) {
-  res.render('ProfilPemilik', { title: 'Profil Pemilik' });
+// Route untuk menampilkan daftar kost favorit pencari
+router.get('/favoritKos', (req, res) => {
+    if (req.session.user && req.session.user.role === 'pencari') {
+        // Kirim data kost favorit ke tampilan
+        pencariController.showFavoritKos(req, res);  // Fungsi yang menangani pengambilan kost favorit dari database
+    } else {
+        res.redirect('/login');
+    }
 });
+
 
 
 
