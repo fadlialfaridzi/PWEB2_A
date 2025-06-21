@@ -7,6 +7,8 @@ const detailKosPencari = require('../controllers/detailKosPencari')
 const berandaPencari = require('../controllers/berandaPencari')
 const mapController = require('../controllers/mapController')
 const bookingController = require('../controllers/bookingController');
+const hubungiPemilikController = require('../controllers/hubungiPemilikController');
+const daftarBookingPemilikController = require('../controllers/daftarBookingPemilikController');
 // route  untuk menampilkan form tambah kos
 router.get('/formTambahKos', (req, res) => {
     if (req.session.user && req.session.user.role === 'pemilik') {
@@ -84,6 +86,10 @@ router.post('/pemesanan', bookingController.createBooking);
 router.post('/bookingPage', bookingController.createBooking);
 // Rute untuk membatalkan pesanan
 router.post('/batalkanPesanan', bookingController.cancelBooking);  // Menambahkan rute ini
+// Rute untuk menampilkan daftar booking kos
+router.get('/myBookings', bookingController.showMyBookings);
+// Rute untuk menampilkan daftar booking kos
+router.get('/daftarBookingPemilik', daftarBookingPemilikController.showDaftarBookingPemilik);
 
 // Route untuk logout
 router.get('/logout', (req, res) => {
@@ -98,6 +104,8 @@ router.get('/logout', (req, res) => {
     });
 });
 
+
+router.get('/hubungiPemilik/:kosId', hubungiPemilikController.showHubungiPemilik);
 
 
 module.exports = router;

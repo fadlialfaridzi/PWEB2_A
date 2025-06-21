@@ -4,47 +4,38 @@ const Kos = require('../models/Kos');
 const showAllKosForPencari = (req, res) => {
     // Memastikan pengguna sudah login dan memiliki role sebagai 'pencari'
     if (!req.session.user || req.session.user.role !== 'pencari') {
-        return res.redirect('/login'); // Arahkan ke halaman login jika tidak memiliki akses
+        return res.redirect('/login');
     }
 
-    // Fetch semua data kos dengan status 'available' untuk pencari
-    Kos.getAllWithFoto(null, (err, kos) => {  // Passing null karena kita tidak perlu filter user
+    // Fetch semua data kos yang tersedia untuk pencari
+    Kos.getAllAvailableKos((err, kos) => {
         if (err) {
             console.error('Error fetching kos:', err);
             return res.status(500).send('Gagal mengambil data kos');
         }
 
-        // Filter kos dengan status 'available'
-        const availableKos = kos.filter(kosItem => kosItem.status === 'available');
-
         // Fetch fasilitas untuk setiap kos
-        const kosWithFacilitiesPromises = availableKos.map((kosItem) => {
+        const kosWithFacilitiesPromises = kos.map((kosItem) => {
             return new Promise((resolve, reject) => {
                 Kos.getFasilitasKos(kosItem.id, (err, fasilitas) => {
                     if (err) {
                         console.error('Error fetching facilities for kos:', err);
-                        reject(err);  // Reject jika ada error saat mengambil fasilitas
+                        reject(err);
                     } else {
-                        // Pastikan fasilitas tidak null atau undefined
-                        const facilities = fasilitas || [];  // Default ke array kosong jika tidak ada fasilitas
-
-                        // Menambahkan fasilitas ke objek kos
+                        const facilities = fasilitas || [];
                         kosItem.facilities = facilities.map(facility => facility.fasilitas);
-
-                        resolve(kosItem); // Resolve kosItem dengan fasilitas
+                        resolve(kosItem);
                     }
                 });
             });
         });
 
-        // Setelah mengambil semua fasilitas, render halaman
         Promise.all(kosWithFacilitiesPromises)
             .then(kosWithFacilities => {
-                // Kirim data kos dengan fasilitas ke view
                 res.render('indexPencariKos', {
                     title: 'Kosand',
                     kos: kosWithFacilities,
-                    user: req.session.user, // Mengirim data user untuk tampilan avatar dan dropdown
+                    user: req.session.user,
                     successMessage: req.query.success || null,
                     successEdit: req.query.successEdit || null,
                     successDelete: req.query.successDelete || null

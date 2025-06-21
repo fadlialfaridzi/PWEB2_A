@@ -38,17 +38,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', authRoutes);
 app.use('/', indexRouter);
 
-// Route untuk logout
-app.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).send("Gagal logout");
-        }
-        // Redirect ke halaman index setelah logout
-        res.redirect('/');
-    });
-});
-
 // Handle 404 errors
 app.use(function(req, res, next) {
   next(createError(404));

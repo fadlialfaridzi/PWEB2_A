@@ -28,30 +28,32 @@
 
         <% if (kos && kos.length > 0) { %>
             <% kos.forEach(function(kosItem) { %>
-                (function() {
-                    const marker = new google.maps.Marker({
-                        position: { lat: <%= kosItem.latitude %>, lng: <%= kosItem.longitude %> },
-                        map: map,
-                        title: "<%= kosItem.name %>"
-                    });
+                <% if (kosItem.status === 'available') { %> <!-- Kondisi untuk menampilkan marker hanya jika status adalah 'available' -->
+                    (function() {
+                        const marker = new google.maps.Marker({
+                            position: { lat: <%= kosItem.latitude %>, lng: <%= kosItem.longitude %> },
+                            map: map,
+                            title: "<%= kosItem.name %>"
+                        });
 
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: `
-                            <div class="p-3">
-                                <h3 class="font-bold"> <a href="/detailkospencari/<%= kosItem.id %>" class="block w-full"><%= kosItem.name %></h3>
-                                <p>Harga: Rp <%= kosItem.price %> / <%= kosItem.payment_type === 'perbulan' ? 'bulan' : 'tahun' %></p>
-                                <p>Alamat: <%= kosItem.address %></p>
-                                <% if (kosItem.description) { %>
-                                    <p class="mt-2">Deskripsi: <%= kosItem.description %></p>
-                                <% } %>
-                            </div>
-                        `
-                    });
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: `
+                                <div class="p-3">
+                                    <h3 class="font-bold"> <a href="/detailkospencari/<%= kosItem.id %>" class="block w-full"><%= kosItem.name %></a></h3>
+                                    <p>Harga: Rp <%= kosItem.price %> / <%= kosItem.payment_type === 'perbulan' ? 'bulan' : 'tahun' %></p>
+                                    <p>Alamat: <%= kosItem.address %></p>
+                                    <% if (kosItem.description) { %>
+                                        <p class="mt-2">Deskripsi: <%= kosItem.description %></p>
+                                    <% } %>
+                                </div>
+                            `
+                        });
 
-                    marker.addListener("click", () => {
-                        infoWindow.open(map, marker);
-                    });
-                })();
+                        marker.addListener("click", () => {
+                            infoWindow.open(map, marker);
+                        });
+                    })();
+                <% } %> <!-- End of available status check -->
             <% }); %>
         <% } else { %>
             console.log("No kos data available");

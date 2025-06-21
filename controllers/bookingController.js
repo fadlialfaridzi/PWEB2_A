@@ -30,6 +30,9 @@ exports.showBookingPage = (req, res) => {
             // Ambil data pengguna dari session
             const user = req.session.user;
 
+            // Pastikan foto kos ada sebelum mengaksesnya
+            const photos = kos.photos && kos.photos.length > 0 ? kos.photos : [];
+
             // Kirim data pengguna, kos, foto, fasilitas, dan tanggal booking ke halaman booking
             res.render('bookingPage', {
                 title: 'Booking Kos',
@@ -37,7 +40,7 @@ exports.showBookingPage = (req, res) => {
                 bookingDate: bookingDate,
                 user: user,  // Kirim data user ke halaman booking
                 fasilitas: fasilitas || [], // Kirim data fasilitas ke halaman booking
-                photos: kos.photos || []  // Kirim foto kos ke halaman booking
+                photos: photos  // Kirim foto kos ke halaman booking (cek ada/tidaknya foto)
             });
         });
     });
@@ -104,6 +107,75 @@ exports.cancelBooking = (req, res) => {
 
         // Redirect ke halaman detail kos setelah pesanan dibatalkan tanpa pesan sukses
         res.redirect(`/detailkospencari/${kosId}`);
+    });
+};
+
+// Fungsi untuk menampilkan daftar booking kos oleh user yang sedang login
+exports.showMyBookings = (req, res) => {
+    const userId = req.session.user?.id;
+
+    if (!userId) {
+        return res.redirect('/login');
+    }
+
+    // Ambil daftar booking kos berdasarkan userId
+    Booking.getBookingsByUser(userId, (err, bookings) => {
+        if (err) {
+            console.error('Error fetching bookings:', err);
+            return res.status(500).send('Gagal mengambil data booking');
+        }
+
+        // Ambil kos_id dari setiap booking
+        const kosIds = bookings.map(booking => booking.kos_id);
+
+        // Pastikan kosIds bukan array kosong sebelum memanggil getKosByIds
+        if (kosIds.length === 0) {
+            return res.render('myBookings', {
+                user: req.session.user,  // Kirim data user ke view
+                title: 'Daftar Booking Kos',
+                bookings: [],  // Jika tidak ada booking, kirimkan array kosong
+                kosDetails: [], // Kos detail kosong
+                noBookingsMessage: 'Belum ada bookingan'  // Kirimkan pesan "Belum ada bookingan"
+            });
+        }
+
+        // Ambil detail kos untuk setiap kos_id
+        Kos.getKosByIds(kosIds, (err, kosDetails) => {
+            if (err) {
+                console.error('Error fetching kos details:', err);
+                return res.status(500).send('Gagal mengambil detail kos');
+            }
+
+            console.log(kosDetails); // Debugging: Periksa apakah kosDetails berisi data yang benar
+
+            // Gabungkan data booking dengan detail kos dan kirimkan ke halaman
+            bookings.forEach((booking, index) => {
+                booking.kos = kosDetails[index];
+                booking.booking_date = booking.booking_date;  // Pastikan booking_date ada
+            });
+
+            // Log untuk memastikan data booking dan kos telah digabung dengan benar
+            console.log(bookings);
+
+            // Kirimkan foto kos ke view bersama detail kos
+            const bookingsWithPhotos = bookings.map((booking, index) => {
+                return {
+                    ...booking,
+                    kos: {
+                        ...booking.kos,
+                        photos: booking.kos.photos || [] // Pastikan foto kos ada
+                    }
+                };
+            });
+
+            // Render halaman myBookings dengan daftar kos yang dibooking
+            res.render('myBookings', {
+                user: req.session.user,  // Kirim data user ke view
+                title: 'Daftar Booking Kos',
+                bookings: bookingsWithPhotos,  // Kirim data booking yang sudah digabungkan dengan foto
+                kosDetails: kosDetails
+            });
+        });
     });
 };
 

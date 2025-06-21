@@ -42,47 +42,83 @@ const Kos = {
         });
     },
 
-    // Mendapatkan semua kos dan foto berdasarkan user_id
-    // Mendapatkan semua kos dan foto tanpa filter user_id
+    // Fungsi untuk pemilik: Mendapatkan kos berdasarkan user_id (pemilik)
     getAllWithFoto: (userId, callback) => {
-    // Query untuk mengambil semua data kos, tanpa filter user_id
-    const query = `
-        SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type, k.status, k.tipe_kos
-        FROM kos k
-        LEFT JOIN foto_kos f ON f.kos_id = k.id
-    `;
+        const query = `
+            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type, k.status, k.tipe_kos
+            FROM kos k
+            LEFT JOIN foto_kos f ON f.kos_id = k.id
+            WHERE k.user_id = ?
+        `;
 
-    // Jika `userId` null atau tidak perlu, kita tidak perlu filter berdasarkan user_id
-    const params = userId ? [userId] : [];
+        const params = [userId];
 
-    db.query(query, params, (err, results) => {
-        if (err) return callback(err);
+        db.query(query, params, (err, results) => {
+            if (err) return callback(err);
 
-        const grouped = {};
-        results.forEach(row => {
-            if (!grouped[row.id]) {
-                grouped[row.id] = {
-                    id: row.id,
-                    name: row.name,
-                    price: row.price,
-                    address: row.address,
-                    latitude: row.latitude,
-                    longitude: row.longitude,
-                    photos: [],
-                    payment_type: row.payment_type,
-                    status: row.status,
-                    tipe_kos: row.tipe_kos,
-                    facilities: [] 
-                };
-            }
-            if (row.filename) {
-                grouped[row.id].photos.push(row.filename);
-            }
+            const grouped = {};
+            results.forEach(row => {
+                if (!grouped[row.id]) {
+                    grouped[row.id] = {
+                        id: row.id,
+                        name: row.name,
+                        price: row.price,
+                        address: row.address,
+                        latitude: row.latitude,
+                        longitude: row.longitude,
+                        photos: [],
+                        payment_type: row.payment_type,
+                        status: row.status,
+                        tipe_kos: row.tipe_kos,
+                        facilities: [] 
+                    };
+                }
+                if (row.filename) {
+                    grouped[row.id].photos.push(row.filename);
+                }
+            });
+
+            callback(null, Object.values(grouped));
         });
+    },
 
-        callback(null, Object.values(grouped));  // Return all kos data as an array of objects
-    });
-},
+    // Fungsi untuk pencari: Mendapatkan SEMUA kos yang tersedia (tanpa filter user_id)
+    getAllAvailableKos: (callback) => {
+        const query = `
+            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, f.filename, k.payment_type, k.status, k.tipe_kos
+            FROM kos k
+            LEFT JOIN foto_kos f ON f.kos_id = k.id
+            WHERE k.status = 'available'
+        `;
+
+        db.query(query, (err, results) => {
+            if (err) return callback(err);
+
+            const grouped = {};
+            results.forEach(row => {
+                if (!grouped[row.id]) {
+                    grouped[row.id] = {
+                        id: row.id,
+                        name: row.name,
+                        price: row.price,
+                        address: row.address,
+                        latitude: row.latitude,
+                        longitude: row.longitude,
+                        photos: [],
+                        payment_type: row.payment_type,
+                        status: row.status,
+                        tipe_kos: row.tipe_kos,
+                        facilities: [] 
+                    };
+                }
+                if (row.filename) {
+                    grouped[row.id].photos.push(row.filename);
+                }
+            });
+
+            callback(null, Object.values(grouped));
+        });
+    },
 
     // Fungsi untuk memperbarui data kos
     updateKos: (kosId, kosData, callback) => {
@@ -109,7 +145,7 @@ const Kos = {
     // Mendapatkan detail kos berdasarkan ID
     getKosById: (kosId, callback) => {
         const query = `
-            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, k.description, k.payment_type, f.filename, k.status, k.tipe_kos
+            SELECT k.id, k.user_id, k.name, k.price, k.address, k.latitude, k.longitude, k.description, k.payment_type, f.filename, k.status, k.tipe_kos
             FROM kos k
             LEFT JOIN foto_kos f ON f.kos_id = k.id
             WHERE k.id = ?
@@ -168,9 +204,52 @@ const Kos = {
             if (err) return callback(err, null);
             callback(null, result);
         });
-    }
+    },
+    // Fungsi untuk mendapatkan kos berdasarkan array kos_id dengan foto
+    getKosByIds: (kosIds, callback) => {
+        // Membuat query untuk mengambil data kos dan foto berdasarkan ID yang diberikan
+        const query = `
+            SELECT k.id, k.name, k.price, k.address, k.latitude, k.longitude, 
+                   k.description, k.payment_type, k.status, k.tipe_kos, f.filename
+            FROM kos k
+            LEFT JOIN foto_kos f ON f.kos_id = k.id
+            WHERE k.id IN (?)
+        `;
+        
+        // Menggunakan parameter kosIds untuk mencari kos yang sesuai
+        db.query(query, [kosIds], (err, results) => {
+            if (err) {
+                console.error('Error fetching kos by ids:', err);
+                return callback(err, null);
+            }
+            
+            // Mengelompokkan hasil berdasarkan ID kos dan mengumpulkan foto
+            const grouped = {};
+            results.forEach(row => {
+                if (!grouped[row.id]) {
+                    grouped[row.id] = {
+                        id: row.id,
+                        name: row.name,
+                        price: row.price,
+                        address: row.address,
+                        latitude: row.latitude,
+                        longitude: row.longitude,
+                        description: row.description,
+                        payment_type: row.payment_type,
+                        status: row.status,
+                        tipe_kos: row.tipe_kos,
+                        photos: []
+                    };
+                }
+                if (row.filename) {
+                    grouped[row.id].photos.push(row.filename);
+                }
+            });
+            
+            callback(null, Object.values(grouped));  // Mengembalikan array kos dengan foto
+        });
+    },
 };
-
 
 
 module.exports = Kos;
