@@ -1,7 +1,7 @@
 const kosController = {
   // ===== RATING =====
   lihatRating: (req, res) => {
-    res.render("kos/lihatRating", { title: "Lihat Rating Kos" });
+    res.render("kos/ratingPopup", { title: "Kasih Rating" });
   },
 
   kasihRating: (req, res) => {
@@ -70,6 +70,42 @@ const kosController = {
     const { nama_kos, alasan, keterangan } = req.body;
     console.log("Laporan dikirim:", { nama_kos, alasan, keterangan });
     res.redirect('/');
+  },
+
+  // ===== FASILITAS =====
+  tampilFasilitas: (req, res) => {
+    const fasilitasDummy = [
+      { id: 1, nama: 'WiFi' },
+      { id: 2, nama: 'Kamar Mandi Dalam' },
+      { id: 3, nama: 'AC' }
+    ];
+    res.render('kos/kelolaFasilitas', { fasilitas: fasilitasDummy });
+  },
+
+  // ===== DASHBOARD PEMILIK =====
+  dashboardPemilik: (req, res) => {
+    const data = {
+      totalKos: 3,
+      totalBooking: 7,
+      totalReview: 5
+    };
+    res.render('pemilik/dashboard', { data });
+  },
+
+  // ===== FORM TAMBAH KOS =====
+  formTambahKos: (req, res) => {
+    res.render('pemilik/tambahKos');
+  },
+
+  prosesTambahKos: (req, res) => {
+    const { nama, harga, fasilitas, alamat, status } = req.body;
+    console.log("Kos baru ditambahkan:");
+    console.log("Nama:", nama);
+    console.log("Harga:", harga);
+    console.log("Fasilitas:", fasilitas);
+    console.log("Alamat:", alamat);
+    console.log("Status:", status);
+    res.redirect('/kos/pemilik/dashboard');
   }
 };
 

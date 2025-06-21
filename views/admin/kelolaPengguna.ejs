@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kelola Pengguna</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-blue-600">Admin Dashboard</h1>
+    <ul class="flex space-x-6">
+      <li><a href="/admin/pengguna" class="text-blue-700 font-semibold">Pengguna</a></li>
+      <li><a href="/admin/kos" class="text-gray-700 hover:text-blue-500">Kelola Kos</a></li>
+      <li><a href="/admin/booking" class="text-gray-700 hover:text-blue-500">Booking</a></li>
+      <li><a href="/admin/report" class="text-gray-700 hover:text-blue-500">Report</a></li>
+      <li><a href="/admin/statistik" class="text-gray-700 hover:text-blue-500">Statistik</a></li>
+    </ul>
+  </nav>
+
+  <!-- Content -->
+  <main class="flex-grow px-8 py-6">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Daftar Pengguna</h2>
+    <div class="overflow-x-auto bg-white rounded-lg shadow p-4">
+      <table class="min-w-full table-auto border border-gray-200">
+        <thead class="bg-gray-100 text-gray-600 text-left">
+          <tr>
+            <th class="py-2 px-4 border">#</th>
+            <th class="py-2 px-4 border">Nama</th>
+            <th class="py-2 px-4 border">Email</th>
+            <th class="py-2 px-4 border">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% pengguna.forEach((user, index) => { %>
+            <tr class="hover:bg-gray-50">
+              <td class="py-2 px-4 border"><%= index + 1 %></td>
+              <td class="py-2 px-4 border"><%= user.nama %></td>
+              <td class="py-2 px-4 border"><%= user.email %></td>
+              <td class="py-2 px-4 border"><%= user.role %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white text-center py-4 border-t">
+    <p class="text-gray-500 text-sm">&copy; 2025 Website Kos Mahasiswa UNAND</p>
+  </footer>
+
+</body>
+</html>
