@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kost Favorit - KostUnand</title>
+    <title>Kost Favorit - KosAnd</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,7 +13,12 @@
                         'blue-primary': '#1e40af',
                         'blue-secondary': '#3b82f6',
                         'blue-light': '#dbeafe',
-                        'blue-dark': '#1e3a8a'
+                        'blue-dark': '#1e3a8a',
+                        'green-primary': '#10B981',
+                        'red-primary': '#EF4444',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
                     }
                 }
             }
@@ -21,46 +26,46 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen font-poppins">
 
     <!-- Header -->
     <header class="bg-white shadow-lg border-b-4 border-blue-primary">
-        <div class="container mx-auto px-4 py-4">
+        <div class="container mx-auto px-6 py-6">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <i class="fas fa-home text-blue-primary text-2xl"></i>
-                    <h1 class="text-2xl font-bold text-blue-primary">KostUnand</h1>
+                    <i class="fas fa-home text-blue-primary text-3xl"></i>
+                    <h1 class="text-3xl font-bold text-blue-primary">KosAnd</h1>
                 </div>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="/" class="text-gray-700 hover:text-blue-primary transition duration-300">Beranda</a>
-                    <a href="/kost" class="text-gray-700 hover:text-blue-primary transition duration-300">Cari Kost</a>
+                <nav class="hidden md:flex space-x-8 text-gray-700">
+                    <a href="/" class="hover:text-blue-primary transition duration-300">Beranda</a>
+                    <a href="/kost" class="hover:text-blue-primary transition duration-300">Cari Kost</a>
                     <a href="/favoritKos" class="text-blue-primary font-semibold">Kost Favorit</a>
-                    <a href="/owner-profile" class="text-gray-700 hover:text-blue-primary transition duration-300">Profil</a>
+                    <a href="/owner-profile" class="hover:text-blue-primary transition duration-300">Profil</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-        <h2 class="text-3xl font-bold text-blue-primary mb-6">Kost Favorit</h2>
+    <main class="container mx-auto px-6 py-8">
+        <h2 class="text-4xl font-bold text-blue-primary mb-6">Kost Favorit</h2>
 
         <!-- Daftar Kost Favorit -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Kost Favorit Statis 1 -->
-            <div class="border rounded-lg p-4 shadow-lg bg-white hover:shadow-xl transition duration-300">
-                <img src="/default-image.jpg" alt="Kost A" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h3 class="text-lg font-semibold text-blue-primary mb-2">Kost A</h3>
+            <div class="border rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition duration-300 transform hover:scale-105">
+                <img src="/default-image.jpg" alt="Kost A" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-xl font-semibold text-blue-primary mb-2">Kost A</h3>
                 <p class="text-gray-600 mb-2">
                     <i class="fas fa-map-marker-alt mr-2"></i> Jl. Contoh No. 12, Jakarta
                 </p>
                 <p class="text-blue-primary font-semibold mb-4">Rp 1.500.000/bulan</p>
-                <a href="/kost/1" class="text-blue-secondary hover:text-blue-primary text-sm">
+                <a href="/kost/1" class="text-blue-secondary hover:text-blue-primary text-sm font-semibold">
                     Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
                 </a>
                 <!-- Tombol Batal Favorit -->
-                <form action="/favoritKos/1" method="POST" class="mt-4">
-                    <button type="submit" class="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 flex items-center justify-center">
+                <form action="/favoritKos/1" method="POST" class="mt-6">
+                    <button type="submit" class="w-full bg-red-primary text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 flex items-center justify-center">
                         <i class="fas fa-heart-broken mr-2"></i>
                         Batalkan Favorit
                     </button>
@@ -68,19 +73,19 @@
             </div>
 
             <!-- Kost Favorit Statis 2 -->
-            <div class="border rounded-lg p-4 shadow-lg bg-white hover:shadow-xl transition duration-300">
-                <img src="/default-image.jpg" alt="Kost B" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h3 class="text-lg font-semibold text-blue-primary mb-2">Kost B</h3>
+            <div class="border rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition duration-300 transform hover:scale-105">
+                <img src="/default-image.jpg" alt="Kost B" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-xl font-semibold text-blue-primary mb-2">Kost B</h3>
                 <p class="text-gray-600 mb-2">
                     <i class="fas fa-map-marker-alt mr-2"></i> Jl. Contoh No. 34, Jakarta
                 </p>
                 <p class="text-blue-primary font-semibold mb-4">Rp 1.800.000/bulan</p>
-                <a href="/kost/2" class="text-blue-secondary hover:text-blue-primary text-sm">
+                <a href="/kost/2" class="text-blue-secondary hover:text-blue-primary text-sm font-semibold">
                     Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
                 </a>
                 <!-- Tombol Batal Favorit -->
-                <form action="/favoritKos/2" method="POST" class="mt-4">
-                    <button type="submit" class="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 flex items-center justify-center">
+                <form action="/favoritKos/2" method="POST" class="mt-6">
+                    <button type="submit" class="w-full bg-red-primary text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 flex items-center justify-center">
                         <i class="fas fa-heart-broken mr-2"></i>
                         Batalkan Favorit
                     </button>
@@ -88,19 +93,19 @@
             </div>
 
             <!-- Kost Favorit Statis 3 -->
-            <div class="border rounded-lg p-4 shadow-lg bg-white hover:shadow-xl transition duration-300">
-                <img src="/default-image.jpg" alt="Kost C" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h3 class="text-lg font-semibold text-blue-primary mb-2">Kost C</h3>
+            <div class="border rounded-lg p-6 shadow-lg bg-white hover:shadow-xl transition duration-300 transform hover:scale-105">
+                <img src="/default-image.jpg" alt="Kost C" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-xl font-semibold text-blue-primary mb-2">Kost C</h3>
                 <p class="text-gray-600 mb-2">
                     <i class="fas fa-map-marker-alt mr-2"></i> Jl. Contoh No. 56, Jakarta
                 </p>
                 <p class="text-blue-primary font-semibold mb-4">Rp 2.000.000/bulan</p>
-                <a href="/kost/3" class="text-blue-secondary hover:text-blue-primary text-sm">
+                <a href="/kost/3" class="text-blue-secondary hover:text-blue-primary text-sm font-semibold">
                     Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
                 </a>
                 <!-- Tombol Batal Favorit -->
-                <form action="/favoritKos/3" method="POST" class="mt-4">
-                    <button type="submit" class="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 flex items-center justify-center">
+                <form action="/favoritKos/3" method="POST" class="mt-6">
+                    <button type="submit" class="w-full bg-red-primary text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 flex items-center justify-center">
                         <i class="fas fa-heart-broken mr-2"></i>
                         Batalkan Favorit
                     </button>
@@ -111,9 +116,9 @@
 
     <!-- Footer -->
     <footer class="bg-blue-primary text-white mt-12">
-        <div class="container mx-auto px-4 py-8">
+        <div class="container mx-auto px-6 py-8">
             <div class="text-center">
-                <h3 class="text-2xl font-bold mb-2">KostUnand</h3>
+                <h3 class="text-2xl font-bold mb-2">KosAnd</h3>
                 <p class="text-blue-200 mb-4">Platform pencarian kost terpercaya di wilayah Universitas Andalas</p>
                 <div class="flex justify-center space-x-6">
                     <a href="#" class="text-blue-200 hover:text-white transition duration-300">
@@ -126,9 +131,10 @@
                         <i class="fab fa-twitter text-xl"></i>
                     </a>
                 </div>
-                <p class="text-blue-200 text-sm mt-4">&copy; 2024 KostUnand. Semua hak dilindungi.</p>
+                <p class="text-blue-200 text-sm mt-4">&copy; 2024 KosAnd. Semua hak dilindungi.</p>
             </div>
         </div>
     </footer>
+
 </body>
 </html>

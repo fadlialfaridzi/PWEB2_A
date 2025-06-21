@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pemilik Kost - Pengguna</title>    
+    <title>Profil Pemilik Kost - Pengguna</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,7 +13,12 @@
                         'blue-primary': '#1e40af',
                         'blue-secondary': '#3b82f6',
                         'blue-light': '#dbeafe',
-                        'blue-dark': '#1e3a8a'
+                        'blue-dark': '#1e3a8a',
+                        'green-primary': '#10B981',
+                        'gray-dark': '#2d3748',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
                     }
                 }
             }
@@ -21,39 +26,39 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen font-poppins">
+
     <!-- Header -->
     <header class="bg-white shadow-lg border-b-4 border-blue-primary">
-        <div class="container mx-auto px-4 py-4">
-            <h1>Profil Pemilik Kost: Pengguna</h1>
+        <div class="container mx-auto px-6 py-6">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <i class="fas fa-home text-blue-primary text-2xl"></i>
-                    <h1 class="text-2xl font-bold text-blue-primary">KosAnd</h1>
+                    <h1 class="text-3xl font-bold text-blue-primary">KosAnd</h1>
                 </div>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="/" class="text-gray-700 hover:text-blue-primary transition duration-300">Beranda</a>
-                    <a href="/kost" class="text-gray-700 hover:text-blue-primary transition duration-300">Cari Kost</a>
+                <nav class="hidden md:flex space-x-6 text-gray-700">
+                    <a href="/" class="hover:text-blue-primary transition duration-300">Beranda</a>
+                    <a href="/kost" class="hover:text-blue-primary transition duration-300">Cari Kost</a>
                     <a href="/owner-profile" class="text-blue-primary font-semibold">Profil</a>
                 </nav>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-6 py-8">
         <!-- Profile Header -->
         <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 border-l-4 border-blue-primary">
             <div class="bg-gradient-to-r from-blue-primary to-blue-secondary text-white p-6">
                 <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                     <div class="relative">
-                        <img src="/default-avatar.jpg" alt="Foto Profil" class="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover">
-                        <div class="absolute -bottom-2 -right-2 bg-green-500 text-white rounded-full p-1">
+                        <img src="/default-avatar.jpg" alt="Foto Profil" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+                        <div class="absolute -bottom-2 -right-2 bg-green-primary text-white rounded-full p-1">
                             <i class="fas fa-check text-xs"></i>
                         </div>
                     </div>
                     <div class="text-center md:text-left">
-                        <h2 class="text-3xl font-bold mb-2">Pengguna</h2>
-                        <p class="text-blue-100 mb-2">
+                        <h2 class="text-4xl font-semibold mb-2">Pengguna</h2>
+                        <p class="text-gray-200 mb-2">
                             <i class="fas fa-map-marker-alt mr-2"></i>
                             Alamat tidak tersedia
                         </p>
@@ -77,7 +82,7 @@
             <div class="lg:col-span-2 space-y-6">
                 <!-- About Section -->
                 <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-secondary">
-                    <h3 class="text-xl font-bold text-blue-primary mb-4 flex items-center">
+                    <h3 class="text-2xl font-semibold text-blue-primary mb-4 flex items-center">
                         <i class="fas fa-user-circle mr-2"></i>
                         Tentang Pemilik
                     </h3>
@@ -88,7 +93,7 @@
 
                 <!-- Properties Section -->
                 <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-secondary">
-                    <h3 class="text-xl font-bold text-blue-primary mb-6 flex items-center">
+                    <h3 class="text-2xl font-semibold text-blue-primary mb-4 flex items-center">
                         <i class="fas fa-building mr-2"></i>
                         Daftar Kost
                     </h3>
@@ -102,7 +107,7 @@
 
                 <!-- Reviews Section -->
                 <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-secondary">
-                    <h3 class="text-xl font-bold text-blue-primary mb-6 flex items-center">
+                    <h3 class="text-2xl font-semibold text-blue-primary mb-4 flex items-center">
                         <i class="fas fa-star mr-2"></i>
                         Ulasan Penyewa
                     </h3>
@@ -117,7 +122,7 @@
             <div class="space-y-6">
                 <!-- Contact Info -->
                 <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-secondary">
-                    <h3 class="text-xl font-bold text-blue-primary mb-4 flex items-center">
+                    <h3 class="text-2xl font-semibold text-blue-primary mb-4 flex items-center">
                         <i class="fas fa-phone mr-2"></i>
                         Kontak
                     </h3>
@@ -130,7 +135,7 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-3">
-                            <i class="fab fa-whatsapp text-green-500 w-5"></i>
+                            <i class="fab fa-whatsapp text-green-primary w-5"></i>
                             <div>
                                 <p class="text-sm text-gray-600">WhatsApp</p>
                                 <a href="https://wa.me/" class="font-semibold text-green-600 hover:text-green-700">Tidak tersedia</a>
@@ -145,7 +150,7 @@
                         </div>
                     </div>
                     <div class="mt-6 space-y-2">
-                        <a href="https://wa.me/" class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 flex items-center justify-center">
+                        <a href="https://wa.me/" class="w-full bg-green-primary text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 flex items-center justify-center">
                             <i class="fab fa-whatsapp mr-2"></i>
                             Chat WhatsApp
                         </a>
@@ -180,7 +185,5 @@
             </div>
         </div>
     </footer>
-
-    
 </body>
 </html>
