@@ -141,6 +141,33 @@ const Kos = {
     deleteFasilitasKos: (kosId, callback) => {
         const query = `DELETE FROM fasilitas_kos WHERE kos_id = ?`;
         db.query(query, [kosId], callback);
+    },
+    getOwnerInfo: (userId, callback) => {
+        const query = `
+            SELECT id, name, phone FROM users WHERE id = ? AND role = 'pemilik'
+        `;
+        db.query(query, [userId], (err, result) => {
+            if (err) {
+                console.error('Error querying owner info:', err);
+                return callback(err, null);
+            }
+            if (result.length === 0) {
+                console.error('Owner not found for user_id:', userId);
+                return callback(new Error('Owner not found'), null);  // Handle case when owner is not found
+            }
+            callback(null, result[0]);  // Return the first result (the owner)
+        });
+    },
+
+    // Fetch list of kos owned by a specific owner
+    getKosByOwner: (ownerId, callback) => {
+        const query = `
+            SELECT id, name, address FROM kos WHERE user_id = ?
+        `;
+        db.query(query, [ownerId], (err, result) => {
+            if (err) return callback(err, null);
+            callback(null, result);
+        });
     }
 };
 

@@ -5,10 +5,19 @@
 
 <body class="bg-gray-50">
 <%- include('Component/navbarPencari.ejs') %>
+
+     <!-- Menampilkan Pesan Sukses Jika Ada -->
+        <% if (successMessage) { %>
+            <div class="bg-green-500 text-white text-center p-4 mb-6 rounded-lg">
+                <p><%= successMessage %></p>
+            </div>
+        <% } %>
+
     <!-- Kos Detail Section -->
     <section class="py-12 bg-white">
         <div class="max-w-[85rem] mx-auto px-4">
             <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Detail Kos</h2>
+            
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <!-- Kos Information -->
                 <div class="bg-white p-6 rounded-xl shadow-lg">
@@ -34,6 +43,27 @@
                     <!-- Tipe Kos -->
                     <p class="mt-5 text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kos.tipe_kos %></span></p>
                     
+                    <!-- Pesan Sekarang Button -->
+                    <div class="mt-10 flex justify-between">
+                        <!-- Jika booking berhasil (successMessage ada) tampilkan tombol Batalkan Pesanan -->
+                            <!-- Tombol Batalkan Pesanan -->
+                            <% if (successMessage) { %>
+                                <form action="/batalkanPesanan" method="POST">
+                                    <input type="hidden" name="kosId" value="<%= kos.id %>">
+                                    <button type="submit" class="text-center bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition-all">
+                                        Batalkan Pesanan
+                                    </button>
+                                </form>
+                            <% } else { %>
+                                <!-- Tombol Pesan Sekarang jika belum ada pesan sukses -->
+                                <a href="/bookingPage/<%= kos.id %>?bookingDate=<%= new Date().toISOString().split('T')[0] %>" id="bookingButton" class="text-center bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all">
+                                    Pesan Sekarang
+                                </a>
+                            <% } %>
+                        <a href="#bookingModal" id="addFavoriteButton" class="text-center bg-pink-400 text-white py-2 px-6 rounded-lg hover:bg-pink-700 transition-all">
+                            Tambahkan Favorit
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Google Maps Section -->
@@ -41,9 +71,12 @@
                     <h2 class="text-xl font-semibold">Lokasi Kos</h2>
                     <div id="map" style="height: 400px;"></div> <!-- Container for Google Maps -->
                 </div>
+                </div>
+
             </div>
         </div>
     </section>
+    
 
     <%- include('Component/footer.ejs') %>
 

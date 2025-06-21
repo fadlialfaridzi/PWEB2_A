@@ -18,13 +18,16 @@ const showDetailKosPencari = (req, res) => {
                 return res.status(500).send('Gagal mengambil fasilitas kos');
             }
 
-            // Kirim data kos dan fasilitas ke view detailKosPencari
+            // Check for success message in the session or query parameters (if needed)
+            const successMessage = req.query.successMessage || '';  // Example: you could pass a success message via query parameters
+
+            // Kirim data kos, fasilitas, dan successMessage ke view detailKosPencari
             res.render('detailKosPencari', {
                 title: 'Detail Kos',
                 user: req.session.user,
                 kos: kosItem,
                 facilities: fasilitas || [],
-                
+                successMessage: successMessage,  // Pass the success message
             });
         });
     });

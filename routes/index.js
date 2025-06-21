@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const upload = require('../config/upload');
-const ownerController = require('../controllers/ownerController'); // Pastikan path ke controller benar
+const ownerController = require('../controllers/ownerController'); // 
 const berandaController = require('../controllers/berandaController')
 const detailKosPencari = require('../controllers/detailKosPencari')
 const berandaPencari = require('../controllers/berandaPencari')
 const mapController = require('../controllers/mapController')
+const bookingController = require('../controllers/bookingController');
 // route  untuk menampilkan form tambah kos
 router.get('/formTambahKos', (req, res) => {
     if (req.session.user && req.session.user.role === 'pemilik') {
@@ -74,7 +75,16 @@ router.post('/hapusKos/:id', ownerController.hapusKos);
 
 // Route for the map page
 router.get('/map', mapController.showMap);
-//logout
+
+// Rute GET untuk menampilkan halaman booking
+router.get('/bookingPage/:kosId', bookingController.showBookingPage);
+// Rute untuk menyimpan data booking
+router.post('/pemesanan', bookingController.createBooking);
+// Rute POST untuk menyimpan data booking
+router.post('/bookingPage', bookingController.createBooking);
+// Rute untuk membatalkan pesanan
+router.post('/batalkanPesanan', bookingController.cancelBooking);  // Menambahkan rute ini
+
 // Route untuk logout
 router.get('/logout', (req, res) => {
     // Hapus data session user
