@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<%- include('Component/headfix.ejs') %>
+
+<body class="bg-gray-50">
+<%- include('Component/navbarAdmin.ejs') %>
+
+    <!-- Admin Dashboard Header -->
+    <section class="py-8 mt-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                    <i class="fas fa-tachometer-alt text-blue-600 mr-2"></i>
+                    Admin Dashboard
+                </h1>
+                <p class="text-gray-600">Selamat datang di panel administrasi KOSAND</p>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Pencari -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-users text-blue-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><%= stats.total_pencari %></h3>
+                            <p class="text-gray-600">Total Pencari</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Pemilik -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-user-tie text-green-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><%= stats.total_pemilik %></h3>
+                            <p class="text-gray-600">Total Pemilik</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Kos Available -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center">
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <i class="fas fa-home text-yellow-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><%= stats.total_kos_available %></h3>
+                            <p class="text-gray-600">Kos Tersedia</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Bookings Pending -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center">
+                        <div class="bg-orange-100 p-3 rounded-full">
+                            <i class="fas fa-clock text-orange-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><%= stats.total_bookings_pending %></h3>
+                            <p class="text-gray-600">Pemesanan Pending</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Statistics -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+                <!-- Completed Bookings -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><%= stats.total_bookings_completed %></h3>
+                            <p class="text-gray-600">Pemesanan Selesai</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Average Rating -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center">
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fas fa-star text-purple-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><%= parseFloat(stats.avg_rating).toFixed(1) %></h3>
+                            <p class="text-gray-600">Rating Rata-rata</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">
+                    <i class="fas fa-bolt text-blue-600 mr-2"></i>
+                    Quick Actions
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="/admin/users" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg text-center transition-colors">
+                        <i class="fas fa-users text-2xl mb-2"></i>
+                        <p class="font-semibold">Kelola Users</p>
+                    </a>
+                    <a href="/admin/kos" class="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg text-center transition-colors">
+                        <i class="fas fa-home text-2xl mb-2"></i>
+                        <p class="font-semibold">Kelola Kos</p>
+                    </a>
+                    <a href="/admin/bookings" class="bg-orange-600 hover:bg-orange-700 text-white p-4 rounded-lg text-center transition-colors">
+                        <i class="fas fa-calendar-check text-2xl mb-2"></i>
+                        <p class="font-semibold">Kelola Pemesanan</p>
+                    </a>
+                    <a href="/admin/ratings" class="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg text-center transition-colors">
+                        <i class="fas fa-star text-2xl mb-2"></i>
+                        <p class="font-semibold">Kelola Rating</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('Component/footer.ejs') %>
+</body>
+</html> 

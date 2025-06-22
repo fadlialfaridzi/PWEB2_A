@@ -1,0 +1,326 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Dashboard Pemilik Kos - KOSAND</title>
+
+      <!-- TailwindCSS -->
+      <link rel="stylesheet" href="/public/stylesheets/style.css">
+      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+      <!----preline --->
+      <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet" />
+      <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+      <!-- Preline UI CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Mengubah background menjadi hijau ketika switch aktif (checked) */
+    input:checked + .bg-green-500 {
+      background-color: #38a169; /* Warna hijau */
+    }
+
+    /* Default background untuk switch (tidak aktif) */
+    .bg-gray-300 {
+      background-color: #d1d5db; /* Warna abu-abu untuk status tidak tersedia */
+      transition: background-color 0.3s ease; /* Transisi halus saat background berubah */
+    }
+
+    /* Background hijau untuk status tersedia */
+    .bg-green-500 {
+      background-color: #38a169; /* Warna hijau */
+      transition: background-color 0.3s ease;
+    }
+
+    /* Dot yang berpindah saat status diubah */
+    .dot {
+      transition: all 0.3s ease; /* Transisi halus saat dot bergerak */
+      position: absolute;
+    }
+
+    /* Posisi dot untuk status available (kanan) */
+    .right-1 {
+      right: 0.25rem;
+    }
+
+    /* Posisi dot untuk status not_available (kiri) */
+    .left-1 {
+      left: 0.25rem;
+    }
+    </style>
+    </head>
+    <main class="flex-grow">
+    <body class="bg-gray-100 flex flex-col min-h-screen"  >
+              <%- include('Component/navbarPemilik.ejs') %>
+              <%- include('Component/heroSectionPemilik.ejs') %>
+
+
+      <!-- Pesan Sukses -->
+      <% if (success) { %>
+          <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
+            <span class="font-bold">Success:</span> Data Kos Berhasil Ditambahkan!
+            <!-- Button Close -->
+            <button onclick="closeSuccessMessage()" class=" bg-green-100 ml-4 text-black hover:text-gray-300 focus:outline-none">
+              Close
+            </button>
+          </div>
+        <% } %>
+
+        <% if (successEdit) { %>
+            <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
+                <span class="font-bold">Success:</span> Data Kos Berhasil Diedit!
+                <button onclick="closeSuccessMessage()" class=" green-100 ml-4 text-black hover:text-gray-300 focus:outline-none">
+                Close
+                </button>
+            </div>
+        <% } %>
+
+        <% if (successDelete) { %>
+            <div id="successMessage" class="bg-red-400 mt-2 border-4 border-red-200 text-white text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
+                <span class="font-bold">Success:</span> Data Kos Berhasil Dihapus!
+                <button onclick="closeSuccessMessage()" class=" bg-red-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+                  Close
+                </button>
+              </div>
+        <% } %>
+              
+
+
+
+      <!-- Available Kos List -->
+      <div class="mx-auto mt-8 w-full sm:w-4/5 lg:w-3/4">
+        <h3 class="text-2xl font-semibold mb-6">Daftar Kos</h3>
+        <!-- Tombol Tambah Kos -->
+        <div class="mb-6 flex justify-end">
+          <a href="/formTambahKos" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Tambah Kos
+          </a>
+        </div>
+
+        <!-- Kos Card List -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <% if (kos && kos.length > 0) { %>
+        <% kos.forEach(kosItem => { %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <% if (kosItem.photos.length > 0) { %>
+              <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
+            <% } else { %>
+              <img src="/images/default-kos.jpg" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
+            <% } %>
+            <div class="p-6">
+              <h4 class="font-semibold text-lg"><%= kosItem.name %></h4>
+              <div class="mb-4">
+                <p class="text-gray-600 mb-2 flex items-center">
+                  <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+                  <%= kosItem.address %>
+                </p>
+              </div>
+              <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
+              <!-- Tipe Kos -->
+              <p class="text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kosItem.tipe_kos %></span></p> 
+
+              <!-- Rating Display -->
+              <div class="flex items-center mt-3 mb-4">
+                <div class="flex items-center">
+                  <i class="fas fa-star text-yellow-400 mr-1"></i>
+                  <span class="font-semibold text-gray-800">
+                    <%= kosItem.avg_rating || '0.0' %>
+                  </span>
+                  <span class="text-gray-500 text-sm ml-1">
+                    (<%= kosItem.total_ratings || 0 %> ulasan)
+                  </span>
+                </div>
+              </div>
+
+              <!-- Debug info -->
+              <script>
+                console.log('Kos <%= kosItem.id %>: <%= kosItem.name %> - Status: <%= kosItem.status %>');
+              </script>
+
+              <div class="border-2 mt-16 rounded-3xl p-4">
+                <!-- Switch Toggle untuk Status Ketersediaan -->
+                <div class="flex items-center mt-4">
+                  <label class="mr-2 text-sm">Status:</label>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <!-- Tombol switch -->
+                    <input type="checkbox" id="statusToggle<%= kosItem.id %>" 
+                           class="sr-only status-toggle" 
+                           data-kos-id="<%= kosItem.id %>"
+                           <% if (kosItem.status === 'available') { %> checked <% } %>>
+                    <span class="w-11 h-6 rounded-full transition-colors duration-300 
+                    <% if (kosItem.status === 'available') { %> bg-green-500 <% } else { %> bg-gray-300 <% } %>"
+                          id="switchBg<%= kosItem.id %>">
+                    </span>
+                    
+                    <!-- Dot (bulatan) yang berpindah -->
+                    <span class="w-4 h-4 bg-white rounded-full absolute top-1 transition-all duration-300 
+                    <% if (kosItem.status === 'available') { %> right-1 <% } else { %> left-1 <% } %>"
+                          id="switchDot<%= kosItem.id %>"></span>
+                  </label>
+                </div>
+                
+                <!-- Tombol Detail Kos -->
+                <div class="mt-7 text-center">
+                  <a href="/detailKos/<%= kosItem.id %>" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
+                      Detail Kos
+                    </a>
+                  </div>
+                </div>
+            </div>
+              
+            
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="text-gray-600">Belum ada kos terdaftar.</p>
+      <% } %>
+    </div>
+    </main>
+    <%- include('Component/footer.ejs') %>
+
+    <script>
+        console.log('Script loaded!');
+        
+        // Function to toggle kos status
+        function toggleKosStatus(kosId, isChecked) {
+            console.log('=== TOGGLE STATUS DEBUG ===');
+            console.log('kosId:', kosId);
+            console.log('isChecked:', isChecked);
+            const newStatus = isChecked ? 'available' : 'not_available';
+            console.log('Setting status to:', newStatus);
+            
+            // Update visual immediately
+            const switchBg = document.getElementById(`switchBg${kosId}`);
+            const switchDot = document.getElementById(`switchDot${kosId}`);
+            
+            console.log('Switch elements found:', !!switchBg, !!switchDot);
+            
+            if (isChecked) {
+                switchBg.classList.remove('bg-gray-300');
+                switchBg.classList.add('bg-green-500');
+                switchDot.classList.remove('left-1');
+                switchDot.classList.add('right-1');
+                console.log('Visual updated to AVAILABLE (green, right)');
+            } else {
+                switchBg.classList.remove('bg-green-500');
+                switchBg.classList.add('bg-gray-300');
+                switchDot.classList.remove('right-1');
+                switchDot.classList.add('left-1');
+                console.log('Visual updated to NOT_AVAILABLE (gray, left)');
+            }
+
+            // Send AJAX request
+            fetch(`/kos/${kosId}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+                if (!data.success) {
+                    alert('Failed to update status: ' + data.message);
+                    // Revert visual changes
+                    const checkbox = document.getElementById(`statusToggle${kosId}`);
+                    checkbox.checked = !isChecked;
+                    if (isChecked) {
+                        switchBg.classList.remove('bg-green-500');
+                        switchBg.classList.add('bg-gray-300');
+                        switchDot.classList.remove('right-1');
+                        switchDot.classList.add('left-1');
+                    } else {
+                        switchBg.classList.remove('bg-gray-300');
+                        switchBg.classList.add('bg-green-500');
+                        switchDot.classList.remove('left-1');
+                        switchDot.classList.add('right-1');
+                    }
+                } else {
+                    console.log('Status updated successfully to:', newStatus);
+                }
+                console.log('=== END TOGGLE DEBUG ===');
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('Error updating status');
+                // Revert visual changes
+                const checkbox = document.getElementById(`statusToggle${kosId}`);
+                checkbox.checked = !isChecked;
+                if (isChecked) {
+                    switchBg.classList.remove('bg-green-500');
+                    switchBg.classList.add('bg-gray-300');
+                    switchDot.classList.remove('right-1');
+                    switchDot.classList.add('left-1');
+                } else {
+                    switchBg.classList.remove('bg-gray-300');
+                    switchBg.classList.add('bg-green-500');
+                    switchDot.classList.remove('left-1');
+                    switchDot.classList.add('right-1');
+                }
+                console.log('=== END TOGGLE DEBUG ===');
+            });
+        }
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded!');
+            
+            // Verify initial status of all toggles
+            console.log('=== VERIFYING INITIAL STATUS ===');
+            const statusToggles = document.querySelectorAll('.status-toggle');
+            console.log('Found status toggles:', statusToggles.length);
+            
+            statusToggles.forEach(toggle => {
+                const kosId = toggle.getAttribute('data-kos-id');
+                const isChecked = toggle.checked;
+                const switchBg = document.getElementById(`switchBg${kosId}`);
+                const switchDot = document.getElementById(`switchDot${kosId}`);
+                
+                console.log(`Kos ${kosId}: checked=${isChecked}, bg=${switchBg.className}, dot=${switchDot.className}`);
+                
+                toggle.addEventListener('change', function() {
+                    const kosId = this.getAttribute('data-kos-id');
+                    const isChecked = this.checked;
+                    console.log('Status toggle changed:', kosId, isChecked);
+                    toggleKosStatus(kosId, isChecked);
+                });
+            });
+            console.log('=== END VERIFICATION ===');
+        });
+
+        // Function to close success message
+        function closeSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }
+    </script>
+    </body>
+
+    </html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<%- include('Component/headfix.ejs') %>
+
+<body class="bg-gray-50">
+<%- include('Component/navbarPencari.ejs') %>
+
+<section class="py-12 bg-white">
+    <div class="max-w-[85rem] mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Rating Kos yang Sudah Disewa</h2>
+
+        <!-- Menampilkan pesan sukses -->
+        <% if (successMessage) { %>
+            <div class="bg-teal-50 border border-teal-200 text-teal-800 px-4 py-3 rounded-lg text-center mb-6 animate-pulse">
+                <p><%= successMessage %></p>
+            </div>
+        <% } %>
+
+        <!-- Menampilkan pesan jika tidak ada booking complete -->
+        <% if (completedBookings.length === 0) { %>
+            <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg text-center">
+                <p>Belum ada kos yang sudah disewa dan selesai</p>
+            </div>
+        <% } else { %>
+            <!-- Menampilkan Daftar Kos yang Sudah Complete -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <% completedBookings.forEach((booking) => { %>
+                    <div class="group bg-white border border-gray-200 shadow-sm rounded-xl hover:shadow-lg transition-all duration-300">
+                        <div class="p-6">
+                            <!-- Header dengan nama kos -->
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-gray-800"><%= booking.kos_name %></h3>
+                                <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                                    <span class="w-1.5 h-1.5 bg-teal-600 rounded-full"></span>
+                                    Complete
+                                </span>
+                            </div>
+
+                            <!-- Informasi Kos -->
+                            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                                <div class="space-y-2">
+                                    <p class="text-sm text-gray-600">
+                                        <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+                                        <strong>Alamat:</strong> <%= booking.kos_address %>
+                                    </p>
+                                    <p class="text-sm text-gray-600">
+                                        <i class="fas fa-money-bill text-green-500 mr-2"></i>
+                                        <strong>Harga:</strong> Rp <%= booking.kos_price %>
+                                    </p>
+                                    <p class="text-sm text-gray-600">
+                                        <i class="fas fa-calendar text-blue-500 mr-2"></i>
+                                        <strong>Tanggal Booking:</strong> 
+                                        <% 
+                                            const bookingDate = new Date(booking.booking_date);
+                                            const formattedDate = bookingDate.toLocaleDateString('id-ID', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            });
+                                        %>
+                                        <%= formattedDate %>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Rating Section -->
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-gray-800 mb-3">Rating & Review:</h4>
+                                
+                                <% if (booking.rating) { %>
+                                    <!-- Tampilkan rating yang sudah ada -->
+                                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                        <div class="flex items-center mb-2">
+                                            <div class="flex items-center">
+                                                <% for(let i = 1; i <= 5; i++) { %>
+                                                    <svg class="w-5 h-5 <%= i <= booking.rating ? 'text-yellow-400' : 'text-gray-400' %>" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                    </svg>
+                                                <% } %>
+                                            </div>
+                                            <span class="ml-2 text-sm text-gray-600">(<%= booking.rating %>/5)</span>
+                                        </div>
+                                        <% if (booking.review) { %>
+                                            <p class="text-gray-700 text-sm"><%= booking.review %></p>
+                                        <% } %>
+                                        <button onclick="showRatingForm('<%= booking.booking_id %>')" 
+                                                class="mt-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
+                                            <i class="fas fa-edit"></i>
+                                            Edit Rating
+                                        </button>
+                                    </div>
+                                <% } else { %>
+                                    <!-- Form untuk rating baru -->
+                                    <button onclick="showRatingForm('<%= booking.booking_id %>')" 
+                                            class="w-full inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600 transition-all duration-300">
+                                        <i class="fas fa-star"></i>
+                                        Berikan Rating
+                                    </button>
+                                <% } %>
+                                
+                                <!-- Form Rating (tersembunyi) -->
+                                <div id="ratingForm<%= booking.booking_id %>" class="hidden mt-4">
+                                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                        <form action="/saveRating" method="POST">
+                                            <input type="hidden" name="bookingId" value="<%= booking.booking_id %>">
+                                            <input type="hidden" name="kosId" value="<%= booking.kos_id %>">
+                                            
+                                            <!-- Rating Stars -->
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">Rating:</label>
+                                                <div class="flex items-center gap-1" data-booking-id="<%= booking.booking_id %>">
+                                                    <% for(let i = 1; i <= 5; i++) { %>
+                                                        <label class="cursor-pointer group">
+                                                            <input type="radio" name="rating" value="<%= i %>" class="sr-only" required>
+                                                            <svg class="w-8 h-8 text-gray-400 group-hover:text-yellow-400 transition-colors duration-200 star-rating" data-rating="<%= i %>" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                            </svg>
+                                                        </label>
+                                                    <% } %>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <span id="ratingText<%= booking.booking_id %>" class="text-sm text-gray-500">Pilih rating Anda</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Review -->
+                                            <div class="mb-4">
+                                                <label for="review<%= booking.booking_id %>" class="block text-sm font-medium text-gray-700 mb-2">Review (opsional):</label>
+                                                <textarea name="review" rows="3" 
+                                                          class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                                          placeholder="Bagikan pengalaman Anda..."></textarea>
+                                            </div>
+                                            
+                                            <!-- Buttons -->
+                                            <div class="flex justify-end gap-x-2">
+                                                <button type="button" onclick="hideRatingForm('<%= booking.booking_id %>')" 
+                                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
+                                                    Batal
+                                                </button>
+                                                <button type="submit" 
+                                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600">
+                                                    <span class="submit-text">Simpan Rating</span>
+                                                    <div class="loading hidden">
+                                                        <div class="animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full" role="status" aria-label="loading">
+                                                            <span class="sr-only">Loading...</span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<%- include('Component/footer.ejs') %>
+
+<script>
+// Rating text mapping
+const ratingTexts = {
+    1: "Sangat Tidak Puas",
+    2: "Tidak Puas", 
+    3: "Cukup",
+    4: "Puas",
+    5: "Sangat Puas"
+};
+
+// Show rating form with Preline animation
+function showRatingForm(bookingId) {
+    const form = document.getElementById(`ratingForm${bookingId}`);
+    form.classList.remove('hidden');
+    form.classList.add('animate-fade-in');
+    
+    // Add star interaction
+    setupStarInteraction(bookingId);
+}
+
+// Hide rating form
+function hideRatingForm(bookingId) {
+    const form = document.getElementById(`ratingForm${bookingId}`);
+    form.classList.add('hidden');
+}
+
+// Setup star interaction
+function setupStarInteraction(bookingId) {
+    const stars = document.querySelectorAll(`#ratingForm${bookingId} .star-rating`);
+    const ratingText = document.getElementById(`ratingText${bookingId}`);
+    
+    stars.forEach((star, index) => {
+        const rating = index + 1;
+        
+        star.addEventListener('click', () => {
+            // Update radio button
+            const radio = star.parentElement.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            // Update stars display
+            updateStars(stars, rating);
+            
+            // Update rating text
+            ratingText.textContent = ratingTexts[rating];
+            ratingText.className = 'text-sm text-green-600 font-medium';
+        });
+        
+        star.addEventListener('mouseenter', () => {
+            updateStars(stars, rating);
+        });
+        
+        star.addEventListener('mouseleave', () => {
+            const selectedRating = document.querySelector(`#ratingForm${bookingId} input[type="radio"]:checked`);
+            if (selectedRating) {
+                updateStars(stars, parseInt(selectedRating.value));
+            } else {
+                updateStars(stars, 0);
+            }
+        });
+    });
+}
+
+// Update stars display
+function updateStars(stars, rating) {
+    stars.forEach((star, index) => {
+        const starRating = index + 1;
+        if (starRating <= rating) {
+            star.classList.remove('text-gray-400');
+            star.classList.add('text-yellow-400');
+        } else {
+            star.classList.remove('text-yellow-400');
+            star.classList.add('text-gray-400');
+        }
+    });
+}
+
+// Form submission with Preline loading
+document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('form[action="/saveRating"]');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const submitText = submitBtn.querySelector('.submit-text');
+            const loading = submitBtn.querySelector('.loading');
+            
+            // Show loading
+            submitText.classList.add('hidden');
+            loading.classList.remove('hidden');
+            submitBtn.disabled = true;
+        });
+    });
+});
+
+// Add Preline hover effects
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects to cards
+    const cards = document.querySelectorAll('.group');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.classList.add('shadow-lg');
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.classList.remove('shadow-lg');
+        });
+    });
+});
+</script>
+
+<style>
+/* Minimal custom CSS for Preline compatibility */
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</body>
+</html>

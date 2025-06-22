@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<%- include('Component/headfix.ejs') %>
+
+<body class="bg-gray-50">
+<%- include('Component/navbarPencari.ejs') %>
+
+     <!-- Menampilkan Pesan Sukses Jika Ada -->
+        <% if (successMessage) { %>
+            <div class="bg-green-500 text-white text-center p-4 mb-6 rounded-lg">
+                <p><%= successMessage %></p>
+            </div>
+        <% } %>
+
+    <!-- Kos Detail Section -->
+    <section class="py-12 bg-white">
+        <div class="max-w-[85rem] mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Detail Kos</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Kos Information -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                        <% if (kos.photos && kos.photos.length > 0) { %>
+                            <img src="/uploads/<%= kos.photos[0] %>" alt="<%= kos.name %>" class="w-full h-full object-cover">
+                        <% } else { %>
+                            <i class="fas fa-home text-white text-6xl"></i>
+                        <% } %>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mt-4"><%= kos.name %></h3>
+                    <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt text-blue-500 mr-2"></i><%= kos.address %></p>
+                    <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kos.price %> / <%= kos.payment_type %></p>
+                    <p class="text-gray-600 mb-4"><%= kos.description %></p>
+
+                    <!-- Facilities List -->
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">Fasilitas</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <% facilities.forEach(facility => { %>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"><%= facility.fasilitas %></span>
+                        <% }); %>
+                    </div>
+                    <!-- Tipe Kos -->
+                    <p class="mt-5 text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kos.tipe_kos %></span></p>
+                    
+                    <!-- Pesan Sekarang Button -->
+                    <div class="mt-10 flex justify-between">
+                        <!-- Jika booking berhasil (successMessage ada) tampilkan tombol Batalkan Pesanan -->
+                            <!-- Tombol Batalkan Pesanan -->
+                            <% if (successMessage) { %>
+                                <form action="/batalkanPesanan" method="POST">
+                                    <input type="hidden" name="kosId" value="<%= kos.id %>">
+                                    <button type="submit" class="text-center bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition-all">
+                                        Batalkan Pesanan
+                                    </button>
+                                </form>
+
+                                <!-- Tombol Hubungi Pemilik (hanya muncul jika booking berhasil) -->
+                                <a href="/hubungiPemilik/<%= kos.id %>" class="text-center bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-700 transition-all">
+                                    <i class="fab fa-whatsapp mr-2"></i>Hubungi Pemilik
+                                </a>
+                            <% } else { %>
+                                <!-- Tombol Pesan Sekarang jika belum ada pesan sukses -->
+                                <a href="/bookingPage/<%= kos.id %>?bookingDate=<%= new Date().toISOString().split('T')[0] %>" id="bookingButton" class="text-center bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all">
+                                    Pesan Sekarang
+                                </a>
+                            <% } %>
+                        <button id="favoriteButton" onclick="toggleFavorite(<%= kos.id %>)" class="text-center py-2 px-6 rounded-lg transition-all">
+                            <i class="fas fa-heart mr-2"></i>
+                            <span id="favoriteText">Tambahkan Favorit</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Google Maps Section -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold">Lokasi Kos</h2>
+                    <div id="map" style="height: 400px;"></div> <!-- Container for Google Maps -->
+                </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+
+    <%- include('Component/footer.ejs') %>
+
+    <script>
+        // Inisialisasi Google Maps
+        function initMap() {
+            const location = {
+                lat: <%= kos.latitude ? kos.latitude : 'null' %>,  // Set latitude from database
+                lng: <%= kos.longitude ? kos.longitude : 'null' %>  // Set longitude from database
+            };
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,  // Set the zoom level
+                center: location,  // Set the center of the map based on latitude and longitude
+            });
+
+            // Add marker to the map at the specified location
+            new google.maps.Marker({
+                position: location,
+                map: map,
+                title: "<%= kos.name %>"  // Optional: Set a title for the marker (e.g., the name of the kos)
+            });
+        }
+
+        // Menjalankan peta setelah halaman dimuat
+        window.initMap = initMap;
+
+        // Check favorite status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkFavoriteStatus(<%= kos.id %>);
+        });
+
+        // Function to check favorite status
+        function checkFavoriteStatus(kosId) {
+            fetch(`/favorites/${kosId}/status`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateFavoriteButton(data.isFavorited);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking favorite status:', error);
+                });
+        }
+
+        // Function to toggle favorite
+        function toggleFavorite(kosId) {
+            fetch(`/favorites/${kosId}/toggle`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateFavoriteButton(data.isFavorited);
+                    // Show success message
+                    showMessage(data.message, 'success');
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('Terjadi kesalahan saat mengubah status favorit', 'error');
+            });
+        }
+
+        // Function to update favorite button appearance
+        function updateFavoriteButton(isFavorited) {
+            const button = document.getElementById('favoriteButton');
+            const text = document.getElementById('favoriteText');
+            const icon = button.querySelector('i');
+
+            if (isFavorited) {
+                button.className = 'text-center bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 transition-all';
+                text.textContent = 'Hapus dari Favorit';
+                icon.className = 'fas fa-heart mr-2';
+            } else {
+                button.className = 'text-center bg-pink-400 text-white py-2 px-6 rounded-lg hover:bg-pink-600 transition-all';
+                text.textContent = 'Tambahkan Favorit';
+                icon.className = 'far fa-heart mr-2';
+            }
+        }
+
+        // Function to show messages
+        function showMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+            messageDiv.className = 'fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ' + bgClass;
+            messageDiv.textContent = message;
+            
+            document.body.appendChild(messageDiv);
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx9UJ53-dhtrJQ0d31MAkwXeNozDcrWOA&callback=initMap" async></script>
+</body>
+
+</html>

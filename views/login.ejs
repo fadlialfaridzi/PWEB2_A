@@ -10,16 +10,16 @@
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 h-screen flex items-center justify-center" style="background-image: url('/images/bg.jpg'); background-size: cover;">
+<body class="bg-gray-100 h-screen  items-center justify-center" style="background-image: url('/images/bg.jpg'); background-size: cover;">
 
   <!-- Container two sections -->
   <div class="flex justify-center items-center h-full w-full">
     
     <!-- Left Section (Login Form) -->
-    <div class="relative bg-white bg-opacity-0 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full sm:w-96 md:w-96 lg:w-96 xl:w-96">
-      <h2 class="text-2xl font-semibold text-center mb-6">Login</h2>
-      
-      <form action="#" method="POST">
+    <div class="relative lg p-8 rounded-lg shadow-lg w-full sm:w-96 md:w-96 lg:w-96 xl:w-96">
+      <h2 class="text-gray-50 text-4xl font-semibold text-center mb-6">Login</h2>
+
+      <form action="/login" method="POST">
         <!-- Email Input -->
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -44,6 +44,8 @@
         <!-- Login Button -->
         <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition duration-200">Login</button>
       </form>
+
+      
       
       <!-- 'OR' Text -->
       <div class="mt-6 text-center text-sm text-gray-600">
@@ -69,7 +71,7 @@
       </div>
       
       <p class="mt-6 text-center text-sm text-gray-600">
-        Don't have an account? <a href="register.ejs" class="text-blue-500 hover:underline">Sign up</a>
+        Don't have an account? <a href="/role" class="text-blue-500 hover:underline">Sign up</a>
       </p>
     </div>
 
@@ -81,7 +83,8 @@
     -->
 
   </div>
-
+  
+  <%- include('Component/footer.ejs') %>
   <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
 
 </body>

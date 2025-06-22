@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<%- include('Component/headfix.ejs') %>
+
+<body class="bg-gray-50">
+<%- include('Component/navbarPencari.ejs') %>
+
+<section class="py-12 bg-white">
+    <div class="max-w-[85rem] mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Daftar Booking Kos</h2>
+
+        <!-- Menampilkan pesan sukses -->
+        <% if (successMessage) { %>
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-center mb-6">
+                <p><%= successMessage %></p>
+            </div>
+        <% } %>
+
+        <!-- Menampilkan pesan jika tidak ada booking -->
+        <% if (bookings.length === 0) { %>
+            <div class="bg-blue-50 border border-blue-200 text-blue-800 p-6 rounded-lg text-center">
+                <div class="mb-4">
+                    <i class="fas fa-info-circle text-4xl text-blue-500"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Tidak Ada Booking Aktif</h3>
+                <p class="text-sm mb-4"><%= noBookingsMessage %></p>
+                <p class="text-xs text-blue-600">
+                    Bookingan yang sudah selesai dapat dilihat di halaman Rating untuk memberikan ulasan.
+                </p>
+            </div>
+        <% } else { %>
+            <!-- Menampilkan Daftar Kos yang Dibooking -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <% bookings.forEach((booking) => { %>
+                    <% if (booking.kos) { %>
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                                <% if (booking.kos.photos && booking.kos.photos.length > 0) { %>
+                                    <img src="/uploads/<%= booking.kos.photos[0] %>" alt="<%= booking.kos.name %>" class="w-full h-full object-cover rounded-lg shadow-md">
+                                <% } else { %>
+                                    <i class="fas fa-home text-white text-6xl"></i>
+                                <% } %>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mt-4"><%= booking.kos.name %></h3>
+                            <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt text-blue-500 mr-2"></i><%= booking.kos.address %></p>
+                            <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= booking.kos.price %> / <%= booking.kos.payment_type %></p>
+                            <% if (booking.kos.description) { %>
+                                <p class="text-gray-600 mb-4"><%= booking.kos.description %></p>
+                            <% } %>
+
+                            <!-- Menampilkan Tanggal Booking (tanpa jam) -->
+                            <% 
+                                const bookingDate = new Date(booking.booking_date);
+                                const formattedDate = bookingDate.toLocaleDateString('id-ID', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                });
+                            %>
+                            <p class="text-lg font-semibold mb-3">Tanggal Booking: <%= formattedDate %></p>
+
+                            <!-- Tombol Batalkan Pesanan dan Hubungi Pemilik -->
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <form action="/batalkanPesanan" method="POST" class="flex-1">
+                                    <input type="hidden" name="kosId" value="<%= booking.kos.id %>">
+                                    <button type="submit" class="w-full bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-all">
+                                        <i class="fas fa-times mr-2"></i>Batalkan Pesanan
+                                    </button>
+                                </form>
+                                
+                                <a href="/hubungiPemilik/<%= booking.kos.id %>" class="flex-1 text-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all">
+                                    <i class="fas fa-phone mr-2"></i>Hubungi Pemilik
+                                </a>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                            <p>Kos dengan ID <%= booking.kos_id %> tidak ditemukan atau telah dihapus</p>
+                        </div>
+                    <% } %>
+                <% }); %>
+            </div>
+        <% } %>
+
+        <!-- Tombol untuk melihat rating -->
+        <div class="text-center mt-8">
+            <a href="/ratingPage" class="bg-purple-500 text-white py-3 px-6 rounded-lg hover:bg-purple-600 transition-all">
+                <i class="fas fa-star mr-2"></i>Lihat Rating Kos yang Sudah Disewa
+            </a>
+        </div>
+    </div>
+</section>
+
+<%- include('Component/footer.ejs') %>
+</body>
+
+</html>

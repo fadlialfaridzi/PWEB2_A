@@ -14,9 +14,11 @@
   
   <!-- Form Container with Responsive Layout -->
   <div class="relative bg-white bg-opacity-0 backdrop-blur-lg p-8 rounded-lg shadow-lg w-full sm:w-96 md:w-96 lg:w-96 xl:w-96">
-    <h2 class="text-2xl font-semibold text-center mb-6">Create an Account</h2>
+    <h2 class="text-gray-50 text-3xl font-semibold text-center mb-6">Create an Account</h2>
 
     <form action="/register" method="POST">
+      <!-- Hidden input untuk role -->
+      <input type="hidden" name="role" value="<%= role %>">  <!-- Kirim role yang dipilih -->
       <!-- Name Input -->
       <div class="mb-4">
         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<%- include('Component/headfix.ejs') %>
+
+
+<body class="bg-gray-50">
+<%- include('Component/navbarPencari.ejs') %>
+<%- include('Component/heroSectionPencari.ejs') %>
+
+    <!-- Search Section -->
+    <section class="py-8 mt-8 relative z-10">
+        <div class="bg-white p-8 mx-auto w-full max-w-6xl rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">
+                <i class="fas fa-search text-blue-600 mr-2"></i>
+                Pencarian Kost
+            </h2>
+            
+            <form action="/search" method="GET" id="searchForm">
+                <!-- Search Box and Filters -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    
+                    <!-- Tipe Kos -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Kos</label>
+                        <select name="tipe_kos" class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <option value="">Semua Tipe Kos</option>
+                            <option value="putra">Putra</option>
+                            <option value="putri">Putri</option>
+                        </select>
+                    </div>
+
+                    <!-- Payment Type Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Pembayaran</label>
+                        <select name="payment_type" class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <option value="">Semua Tipe Pembayaran</option>
+                            <option value="perbulan">Per Bulan</option>
+                            <option value="pertahun">Per Tahun</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Rentang Harga</label>
+                        <select name="price_range" class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <option value="">Semua Harga</option>
+                            <option value="1">Rp 100.000 - 500.000</option>
+                            <option value="2">Rp 500.000 - 1.000.000</option>
+                            <option value="3">Rp 1.000.000 - 2.000.000</option>
+                            <option value="4">Rp 2.000.000 - 5.000.000</option>
+                            <option value="5">Rp > 5.000.000</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Facilities Section -->
+                <div class="bg-blue-50 p-6 rounded-xl mb-6">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                        <i class="fas fa-cogs text-blue-600 mr-2"></i>
+                        Fasilitas
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="WiFi" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-wifi text-blue-600"></i>
+                            <span class="text-sm font-medium">WiFi</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="AC" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-snowflake text-blue-600"></i>
+                            <span class="text-sm font-medium">AC</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Kamar Mandi Dalam" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-bath text-blue-600"></i>
+                            <span class="text-sm font-medium">Kamar Mandi Dalam</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Dapur" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-utensils text-blue-600"></i>
+                            <span class="text-sm font-medium">Dapur</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Ruang Tamu" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-couch text-blue-600"></i>
+                            <span class="text-sm font-medium">Ruang Tamu</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="CCTV" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-video text-blue-600"></i>
+                            <span class="text-sm font-medium">CCTV</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Token Per Kemar" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-plug text-blue-600"></i>
+                            <span class="text-sm font-medium">Token Per Kamar</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Air Gratis" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-tint text-blue-600"></i>
+                            <span class="text-sm font-medium">Air Gratis</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Kasur" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-bed text-blue-600"></i>
+                            <span class="text-sm font-medium">Kasur</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Lemari" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-archive text-blue-600"></i>
+                            <span class="text-sm font-medium">Lemari</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Meja Belajar" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-desk text-blue-600"></i>
+                            <span class="text-sm font-medium">Meja Belajar</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Search Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                        <i class="fas fa-search"></i>
+                        <span>Cari Kost</span>
+                    </button>
+                    <a href="/map" class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Cari dengan Google Maps</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Available Kos List -->
+    <section id="katalog" class="py-12 bg-gray-50">
+        <div class="max-w-[85rem] mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Daftar Kost Tersedia</h3>
+                <p class="text-lg text-gray-600">Pilihan kost terbaik di sekitar Universitas Andalas</p>
+            </div>
+
+            <!-- Kos Card List -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <% if (kos && kos.length > 0) { %>
+                    <% kos.forEach((kosItem, index) => { %>
+                        <a href="/detailkospencari/<%= kosItem.id %>" class="block w-full">
+                        <div class="kos-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                            <% if (index >= 4) { %> style="display: none;" <% } %> >
+                            <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                                <% if (kosItem.photos && kosItem.photos.length > 0) { %>
+                                    <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-full object-cover">
+                                <% } else { %>
+                                    <i class="fas fa-home text-white text-6xl"></i>
+                                <% } %>
+                            </div>
+                            <div class="p-6">
+                                <h4 class="font-bold text-xl text-gray-800 mb-2"><%= kosItem.name %></h4>
+                                <div class="mb-4">
+                                    <p class="text-gray-600 mb-2 flex items-center">
+                                        <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+                                        <%= kosItem.address %>
+                                    </p>
+                                </div>
+                                <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
+                                <!-- <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400 mr-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm">(4.5)</span>
+                                </div> -->
+                                <div class="flex flex-wrap gap-1 mb-4">
+                                    <% if (kosItem.facilities && kosItem.facilities.length > 0) { %>
+                                        <% kosItem.facilities.forEach(facility => { %>
+                                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"><%= facility %></span>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <span class="text-gray-600 text-xs">No facilities available</span>
+                                    <% } %>
+                                </div>
+
+                                <!-- Tipe Kos -->
+                                <p class="text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kosItem.tipe_kos %></span></p>
+
+                                <!-- Rating & Jumlah User -->
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="flex items-center">
+                                        <% for(let i = 1; i <= 5; i++) { %>
+                                            <i class="fas fa-star <%= i <= Math.round(parseFloat(kosItem.avg_rating || 0)) ? 'text-yellow-400' : 'text-gray-400' %>"></i>
+                                        <% } %>
+                                    </span>
+                                    <span class="text-sm text-gray-600 ml-2">
+                                        <%= kosItem.avg_rating || '0.0' %> / 5
+                                        (<%= kosItem.total_ratings || 0 %> rating<%= (kosItem.total_ratings || 0) == 1 ? '' : 's' %>)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    <% }); %>
+                <% } else { %>
+                    <p class="text-gray-600">Belum ada kos terdaftar.</p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <div class="flex justify-center items-center mt-8">
+        <% if (kos && kos.length > 4) { %>
+            <div class="text-center">
+                <button id="showMoreButton" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+                    Tampilkan Semua
+                </button>
+                <button id="showLessButton" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 mt-4" style="display: none;">
+                    Tampilkan Lebih Sedikit
+                </button>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- Show More and Show Less Button -->
+    <!-- About Section -->
+    <section id="tentang" class="py-16 bg-white">
+        <div class="max-w-[85rem] mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Tentang KOSAND</h3>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    KOSAND adalah platform digital yang memudahkan mahasiswa Universitas Andalas dalam mencari 
+                    tempat tinggal yang nyaman, aman, dan terjangkau di sekitar kampus.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-search text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Pencarian Mudah</h4>
+                    <p class="text-gray-600">Temukan kost dengan filter lokasi, harga, dan fasilitas sesuai kebutuhan Anda</p>
+                </div>
+                
+                <div class="text-center p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Terpercaya</h4>
+                    <p class="text-gray-600">Semua kost telah diverifikasi untuk memastikan kualitas dan keamanan</p>
+                </div>
+                
+                <div class="text-center p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <div class="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marked-alt text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Dekat Kampus</h4>
+                    <p class="text-gray-600">Kost-kost pilihan yang strategis dan mudah diakses dari Universitas Andalas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-blue-600">
+        <div class="max-w-[85rem] mx-auto px-4 text-center text-white">
+            <h3 class="text-3xl md:text-4xl font-bold mb-4">
+                Temukan Kost Idealmu Sekarang Juga!
+            </h3>
+            <p class="text-lg md:text-xl mb-6 max-w-3xl mx-auto">
+                Jelajahi berbagai pilihan kost yang tersedia di sekitar Universitas Andalas, dengan harga yang terjangkau dan fasilitas yang memadai. Cari sekarang dan temukan tempat tinggal yang nyaman!
+            </p>
+
+            <!-- Button Call to Action -->
+            <div class="flex justify-center gap-6">
+                <a href="#katalog" class="bg-white text-blue-600 hover:bg-blue-100 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+                    Lihat Katalog Kost
+                </a>
+                <a href="/kontak" class="bg-transparent border-2 border-white text-white hover:bg-blue-700 hover:text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200">
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <%- include('Component/footer.ejs') %>
+
+    
+
+    
+
+
+ <script>
+        // JavaScript to toggle the dropdown visibility
+        const dropdownButton = document.getElementById('userDropdownButton');
+        const dropdownMenu = document.getElementById('userDropdownMenu');
+
+        dropdownButton.addEventListener('click', () => {
+            // Toggle the visibility of the dropdown menu
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        // Optionally, close the dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden'); // Hide dropdown if clicked outside
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const showMoreButton = document.getElementById("showMoreButton");
+            const showLessButton = document.getElementById("showLessButton");
+            const hiddenCards = document.querySelectorAll(".kos-card[style='display: none;']");
+
+            // Show More functionality
+            if (showMoreButton) {
+                showMoreButton.addEventListener("click", function() {
+                    hiddenCards.forEach(card => {
+                        card.style.display = "block";  // Remove the "display: none" style
+                    });
+
+                    // Hide "Tampilkan Semua" button and show "Tampilkan Lebih Sedikit"
+                    showMoreButton.style.display = "none";
+                    showLessButton.style.display = "inline-block";
+                });
+            }
+
+            // Show Less functionality
+            if (showLessButton) {
+                showLessButton.addEventListener("click", function() {
+                    hiddenCards.forEach(card => {
+                        card.style.display = "none";  // Add the "display: none" style
+                    });
+
+                    // Show "Tampilkan Semua" button and hide "Tampilkan Lebih Sedikit"
+                    showLessButton.style.display = "none";
+                    showMoreButton.style.display = "inline-block";
+                });
+            }
+
+            // Search form handling
+            const searchForm = document.getElementById("searchForm");
+            if (searchForm) {
+                searchForm.addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(searchForm);
+                    const searchParams = new URLSearchParams();
+                    
+                    // Add non-empty values to search params
+                    for (let [key, value] of formData.entries()) {
+                        if (value && value.trim() !== '') {
+                            if (key === 'facilities') {
+                                // Handle multiple facilities
+                                if (!searchParams.has(key)) {
+                                    searchParams.append(key, value);
+                                } else {
+                                    searchParams.append(key, value);
+                                }
+                            } else {
+                                searchParams.append(key, value);
+                            }
+                        }
+                    }
+                    
+                    // Redirect to search results
+                    const searchUrl = `/search?${searchParams.toString()}`;
+                    window.location.href = searchUrl;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
