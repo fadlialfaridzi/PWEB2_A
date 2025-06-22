@@ -27,7 +27,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <h4 class="font-semibold text-gray-800 mb-2">Nomor Telepon</h4>
-                        <p class="text-lg text-blue-600"><%= ownerInfo.phone %></p>
+                        <p class="text-lg text-blue-600"><%= ownerInfo.phone || 'Tidak tersedia' %></p>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <h4 class="font-semibold text-gray-800 mb-2">Total Kos Dimiliki</h4>
@@ -39,29 +39,41 @@
                 <div class="mb-8">
                     <h4 class="text-xl font-semibold text-gray-800 mb-4">Kos yang Dimiliki</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <% ownerKos.forEach(kos => { %>
-                            <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
-                                <h5 class="font-semibold text-gray-800"><%= kos.name %></h5>
-                                <p class="text-gray-600 text-sm"><%= kos.address %></p>
+                        <% if (ownerKos && ownerKos.length > 0) { %>
+                            <% ownerKos.forEach(kos => { %>
+                                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+                                    <h5 class="font-semibold text-gray-800"><%= kos.name %></h5>
+                                    <p class="text-gray-600 text-sm"><%= kos.address %></p>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="col-span-2 bg-gray-50 p-4 rounded-lg text-center">
+                                <p class="text-gray-600">Tidak ada kos yang dimiliki</p>
                             </div>
-                        <% }); %>
+                        <% } %>
                     </div>
                 </div>
 
                 <!-- Tombol Hubungi -->
                 <div class="flex flex-col sm:flex-row gap-4">
                     <!-- Tombol WhatsApp -->
-                    <a href="https://wa.me/<%= ownerInfo.phone.replace(/\D/g, '') %>?text=Halo, saya tertarik dengan kos <%= kosName %>. Apakah masih tersedia?" 
-                       target="_blank"
-                       class="flex-1 bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition-all text-center">
-                        <i class="fab fa-whatsapp mr-2"></i>Hubungi via WhatsApp
-                    </a>
-                    
-                    <!-- Tombol Telepon -->
-                    <a href="tel:<%= ownerInfo.phone %>" 
-                       class="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-all text-center">
-                        <i class="fas fa-phone mr-2"></i>Hubungi via Telepon
-                    </a>
+                    <% if (ownerInfo && ownerInfo.phone) { %>
+                        <a href="https://wa.me/<%= ownerInfo.phone.replace(/\D/g, '') %>?text=Halo, saya tertarik dengan kos <%= kosName %>. Apakah masih tersedia?" 
+                           target="_blank"
+                           class="flex-1 bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600 transition-all text-center">
+                            <i class="fab fa-whatsapp mr-2"></i>Hubungi via WhatsApp
+                        </a>
+                        
+                        <!-- Tombol Telepon -->
+                        <a href="tel:<%= ownerInfo.phone %>" 
+                           class="flex-1 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-all text-center">
+                            <i class="fas fa-phone mr-2"></i>Hubungi via Telepon
+                        </a>
+                    <% } else { %>
+                        <div class="flex-1 bg-gray-300 text-gray-600 py-3 px-6 rounded-lg text-center">
+                            <i class="fas fa-info-circle mr-2"></i>Nomor telepon tidak tersedia
+                        </div>
+                    <% } %>
                 </div>
             </div>
         <% } else { %>

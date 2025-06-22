@@ -85,25 +85,36 @@ const Kos = {
     // Get kos by ID
     getKosById: (kosId, callback) => {
         const query = 'SELECT * FROM kos WHERE id = ?';
+        console.log('getKosById - kosId:', kosId);
+        console.log('getKosById - query:', query);
+        
         db.query(query, [kosId], (err, results) => {
             if (err) {
+                console.error('getKosById - database error:', err);
                 return callback(err);
             }
             
+            console.log('getKosById - results:', results);
+            
             if (results.length === 0) {
+                console.log('getKosById - no results found');
                 return callback(null, null);
             }
             
             const kosItem = results[0];
+            console.log('getKosById - kosItem:', kosItem);
             
             // Get photos for this kos
             const photoQuery = 'SELECT filename FROM foto_kos WHERE kos_id = ?';
             db.query(photoQuery, [kosId], (err, photos) => {
                 if (err) {
+                    console.error('getKosById - photo query error:', err);
                     return callback(err);
                 }
                 
+                console.log('getKosById - photos:', photos);
                 kosItem.photos = photos.map(photo => photo.filename);
+                console.log('getKosById - final kosItem:', kosItem);
                 callback(null, kosItem);
             });
         });
@@ -255,7 +266,25 @@ const Kos = {
     // Get owner info
     getOwnerInfo: (userId, callback) => {
         const query = 'SELECT id, name, email, phone FROM users WHERE id = ?';
-        db.query(query, [userId], callback);
+        console.log('getOwnerInfo - userId:', userId);
+        console.log('getOwnerInfo - query:', query);
+        
+        db.query(query, [userId], (err, results) => {
+            if (err) {
+                console.error('getOwnerInfo - database error:', err);
+                return callback(err);
+            }
+            
+            console.log('getOwnerInfo - results:', results);
+            
+            if (results.length === 0) {
+                console.log('getOwnerInfo - no results found');
+                return callback(null, null);
+            }
+            
+            console.log('getOwnerInfo - returning:', results[0]);
+            callback(null, results[0]);
+        });
     },
 
     // Get kos by owner
@@ -264,6 +293,10 @@ const Kos = {
         db.query(query, [userId], (err, results) => {
             if (err) {
                 return callback(err);
+            }
+            
+            if (results.length === 0) {
+                return callback(null, []);
             }
             
             // Process photos for each kos

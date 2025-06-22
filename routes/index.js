@@ -9,6 +9,9 @@ const mapController = require('../controllers/mapController')
 const bookingController = require('../controllers/bookingController');
 const hubungiPemilikController = require('../controllers/hubungiPemilikController');
 const daftarBookingPemilikController = require('../controllers/daftarBookingPemilikController');
+const profileController = require('../controllers/profileController');
+const { requireAuth } = require('../middlewares/authMiddleware');
+
 // route  untuk menampilkan form tambah kos
 router.get('/formTambahKos', (req, res) => {
     if (req.session.user && req.session.user.role === 'pemilik') {
@@ -115,5 +118,11 @@ router.get('/logout', (req, res) => {
 
 router.get('/hubungiPemilik/:kosId', hubungiPemilikController.showHubungiPemilik);
 
+// Profile Routes (protected with authentication)
+router.get('/profile', requireAuth, profileController.showProfile);
+router.get('/editProfile', requireAuth, profileController.showEditProfile);
+router.post('/updateProfile', requireAuth, profileController.updateProfile);
+router.get('/changePassword', requireAuth, profileController.showChangePassword);
+router.post('/updatePassword', requireAuth, profileController.updatePassword);
 
 module.exports = router;
