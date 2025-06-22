@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak - KOSAND</title>
+    
+    <!-- TailwindCSS -->
+    <link rel="stylesheet" href="/public/stylesheets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <% if (user && user.role === 'pencari') { %>
+        <%- include('Component/navbarPencari.ejs') %>
+    <% } else if (user && user.role === 'pemilik') { %>
+        <%- include('Component/navbarPemilik.ejs') %>
+    <% } else if (user && user.role === 'admin') { %>
+        <%- include('Component/navbarAdmin.ejs') %>
+    <% } else { %>
+        <!-- Default navbar for non-logged users -->
+        <nav class="bg-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600">KOSAND</a>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <a href="/" class="text-gray-700 hover:text-blue-600">Beranda</a>
+                        <a href="/kontak" class="text-blue-600 font-semibold">Kontak</a>
+                        <a href="/login" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    <% } %>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white py-16">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-4">Hubungi Kami</h1>
+            <p class="text-xl opacity-90">Tim pengembang KOSAND siap membantu Anda</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        <!-- Project Info Card -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8 card-hover">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Tugas Besar Pemrograman Website</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600">Kelompok 2</p>
+            </div>
+            
+            <!-- Team Members -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Fadli Alfaridzi</h3>
+                    <p class="text-sm text-gray-600">2311523003</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Nurul Aini</h3>
+                    <p class="text-sm text-gray-600">2311521013</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Naisya Harjimen</h3>
+                    <p class="text-sm text-gray-600">2311523025</p>
+                </div>
+                
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user text-2xl text-pink-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Nabila Nurfatihatul Laila</h3>
+                    <p class="text-sm text-gray-600">2311522023</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Admin Section -->
+        <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Butuh Bantuan?</h2>
+                <p class="text-lg text-gray-600">Hubungi admin kami melalui WhatsApp</p>
+            </div>
+            
+            <div class="text-center">
+                <a href="https://wa.me/6281275538168" 
+                   target="_blank" 
+                   class="inline-flex items-center px-8 py-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300 text-lg font-semibold">
+                    <i class="fab fa-whatsapp text-2xl mr-3"></i>
+                    Hubungi Admin via WhatsApp
+                </a>
+                <p class="text-sm text-gray-500 mt-4">081275538168</p>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="grid md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center card-hover">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-code text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Teknologi</h3>
+                <p class="text-sm text-gray-600">Node.js, Express, MySQL, EJS, Tailwind CSS</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center card-hover">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-graduation-cap text-2xl text-green-600"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Mata Kuliah</h3>
+                <p class="text-sm text-gray-600">Pemrograman Website</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center card-hover">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-university text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Institusi</h3>
+                <p class="text-sm text-gray-600">Universitas Andalas</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('Component/footer.ejs') %>
+
+    <script>
+        // Add any additional JavaScript here if needed
+        console.log('Contact page loaded');
+    </script>
+</body>
+</html> 
