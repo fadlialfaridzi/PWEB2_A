@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KOSAND - Kos Favorit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-100 min-h-screen font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-blue-500">
+    <div class="max-w-6xl mx-auto flex items-center justify-between py-3 px-6">
+      <h1 class="text-white font-bold text-xl">KOSAND</h1>
+      <ul class="hidden md:flex space-x-6 text-white text-sm font-semibold">
+        <li><a href="#" class="hover:underline">Beranda</a></li>
+        <li><a href="#" class="hover:underline">Katalog</a></li>
+        <li><a href="#" class="hover:underline">Tentang</a></li>
+        <li><a href="#" class="hover:underline">Kontak</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Secondary Nav -->
+  <div class="bg-blue-700 text-white flex justify-between items-center px-6 py-2">
+    <button aria-label="Home">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24">
+        <path d="M3 12l9-9 9 9h-3v9h-12v-9h-3z"/>
+      </svg>
+    </button>
+    <button aria-label="Profil">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24">
+        <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.2c-3.3 0-9.8 1.7-9.8 5v2.2h19.5v-2.2c0-3.3-6.5-5-9.7-5z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-6 py-6">
+    <h2 class="text-blue-700 font-bold text-xl mb-4">Kos Favorit</h2>
+
+    <% if (favoritKos.length === 0) { %>
+      <p class="text-center text-gray-500">Belum ada kos favorit.</p>
+    <% } %>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <% favoritKos.forEach(kos => { %>
+        <div class="bg-white border border-gray-300 rounded-md p-4 flex gap-4 shadow-sm">
+          <img src="<%= kos.gambar %>" alt="<%= kos.nama %>" class="w-36 h-24 object-cover border rounded" />
+          
+          <div class="flex flex-col justify-between w-full">
+            <div>
+              <h3 class="text-lg font-bold text-gray-900"><%= kos.nama %></h3>
+              <p class="text-gray-800 font-medium mt-1">IDR <%= kos.harga.toLocaleString() %></p>
+            </div>
+
+            <div class="flex items-center justify-between mt-3">
+              <a href="#" class="text-blue-600 font-semibold hover:underline">Detail Kos</a>
+              <div class="flex items-center gap-1 text-yellow-500 font-semibold">
+                <span>Favorite</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.036 6.26a1 1 0 00.95.69h6.58c.968 0 1.37 1.24.588 1.81l-5.34 3.88a1 1 0 00-.364 1.118l2.036 6.26c.3.921-.755 1.688-1.54 1.118l-5.34-3.88a1 1 0 00-1.176 0l-5.34 3.88c-.785.57-1.838-.197-1.539-1.118l2.036-6.26a1 1 0 00-.364-1.118l-5.34-3.88c-.783-.57-.38-1.81.588-1.81h6.58a1 1 0 00.95-.69l2.036-6.26z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </section>
+  </main>
+
+</body>
+</html>

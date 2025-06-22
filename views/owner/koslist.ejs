@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kosand - Menandai Kos Tersedia atau Tidak</title>
+  <title>Kosand - Daftar Kos</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-blue-100 min-h-screen flex justify-center items-start p-6">
   <section class="w-full max-w-4xl rounded-md bg-white shadow-md">
-    <!-- Header Section -->
+    
+    <!-- Header -->
     <header class="bg-blue-600 text-white rounded-t-md">
       <div class="container mx-auto flex justify-between items-center px-6 py-3">
         <div class="flex items-center space-x-4">
           <h1 class="font-bold text-xl select-none">KOSAND</h1>
-          <nav class="space-x-8 text-sm font-semibold">
+          <nav class="space-x-6 text-sm font-semibold hidden md:flex">
             <a href="#" class="hover:underline">Beranda</a>
             <a href="#" class="hover:underline">Katalog</a>
             <a href="#" class="hover:underline">Tentang</a>
@@ -22,24 +23,19 @@
           </nav>
         </div>
         <div class="flex items-center space-x-6">
-          <button title="Beranda" aria-label="Beranda" class="hover:text-blue-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-              <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3z" />
-            </svg>
+          <button class="hover:text-blue-300" aria-label="Beranda">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3z" /></svg>
           </button>
-          <button title="Profil" aria-label="Profil" class="hover:text-blue-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-              <circle cx="12" cy="7" r="4" />
-              <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
-            </svg>
+          <button class="hover:text-blue-300" aria-label="Profil">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" /><path d="M5.5 21a6.5 6.5 0 0 1 13 0" /></svg>
           </button>
         </div>
       </div>
     </header>
 
-    <!-- Content Section -->
+    <!-- Main Content -->
     <article class="p-6">
-      <h2 class="text-blue-600 font-semibold text-lg mb-4">Daftar Kos Tersedia atau Tidak</h2>
+      <h2 class="text-blue-600 font-semibold text-lg mb-4">Daftar Kos</h2>
 
       <!-- Search & Filter Form -->
       <form method="GET" action="/owner/list-kos" class="flex flex-col md:flex-row gap-4 mb-6">
@@ -57,8 +53,7 @@
           <option value="full" <%= status === 'full' ? 'selected' : '' %>>Full</option>
         </select>
 
-        <button type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md text-sm">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md text-sm">
           Filter
         </button>
       </form>
@@ -69,15 +64,31 @@
 
       <% daftarKos.forEach(kos => { %>
         <div class="border border-gray-300 rounded-md shadow-sm p-4 flex gap-4 mb-6 items-center bg-white">
-          <img src="<%= kos.gambar %>" alt="<%= kos.nama %>" class="w-28 h-20 object-cover rounded-sm" />
+          <img src="<%= kos.gambar || '/images/default.jpg' %>" alt="<%= kos.nama %>" class="w-28 h-20 object-cover rounded-sm border" />
 
           <div class="flex flex-col flex-1">
-            <span class="font-bold text-lg"><%= kos.nama %></span>
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-lg"><%= kos.nama %></span>
+              <!-- Tombol Favorite -->
+              <form action="/owner/kos/<%= kos.id %>/favorite" method="POST">
+                <button type="submit" title="Tandai sebagai favorit" class="focus:outline-none">
+                  <% if (kos.favorite) { %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.781 1.402 8.174L12 18.896l-7.336 3.87 1.402-8.174-5.934-5.781 8.2-1.193z"/>
+                    </svg>
+                  <% } else { %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.781 1.402 8.174L12 18.896l-7.336 3.87 1.402-8.174-5.934-5.781 8.2-1.193z"/>
+                    </svg>
+                  <% } %>
+                </button>
+              </form>
+            </div>
             <span class="text-sm text-gray-600">Harga Kos</span>
+            <span class="font-semibold text-black">IDR <%= kos.harga.toLocaleString() %></span>
           </div>
 
-          <div class="text-right flex flex-col items-end space-y-2">
-            <span class="font-semibold text-black">IDR <%= kos.harga.toLocaleString() %></span>
+          <div class="text-right">
             <% if (kos.status === 'tersedia') { %>
               <span class="bg-green-500 text-white rounded-full px-3 py-1 text-xs font-semibold">Tersedia</span>
             <% } else { %>

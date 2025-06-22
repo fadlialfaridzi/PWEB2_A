@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const userController = require('../controllers/userController');
 
-router.get('/', (req, res) => {
-  res.send('respond with a resource');
-});
+router.get('/favorites', userController.getFavoriteKos);
 
 module.exports = router;

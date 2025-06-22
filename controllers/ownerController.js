@@ -1,10 +1,8 @@
 const pool = require('../db'); // koneksi ke database dari db.js
 
 // ========================
-// Booking Kos
+// Booking Kos (dengan fitur pencarian)
 // ========================
-
-// Menampilkan semua booking kos dengan status confirmed, bisa cari berdasarkan nama penyewa atau nama kos
 exports.getAllBookings = async (req, res) => {
   const search = req.query.search || '';
 
@@ -29,21 +27,20 @@ exports.getAllBookings = async (req, res) => {
       search
     });
   } catch (err) {
-    console.error('Gagal mengambil data booking:', err);
+    console.error('[ERROR] Gagal mengambil data booking:', err);
     res.status(500).send('Terjadi kesalahan saat mengambil data booking.');
   }
 };
 
 // ========================
-// Daftar Kos + Filter
+// Menampilkan Daftar Kos (dengan Search + Filter Status)
 // ========================
-
 exports.getKosList = async (req, res) => {
   const search = req.query.search || '';
   const status = req.query.status || '';
 
   let query = `
-    SELECT id, nama, harga, info, gambar, status
+    SELECT id, nama, harga, info, gambar, status, favorite
     FROM kos
     WHERE nama LIKE ?
   `;
@@ -62,21 +59,22 @@ exports.getKosList = async (req, res) => {
       status
     });
   } catch (err) {
-    console.error('Gagal mengambil data kos:', err);
+    console.error('[ERROR] Gagal mengambil data kos:', err);
     res.status(500).send('Terjadi kesalahan saat mengambil data kos.');
   }
 };
 
 // ========================
-// Toggle Status Kos
+// Toggle Status Kos (tersedia <=> full)
 // ========================
-
 exports.toggleKosAvailability = async (req, res) => {
   const kosId = req.params.id;
 
   try {
     const [rows] = await pool.query(`SELECT status FROM kos WHERE id = ?`, [kosId]);
-    if (rows.length === 0) return res.status(404).send('Kos tidak ditemukan.');
+    if (rows.length === 0) {
+      return res.status(404).send('Kos tidak ditemukan.');
+    }
 
     const currentStatus = rows[0].status;
     const newStatus = currentStatus === 'tersedia' ? 'full' : 'tersedia';
@@ -85,7 +83,51 @@ exports.toggleKosAvailability = async (req, res) => {
 
     res.redirect('/owner/list-kos');
   } catch (err) {
-    console.error('Gagal mengubah status kos:', err);
+    console.error('[ERROR] Gagal mengubah status kos:', err);
     res.status(500).send('Terjadi kesalahan saat memperbarui status kos.');
+  }
+};
+
+// ========================
+// Toggle Favorite Kos
+// ========================
+exports.toggleFavoriteKos = async (req, res) => {
+  const kosId = req.params.id;
+
+  try {
+    const [rows] = await pool.query(`SELECT favorite FROM kos WHERE id = ?`, [kosId]);
+    if (rows.length === 0) {
+      return res.status(404).send('Kos tidak ditemukan.');
+    }
+
+    const currentFavorite = rows[0].favorite;
+    const newFavorite = currentFavorite === 1 ? 0 : 1;
+
+    await pool.query(`UPDATE kos SET favorite = ? WHERE id = ?`, [newFavorite, kosId]);
+
+    res.redirect('/owner/list-kos');
+  } catch (err) {
+    console.error('[ERROR] Gagal mengubah favorite kos:', err);
+    res.status(500).send('Terjadi kesalahan saat mengubah status favorit.');
+  }
+};
+
+// ========================
+// Daftar Kos Favorit
+// ========================
+exports.getFavKos = async (req, res) => {
+  try {
+    const [rows] = await pool.query(`
+      SELECT id, nama, harga, gambar
+      FROM kos
+      WHERE favorite = 1
+    `);
+
+    res.render('owner/favkost', {
+      favoritKos: rows
+    });
+  } catch (err) {
+    console.error('[ERROR] Gagal mengambil kos favorit:', err);
+    res.status(500).send('Terjadi kesalahan saat mengambil data favorit.');
   }
 };
