@@ -1,0 +1,126 @@
+<nav class="bg-blue-600 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+            <!-- Logo and Brand -->
+            <div class="flex items-center">
+                <a href="/admin" class="flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    <span class="text-white font-bold text-xl">KOSAND Admin</span>
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/admin" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    <i class="fas fa-tachometer-alt mr-2"></i>
+                    Dashboard
+                </a>
+                <a href="/admin/users" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    <i class="fas fa-users mr-2"></i>
+                    Kelola Users
+                </a>
+                <a href="/admin/kos" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    <i class="fas fa-home mr-2"></i>
+                    Kelola Kos
+                </a>
+                <a href="/admin/bookings" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    <i class="fas fa-calendar-check mr-2"></i>
+                    Kelola Pemesanan
+                </a>
+                <a href="/admin/ratings" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    <i class="fas fa-star mr-2"></i>
+                    Kelola Rating
+                </a>
+            </div>
+
+            <!-- User Menu -->
+            <div class="flex items-center">
+                <div class="relative">
+                    <button id="userDropdownButton" class="flex items-center text-white hover:text-blue-200 focus:outline-none">
+                        <img class="h-8 w-8 rounded-full" src="/images/user.png" alt="User">
+                        <span class="ml-2 text-sm font-medium"><%= user.name %></span>
+                        <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    
+                    <div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                        <div class="px-4 py-2 text-sm text-gray-700 border-b">
+                            <div class="font-medium"><%= user.name %></div>
+                            <div class="text-gray-500"><%= user.email %></div>
+                            <div class="text-xs text-blue-600 font-medium">Administrator</div>
+                        </div>
+                        <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-user mr-2"></i>
+                            Profile
+                        </a>
+                        <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobileMenuButton" class="text-white hover:text-blue-200 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/admin" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-tachometer-alt mr-2"></i>
+                    Dashboard
+                </a>
+                <a href="/admin/users" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-users mr-2"></i>
+                    Kelola Users
+                </a>
+                <a href="/admin/kos" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-home mr-2"></i>
+                    Kelola Kos
+                </a>
+                <a href="/admin/bookings" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-calendar-check mr-2"></i>
+                    Kelola Pemesanan
+                </a>
+                <a href="/admin/ratings" class="text-white hover:text-blue-200 block px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-star mr-2"></i>
+                    Kelola Rating
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    // User dropdown toggle
+    const dropdownButton = document.getElementById('userDropdownButton');
+    const dropdownMenu = document.getElementById('userDropdownMenu');
+
+    if (dropdownButton && dropdownMenu) {
+        dropdownButton.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    }
+</script> 

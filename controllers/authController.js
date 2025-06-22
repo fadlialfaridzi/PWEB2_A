@@ -88,6 +88,8 @@ function login(req, res) {
           return res.redirect('/indexPencariKos');
         } else if (user.role === 'pemilik') {
           return res.redirect('/indexPemilikKos');
+        } else if (user.role === 'admin') {
+          return res.redirect('/admin');
         }
       });
     } else {
@@ -123,6 +125,8 @@ req.session.user = {
           return res.redirect('/indexPencariKos');
   } else if (user.role === 'pemilik') {
           return res.redirect('/indexPemilikKos');
+  } else if (user.role === 'admin') {
+          return res.redirect('/admin');
   }
       } else {
         console.log('Plain text password mismatch');

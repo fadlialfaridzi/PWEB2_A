@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<%- include('../Component/headfix.ejs') %>
+
+<body class="bg-gray-50">
+<%- include('../Component/navbarAdmin.ejs') %>
+
+    <!-- Manage Kos Header -->
+    <section class="py-8 mt-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                    <i class="fas fa-home text-blue-600 mr-2"></i>
+                    Kelola Kos
+                </h1>
+                <p class="text-gray-600">Kelola semua kos yang terdaftar di sistem</p>
+            </div>
+
+            <!-- Kos Table -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-800">Daftar Semua Kos</h2>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Kos
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Pemilik
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Harga
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Rating
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Aksi
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <% if (kos && kos.length > 0) { %>
+                                <% kos.forEach(kosItem => { %>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-12 w-12">
+                                                    <div class="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                                                        <i class="fas fa-home text-blue-600"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900"><%= kosItem.name %></div>
+                                                    <div class="text-sm text-gray-500"><%= kosItem.address %></div>
+                                                    <div class="text-xs text-gray-400">ID: <%= kosItem.id %></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900"><%= kosItem.owner_name %></div>
+                                            <div class="text-sm text-gray-500"><%= kosItem.owner_email %></div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">Rp <%= kosItem.price %></div>
+                                            <div class="text-sm text-gray-500">/<%= kosItem.payment_type %></div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <% if (kosItem.status === 'available') { %>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    <i class="fas fa-check-circle mr-1"></i>
+                                                    Tersedia
+                                                </span>
+                                            <% } else { %>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                    <i class="fas fa-times-circle mr-1"></i>
+                                                    Terpesan
+                                                </span>
+                                            <% } %>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex text-yellow-400 mr-2">
+                                                    <% for(let i = 1; i <= 5; i++) { %>
+                                                        <i class="fas fa-star <%= i <= Math.round(parseFloat(kosItem.avg_rating || 0)) ? 'text-yellow-400' : 'text-gray-300' %>"></i>
+                                                    <% } %>
+                                                </div>
+                                                <div class="text-sm text-gray-500">
+                                                    <%= parseFloat(kosItem.avg_rating || 0).toFixed(1) %> 
+                                                    (<%= kosItem.total_ratings || 0 %>)
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button onclick="deleteKos(<%= kosItem.id %>)" class="text-red-600 hover:text-red-900">
+                                                <i class="fas fa-trash mr-1"></i>
+                                                Hapus
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                        Tidak ada kos yang terdaftar
+                                    </td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('../Component/footer.ejs') %>
+
+    <script>
+        function deleteKos(kosId) {
+            if (confirm('Apakah Anda yakin ingin menghapus kos ini? Tindakan ini tidak dapat dibatalkan dan akan menghapus semua data terkait (foto, fasilitas, rating, booking).')) {
+                fetch(`/admin/kos/${kosId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menghapus kos');
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -12,6 +12,7 @@ const daftarBookingPemilikController = require('../controllers/daftarBookingPemi
 const profileController = require('../controllers/profileController');
 const favoritController = require('../controllers/favoritController');
 const searchController = require('../controllers/searchController');
+const adminController = require('../controllers/adminController');
 const { requireAuth } = require('../middlewares/authMiddleware');
 
 // route  untuk menampilkan form tambah kos
@@ -136,5 +137,16 @@ router.get('/favorites/:kosId/status', requireAuth, favoritController.checkFavor
 
 // Search route
 router.get('/search', searchController.searchKos);
+
+// Admin routes
+router.get('/admin', adminController.adminDashboard);
+router.get('/admin/users', adminController.manageUsers);
+router.delete('/admin/users/:id', adminController.deleteUser);
+router.get('/admin/kos', adminController.manageKos);
+router.delete('/admin/kos/:id', adminController.deleteKos);
+router.get('/admin/bookings', adminController.manageBookings);
+router.post('/admin/bookings/status', adminController.updateBookingStatus);
+router.get('/admin/ratings', adminController.manageRatings);
+router.delete('/admin/ratings/:id', adminController.deleteRating);
 
 module.exports = router;
