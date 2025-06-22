@@ -11,6 +11,7 @@ const hubungiPemilikController = require('../controllers/hubungiPemilikControlle
 const daftarBookingPemilikController = require('../controllers/daftarBookingPemilikController');
 const profileController = require('../controllers/profileController');
 const favoritController = require('../controllers/favoritController');
+const searchController = require('../controllers/searchController');
 const { requireAuth } = require('../middlewares/authMiddleware');
 
 // route  untuk menampilkan form tambah kos
@@ -132,5 +133,8 @@ router.post('/favorites/:kosId/toggle', requireAuth, favoritController.toggleFav
 router.post('/favorites/:kosId/add', requireAuth, favoritController.addToFavorites);
 router.post('/favorites/:kosId/remove', requireAuth, favoritController.removeFromFavorites);
 router.get('/favorites/:kosId/status', requireAuth, favoritController.checkFavoriteStatus);
+
+// Search route
+router.get('/search', searchController.searchKos);
 
 module.exports = router;

@@ -29,7 +29,7 @@ function register(req, res) {
           return res.status(500).send('Error during registration');
         }
 
-        res.redirect('/login');
+  res.redirect('/login');
       });
     });
   });
@@ -46,10 +46,10 @@ function login(req, res) {
       return res.status(500).send('Error during login');
     }
 
-    if (!user) {
+  if (!user) {
       console.log('User not found for email:', email);
-      return res.status(400).send('Invalid credentials');
-    }
+    return res.status(400).send('Invalid credentials');
+  }
 
     console.log('User found:', { id: user.id, name: user.name, role: user.role });
     console.log('Password in DB:', user.password ? 'exists' : 'null/undefined');
@@ -69,9 +69,9 @@ function login(req, res) {
 
         console.log('Password comparison result:', isPasswordValid);
 
-        if (!isPasswordValid) {
-          return res.status(400).send('Invalid credentials');
-        }
+  if (!isPasswordValid) {
+    return res.status(400).send('Invalid credentials');
+  }
 
         // Set session
         req.session.user = {
@@ -98,9 +98,9 @@ function login(req, res) {
         console.log('Plain text password match');
         
         // Set session
-        req.session.user = {
+req.session.user = {
           id: user.id,
-          name: user.name,
+  name: user.name,
           email: user.email,
           phone: user.phone,
           role: user.role
@@ -119,11 +119,11 @@ function login(req, res) {
           }
         });
 
-        if (user.role === 'pencari') {
+  if (user.role === 'pencari') {
           return res.redirect('/indexPencariKos');
-        } else if (user.role === 'pemilik') {
+  } else if (user.role === 'pemilik') {
           return res.redirect('/indexPemilikKos');
-        }
+  }
       } else {
         console.log('Plain text password mismatch');
         return res.status(400).send('Invalid credentials');

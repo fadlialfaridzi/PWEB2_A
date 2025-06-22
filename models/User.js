@@ -1,13 +1,13 @@
 const db = require('../config/db');
 
 const User = {
-    // Register new user
+// Register new user
     registerUser: (name, email, phone, password, role, callback) => {
         const query = 'INSERT INTO users (name, email, phone, password, role) VALUES (?, ?, ?, ?, ?)';
         db.query(query, [name, email, phone, password, role], callback);
     },
 
-    // Find user by email
+// Find user by email
     findUserByEmail: (email, callback) => {
         const query = 'SELECT * FROM users WHERE email = ?';
         db.query(query, [email], (err, results) => {

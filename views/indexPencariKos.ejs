@@ -16,119 +16,121 @@
                 Pencarian Kost
             </h2>
             
-            <!-- Search Box and Filters -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                
-                <!-- Tipe Kos -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Kos</label>
-                    <select class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
-                        <option value="" disabled selected>Pilih Tipe Kos</option>
-                        <option value="putra">Putra</option>
-                        <option value="putri">Putri</option>
-                    </select>
+            <form action="/search" method="GET" id="searchForm">
+                <!-- Search Box and Filters -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    
+                    <!-- Tipe Kos -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Kos</label>
+                        <select name="tipe_kos" class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <option value="">Semua Tipe Kos</option>
+                            <option value="putra">Putra</option>
+                            <option value="putri">Putri</option>
+                        </select>
+                    </div>
+
+                    <!-- Payment Type Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Pembayaran</label>
+                        <select name="payment_type" class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <option value="">Semua Tipe Pembayaran</option>
+                            <option value="perbulan">Per Bulan</option>
+                            <option value="pertahun">Per Tahun</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Rentang Harga</label>
+                        <select name="price_range" class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <option value="">Semua Harga</option>
+                            <option value="1">Rp 100.000 - 500.000</option>
+                            <option value="2">Rp 500.000 - 1.000.000</option>
+                            <option value="3">Rp 1.000.000 - 2.000.000</option>
+                            <option value="4">Rp 2.000.000 - 5.000.000</option>
+                            <option value="5">Rp > 5.000.000</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- Payment Type Filter -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Pembayaran</label>
-                    <select class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
-                        <option value="" disabled selected>Pilih Tipe Pembayaran</option>
-                        <option value="bulan">Per Bulan</option>
-                        <option value="tahun">Per Tahun</option>
-                    </select>
+                <!-- Facilities Section -->
+                <div class="bg-blue-50 p-6 rounded-xl mb-6">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                        <i class="fas fa-cogs text-blue-600 mr-2"></i>
+                        Fasilitas
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="WiFi" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-wifi text-blue-600"></i>
+                            <span class="text-sm font-medium">WiFi</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="AC" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-snowflake text-blue-600"></i>
+                            <span class="text-sm font-medium">AC</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Kamar Mandi Dalam" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-bath text-blue-600"></i>
+                            <span class="text-sm font-medium">Kamar Mandi Dalam</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Dapur" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-utensils text-blue-600"></i>
+                            <span class="text-sm font-medium">Dapur</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Ruang Tamu" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-couch text-blue-600"></i>
+                            <span class="text-sm font-medium">Ruang Tamu</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="CCTV" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-video text-blue-600"></i>
+                            <span class="text-sm font-medium">CCTV</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Token Per Kemar" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-plug text-blue-600"></i>
+                            <span class="text-sm font-medium">Token Per Kamar</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Air Gratis" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-tint text-blue-600"></i>
+                            <span class="text-sm font-medium">Air Gratis</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Kasur" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-bed text-blue-600"></i>
+                            <span class="text-sm font-medium">Kasur</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Lemari" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-archive text-blue-600"></i>
+                            <span class="text-sm font-medium">Lemari</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
+                            <input type="checkbox" name="facilities" value="Meja Belajar" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
+                            <i class="fas fa-desk text-blue-600"></i>
+                            <span class="text-sm font-medium">Meja Belajar</span>
+                        </label>
+                    </div>
                 </div>
 
-                <!-- Price Filter -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Rentang Harga</label>
-                    <select class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
-                        <option value="" disabled selected>Pilih Rentang Harga</option>
-                        <option value="1">Rp 100.000 - 500.000</option>
-                        <option value="2">Rp 500.000 - 1.000.000</option>
-                        <option value="3">Rp 1.000.000 - 2.000.000</option>
-                        <option value="4">Rp 2.000.000 - 5.000.000</option>
-                        <option value="5">Rp > 5.000.000</option>
-                    </select>
+                <!-- Search Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                        <i class="fas fa-search"></i>
+                        <span>Cari Kost</span>
+                    </button>
+                    <a href="/map" class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Cari dengan Google Maps</span>
+                    </a>
                 </div>
-            </div>
-
-            <!-- Facilities Section -->
-            <div class="bg-blue-50 p-6 rounded-xl mb-6">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">
-                    <i class="fas fa-cogs text-blue-600 mr-2"></i>
-                    Fasilitas
-                </h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-wifi text-blue-600"></i>
-                        <span class="text-sm font-medium">WiFi</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-snowflake text-blue-600"></i>
-                        <span class="text-sm font-medium">AC</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-bath text-blue-600"></i>
-                        <span class="text-sm font-medium">Kamar Mandi Dalam</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-utensils text-blue-600"></i>
-                        <span class="text-sm font-medium">Dapur</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-couch text-blue-600"></i>
-                        <span class="text-sm font-medium">Ruang Tamu</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-video text-blue-600"></i>
-                        <span class="text-sm font-medium">CCTV</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-plug text-blue-600"></i>
-                        <span class="text-sm font-medium">Token Per Kamar</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-tint text-blue-600"></i>
-                        <span class="text-sm font-medium">Air Gratis</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-bed text-blue-600"></i>
-                        <span class="text-sm font-medium">Kasur</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-archive text-blue-600"></i>
-                        <span class="text-sm font-medium">Lemari</span>
-                    </label>
-                    <label class="flex items-center space-x-2 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors">
-                        <input type="checkbox" class="form-checkbox text-blue-600 rounded focus:ring-blue-500" />
-                        <i class="fas fa-desk text-blue-600"></i>
-                        <span class="text-sm font-medium">Meja Belajar</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Search Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
-                    <i class="fas fa-search"></i>
-                    <span>Cari Kost</span>
-                </button>
-                <a href="/map" class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span>Cari dengan Google Maps</span>
-                </a>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -316,26 +318,62 @@
             const hiddenCards = document.querySelectorAll(".kos-card[style='display: none;']");
 
             // Show More functionality
-            showMoreButton.addEventListener("click", function() {
-                hiddenCards.forEach(card => {
-                    card.style.display = "block";  // Remove the "display: none" style
-                });
+            if (showMoreButton) {
+                showMoreButton.addEventListener("click", function() {
+                    hiddenCards.forEach(card => {
+                        card.style.display = "block";  // Remove the "display: none" style
+                    });
 
-                // Hide "Tampilkan Semua" button and show "Tampilkan Lebih Sedikit"
-                showMoreButton.style.display = "none";
-                showLessButton.style.display = "inline-block";
-            });
+                    // Hide "Tampilkan Semua" button and show "Tampilkan Lebih Sedikit"
+                    showMoreButton.style.display = "none";
+                    showLessButton.style.display = "inline-block";
+                });
+            }
 
             // Show Less functionality
-            showLessButton.addEventListener("click", function() {
-                hiddenCards.forEach(card => {
-                    card.style.display = "none";  // Add the "display: none" style
-                });
+            if (showLessButton) {
+                showLessButton.addEventListener("click", function() {
+                    hiddenCards.forEach(card => {
+                        card.style.display = "none";  // Add the "display: none" style
+                    });
 
-                // Show "Tampilkan Semua" button and hide "Tampilkan Lebih Sedikit"
-                showLessButton.style.display = "none";
-                showMoreButton.style.display = "inline-block";
-            });
+                    // Show "Tampilkan Semua" button and hide "Tampilkan Lebih Sedikit"
+                    showLessButton.style.display = "none";
+                    showMoreButton.style.display = "inline-block";
+                });
+            }
+
+            // Search form handling
+            const searchForm = document.getElementById("searchForm");
+            if (searchForm) {
+                searchForm.addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(searchForm);
+                    const searchParams = new URLSearchParams();
+                    
+                    // Add non-empty values to search params
+                    for (let [key, value] of formData.entries()) {
+                        if (value && value.trim() !== '') {
+                            if (key === 'facilities') {
+                                // Handle multiple facilities
+                                if (!searchParams.has(key)) {
+                                    searchParams.append(key, value);
+                                } else {
+                                    searchParams.append(key, value);
+                                }
+                            } else {
+                                searchParams.append(key, value);
+                            }
+                        }
+                    }
+                    
+                    // Redirect to search results
+                    const searchUrl = `/search?${searchParams.toString()}`;
+                    window.location.href = searchUrl;
+                });
+            }
         });
     </script>
 </body>
