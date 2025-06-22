@@ -36,21 +36,54 @@
     <% } else if (user && user.role === 'admin') { %>
         <%- include('Component/navbarAdmin.ejs') %>
     <% } else { %>
-        <!-- Default navbar for non-logged users -->
-        <nav class="bg-white shadow-lg">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="flex justify-between h-16">
-                    <div class="flex items-center">
-                        <a href="/" class="text-xl font-bold text-blue-600">KOSAND</a>
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        <a href="/" class="text-gray-700 hover:text-blue-600">Beranda</a>
-                        <a href="/kontak" class="text-blue-600 font-semibold">Kontak</a>
-                        <a href="/login" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Login</a>
-                    </div>
+        <!-- Navbar -->
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-500 text-sm py-3 shadow-lg sticky top-0 z-50">
+        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="bg-white text-blue-700 p-2 rounded-lg">
+                    <i class="fas fa-home text-xl"></i>
+                </div>
+                <a class="sm:order-1 flex-none text-xl font-bold text-white focus:outline-hidden focus:opacity-80" href="#">KOSAND</a>
+            </div>
+            
+            <div class="sm:order-3 flex items-center gap-x-2">
+                <button type="button" class="sm:hidden hs-collapse-toggle relative size-9 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" id="hs-navbar-alignment-collapse" aria-expanded="false" aria-controls="hs-navbar-alignment" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-alignment">
+                    <svg class="hs-collapse-open:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+                    <svg class="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    <span class="sr-only">Toggle</span>
+                </button>
+                <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-sm hover:bg-blue-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <a href="login">Login</a>
+                </button>
+                <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-800 text-white hover:bg-blue-900 focus:outline-hidden focus:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none transition-colors">
+                    <i class="fas fa-user-plus"></i>
+                    <a href="role">Register</a>
+                </button>
+            </div>
+            
+            <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
+                <div class="flex flex-col gap-3 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
+                    <a href="/" class=" text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-blue-50 hover:text-blue-700 transition-colors">
+                        <i class="fas fa-home"></i>
+                        Beranda
+                    </a>
+                    <a href="/#katalog" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-list"></i>
+                        Katalog
+                    </a>
+                    <a href="/#tentang" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-info-circle"></i>
+                        Tentang
+                    </a>
+                    <a href="/kontak" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
+                        <i class="fas fa-phone"></i>
+                        Kontak
+                    </a>
                 </div>
             </div>
         </nav>
+    </header>
     <% } %>
 
     <!-- Hero Section -->
