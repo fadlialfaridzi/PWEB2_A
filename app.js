@@ -63,4 +63,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); // Pastikan path views sudah benar
+
+// Definisikan route di sini
+app.use('/', require('./routes/index')); // pastikan routes/index.js sudah sesuai
+
+
 module.exports = app;

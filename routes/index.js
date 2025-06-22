@@ -125,5 +125,10 @@ router.get('/favoritKos', (req, res) => {
 
 router.get('/hubungiPemilik/:kosId', hubungiPemilikController.showHubungiPemilik);
 
+// Route untuk menampilkan halaman About
+router.get('/about', (req, res) => {
+    res.render('about', { title: 'Tentang Kami' });
+});
+
 
 module.exports = router;
