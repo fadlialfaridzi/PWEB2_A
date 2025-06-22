@@ -50,9 +50,6 @@ app.use((err, req, res, next) => {
 });
 
 // ================
-// Start Server
+// Export untuk dipakai di bin/www
 // ================
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
+module.exports = app;
