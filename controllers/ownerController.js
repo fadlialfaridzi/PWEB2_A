@@ -292,6 +292,38 @@ const addPhotos = (req, res) => {
     res.redirect(`/detailKos/${kosId}`);
 };
 
+const db = require('../config/db'); // Pastikan sudah terkoneksi ke MySQL
+
+module.exports = {
+    showProfile: (req, res) => {
+        const userId = req.session.user.id; // Mengambil user_id dari session
+
+        // Query untuk mengambil data pemilik
+        db.query('SELECT * FROM users WHERE id = ?', [userId], (err, result) => {
+            if (err) {
+                return res.status(500).send("Database error");
+            }
+
+            const user = result[0]; // Ambil data pemilik yang ditemukan
+
+            // Query untuk mengambil semua kos milik pemilik ini
+            db.query('SELECT * FROM kos WHERE user_id = ?', [userId], (err, kosResult) => {
+                if (err) {
+                    return res.status(500).send("Database error");
+                }
+
+                res.render('ownerProfile', {
+                    title: 'Profil Pemilik Kos',
+                    user,
+                    kosList: kosResult // Mengirimkan daftar kos yang dimiliki
+                });
+            });
+        });
+    }
+};
+
+
+
 module.exports = {
     ownerDashboard,
     tambahKos,

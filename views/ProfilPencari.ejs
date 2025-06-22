@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pencari - KOSAND</title>
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <header class="flex justify-between bg-blue-500 text-white py-4 px-6 shadow-lg sticky top-0 z-50">
+        <div class="flex items-center space-x-4">
+            <i class="fas fa-home text-3xl"></i>
+            <a href="/" class="text-xl font-bold">KOSAND</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="/" class="text-white">Beranda</a>
+            <a href="/kost" class="text-white">Cari Kost</a>
+            <a href="/profil-pencari" class="text-blue-200 font-semibold">Profil</a>
+        </div>
+    </header>
+
+    <!-- Profile Section -->
+    <main class="container mx-auto px-6 py-8">
+        <h2 class="text-3xl font-bold text-blue-primary mb-6">Profil Pencari Kost</h2>
+
+        <div class="bg-white rounded-lg p-6 shadow-lg mb-8">
+            <h3 class="text-2xl font-semibold text-blue-primary mb-4">Informasi Pengguna</h3>
+            <p class="text-gray-600"><strong>Nama:</strong> <%= profile.name %></p>
+            <p class="text-gray-600"><strong>Email:</strong> <%= profile.email %></p>
+            <p class="text-gray-600"><strong>Telepon:</strong> <%= profile.phone %></p>
+        </div>
+
+        <!-- Favorite Kost Section -->
+        <div class="bg-white rounded-lg p-6 shadow-lg">
+            <h3 class="text-2xl font-semibold text-blue-primary mb-4">Kost Favorit</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <% profile.favoriteKost.forEach(kost => { %>
+                    <div class="border rounded-lg p-4 shadow-lg bg-white hover:shadow-xl transition duration-300">
+                        <img src="<%= kost.image %>" alt="<%= kost.name %>" class="w-full h-32 object-cover rounded-lg mb-4">
+                        <h3 class="text-lg font-semibold text-blue-primary mb-2"><%= kost.name %></h3>
+                        <p class="text-gray-600 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2"></i> <%= kost.address %>
+                        </p>
+                        <p class="text-blue-primary font-semibold mb-4">Rp <%= kost.price %>/bulan</p>
+                        <a href="/kost/1" class="text-blue-secondary hover:text-blue-primary text-sm">
+                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-500 text-white mt-12 py-4">
+        <div class="text-center">
+            <p>&copy; 2025 KOSAND. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

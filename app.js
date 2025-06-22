@@ -25,9 +25,6 @@ app.use(session({
 // Middleware for POST data
 app.use(express.urlencoded({ extended: true }));
 
-// Set view engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 // Use middlewares
 app.use(logger('dev'));
@@ -63,7 +60,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
+app.get('/profile', ownerController.ownerDashboard);
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
@@ -71,6 +68,8 @@ app.set('views', path.join(__dirname, 'views')); // Pastikan path views sudah be
 
 // Definisikan route di sini
 app.use('/', require('./routes/index')); // pastikan routes/index.js sudah sesuai
+
+app.get('/profile', ownerController.ownerDashboard);
 
 
 module.exports = app;

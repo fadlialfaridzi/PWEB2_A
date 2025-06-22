@@ -130,5 +130,22 @@ router.get('/about', (req, res) => {
     res.render('about', { title: 'Tentang Kami' });
 });
 
+router.get('/ProfilPemilik', ownerController.ownerDashboard);
+
+const userProfile = {
+    name: 'John Doe',
+    email: 'johndoe@example.com',
+    phone: '08123456789',
+    favoriteKost: [
+        { name: 'Kost A', address: 'Jl. Contoh No. 12, Jakarta', price: '1.500.000', image: '/default-image.jpg' },
+        { name: 'Kost B', address: 'Jl. Contoh No. 34, Jakarta', price: '1.800.000', image: '/default-image.jpg' },
+        { name: 'Kost C', address: 'Jl. Contoh No. 56, Jakarta', price: '2.000.000', image: '/default-image.jpg' },
+    ]
+};
+
+// Route for user profile
+router.get('/profil-pencari', (req, res) => {
+    res.render('profil', { profile: userProfile });
+});
 
 module.exports = router;
