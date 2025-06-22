@@ -40,13 +40,8 @@
 
     <style>
         /* Mengubah background menjadi hijau ketika switch aktif (checked) */
-    input:checked + .bg-green {
+    input:checked + .bg-green-500 {
       background-color: #38a169; /* Warna hijau */
-    }
-
-    /* Menggeser dot ke kanan ketika switch aktif */
-    input:checked + .bg-gray-300 .dot {
-      transform: translateX(1.5rem); /* Geser bulatan ke kanan */
     }
 
     /* Default background untuk switch (tidak aktif) */
@@ -55,17 +50,26 @@
       transition: background-color 0.3s ease; /* Transisi halus saat background berubah */
     }
 
-    /* Dot yang berpindah saat status diubah */
-    .dot {
-      transition: transform 0.3s ease; /* Transisi halus saat dot bergerak */
-      position: absolute;
-      right: 0.25rem; /* Posisi awal (kiri) */
-    }
-
-    /* Jika status adalah available, backgroundnya hijau */
+    /* Background hijau untuk status tersedia */
     .bg-green-500 {
       background-color: #38a169; /* Warna hijau */
       transition: background-color 0.3s ease;
+    }
+
+    /* Dot yang berpindah saat status diubah */
+    .dot {
+      transition: all 0.3s ease; /* Transisi halus saat dot bergerak */
+      position: absolute;
+    }
+
+    /* Posisi dot untuk status available (kanan) */
+    .right-1 {
+      right: 0.25rem;
+    }
+
+    /* Posisi dot untuk status not_available (kiri) */
+    .left-1 {
+      left: 0.25rem;
     }
     </style>
     </head>
@@ -152,26 +156,33 @@
                 </div>
               </div>
 
+              <!-- Debug info -->
+              <script>
+                console.log('Kos <%= kosItem.id %>: <%= kosItem.name %> - Status: <%= kosItem.status %>');
+              </script>
+
               <div class="border-2 mt-16 rounded-3xl p-4">
                 <!-- Switch Toggle untuk Status Ketersediaan -->
-                <form action="/kos/<%= kosItem.id  %>/status" method="post">
-                  <input type="text" name="status" value="<%= kosItem.status %>" hidden>
-      
-                  <button class="flex items-center mt-4">
-                    <label for="statusToggle<%= kosItem.id %>" class="mr-2 text-sm">Status:</label>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                      <!-- Tombol switch -->
-                      <input hidden type="checkbox" id="statusToggle<%= kosItem.id %>"
-                      <% if (kosItem.status === 'available') { %> checked <% } %>>
-                      <span class="w-11 h-6 rounded-full transition-colors duration-300 
-                      <% if (kosItem.status === 'available') { %> bg-green-500 <% } else { %> bg-red-300 <% } %>">
-                      </span>
-                      
-                      <!-- Dot (bulatan) yang berpindah -->
-                      <span class="w-4 h-4 bg-white rounded-full absolute top-1  transition-all duration-300 <% if (kosItem.status === 'available') { %> right-1 <% } else { %> left-1 <% } %>"></span>
-                    </label>
-                  </button>
-                </form>
+                <div class="flex items-center mt-4">
+                  <label class="mr-2 text-sm">Status:</label>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <!-- Tombol switch -->
+                    <input type="checkbox" id="statusToggle<%= kosItem.id %>" 
+                           class="sr-only status-toggle" 
+                           data-kos-id="<%= kosItem.id %>"
+                           <% if (kosItem.status === 'available') { %> checked <% } %>>
+                    <span class="w-11 h-6 rounded-full transition-colors duration-300 
+                    <% if (kosItem.status === 'available') { %> bg-green-500 <% } else { %> bg-gray-300 <% } %>"
+                          id="switchBg<%= kosItem.id %>">
+                    </span>
+                    
+                    <!-- Dot (bulatan) yang berpindah -->
+                    <span class="w-4 h-4 bg-white rounded-full absolute top-1 transition-all duration-300 
+                    <% if (kosItem.status === 'available') { %> right-1 <% } else { %> left-1 <% } %>"
+                          id="switchDot<%= kosItem.id %>"></span>
+                  </label>
+                </div>
+                
                 <!-- Tombol Detail Kos -->
                 <div class="mt-7 text-center">
                   <a href="/detailKos/<%= kosItem.id %>" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
@@ -191,131 +202,125 @@
     </main>
     <%- include('Component/footer.ejs') %>
 
-      <script>
-        // Menangani toggle dropdown pada navbar
-        const dropdownButton = document.getElementById('userDropdownButton');
-        const dropdownMenu = document.getElementById('userDropdownMenu');
-
-        dropdownButton?.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!dropdownButton?.contains(event.target) && !dropdownMenu?.contains(event.target)) {
-            dropdownMenu?.classList.add('hidden');
+    <script>
+        console.log('Script loaded!');
+        
+        // Function to toggle kos status
+        function toggleKosStatus(kosId, isChecked) {
+            console.log('=== TOGGLE STATUS DEBUG ===');
+            console.log('kosId:', kosId);
+            console.log('isChecked:', isChecked);
+            const newStatus = isChecked ? 'available' : 'not_available';
+            console.log('Setting status to:', newStatus);
+            
+            // Update visual immediately
+            const switchBg = document.getElementById(`switchBg${kosId}`);
+            const switchDot = document.getElementById(`switchDot${kosId}`);
+            
+            console.log('Switch elements found:', !!switchBg, !!switchDot);
+            
+            if (isChecked) {
+                switchBg.classList.remove('bg-gray-300');
+                switchBg.classList.add('bg-green-500');
+                switchDot.classList.remove('left-1');
+                switchDot.classList.add('right-1');
+                console.log('Visual updated to AVAILABLE (green, right)');
+            } else {
+                switchBg.classList.remove('bg-green-500');
+                switchBg.classList.add('bg-gray-300');
+                switchDot.classList.remove('right-1');
+                switchDot.classList.add('left-1');
+                console.log('Visual updated to NOT_AVAILABLE (gray, left)');
             }
-        });
 
-        // Fungsi untuk toggle modal
-        function toggleModal() {
-            const modal = document.getElementById('modalKos');
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
+            // Send AJAX request
+            fetch(`/kos/${kosId}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+                if (!data.success) {
+                    alert('Failed to update status: ' + data.message);
+                    // Revert visual changes
+                    const checkbox = document.getElementById(`statusToggle${kosId}`);
+                    checkbox.checked = !isChecked;
+                    if (isChecked) {
+                        switchBg.classList.remove('bg-green-500');
+                        switchBg.classList.add('bg-gray-300');
+                        switchDot.classList.remove('right-1');
+                        switchDot.classList.add('left-1');
+                    } else {
+                        switchBg.classList.remove('bg-gray-300');
+                        switchBg.classList.add('bg-green-500');
+                        switchDot.classList.remove('left-1');
+                        switchDot.classList.add('right-1');
+                    }
+                } else {
+                    console.log('Status updated successfully to:', newStatus);
+                }
+                console.log('=== END TOGGLE DEBUG ===');
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('Error updating status');
+                // Revert visual changes
+                const checkbox = document.getElementById(`statusToggle${kosId}`);
+                checkbox.checked = !isChecked;
+                if (isChecked) {
+                    switchBg.classList.remove('bg-green-500');
+                    switchBg.classList.add('bg-gray-300');
+                    switchDot.classList.remove('right-1');
+                    switchDot.classList.add('left-1');
+                } else {
+                    switchBg.classList.remove('bg-gray-300');
+                    switchBg.classList.add('bg-green-500');
+                    switchDot.classList.remove('left-1');
+                    switchDot.classList.add('right-1');
+                }
+                console.log('=== END TOGGLE DEBUG ===');
+            });
         }
 
-        // Submit form untuk tambah kos dengan AJAX
-        document.getElementById('formKos').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-
-            const res = await fetch('/tambahKos', {
-            method: 'POST',
-            body: formData
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded!');
+            
+            // Verify initial status of all toggles
+            console.log('=== VERIFYING INITIAL STATUS ===');
+            const statusToggles = document.querySelectorAll('.status-toggle');
+            console.log('Found status toggles:', statusToggles.length);
+            
+            statusToggles.forEach(toggle => {
+                const kosId = toggle.getAttribute('data-kos-id');
+                const isChecked = toggle.checked;
+                const switchBg = document.getElementById(`switchBg${kosId}`);
+                const switchDot = document.getElementById(`switchDot${kosId}`);
+                
+                console.log(`Kos ${kosId}: checked=${isChecked}, bg=${switchBg.className}, dot=${switchDot.className}`);
+                
+                toggle.addEventListener('change', function() {
+                    const kosId = this.getAttribute('data-kos-id');
+                    const isChecked = this.checked;
+                    console.log('Status toggle changed:', kosId, isChecked);
+                    toggleKosStatus(kosId, isChecked);
+                });
             });
-
-            const result = await res.json();
-            if (result.success) {
-            alert("Kos berhasil ditambahkan!");
-            location.reload();
-            } else {
-            alert("Gagal menambahkan kos.");
-            }
+            console.log('=== END VERIFICATION ===');
         });
 
-    //     function updateKosStatus(kosId, status) {
-    //     // Kirim status baru ke server
-    //     fetch(`/kos/${kosId}/status`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ status: status })
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         // Geser dot ke kanan saat status diubah
-    //         const switchButton = document.getElementById(`statusToggle${kosId}`);
-    //         const switchBackground = switchButton.nextElementSibling; // Mengambil elemen background switch
-    //         const dot = switchBackground.querySelector('.dot'); // Mengambil elemen dot
-
-    //         if (status === 'available') {
-    //             dot.style.transform = 'translateX(1.5rem)';
-    //             switchBackground.style.backgroundColor = '#38a169';  // Warna hijau
-    //         } else {
-    //             dot.style.transform = 'translateX(0)';
-    //             switchBackground.style.backgroundColor = '#d1d5db';  // Warna abu-abu
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-    // } 
-
-      // Fungsi untuk menutup pesan sukses
-      function closeSuccessMessage() {
-          const successMessages = document.querySelectorAll('.successMessage');  // Pilih semua elemen dengan kelas .successMessage
-          successMessages.forEach((message) => {
-              display = 'none'; // Menyembunyikan elemen
-          });
-}
-
-        // Fungsi untuk mengubah status switch button
-      function updateSwitchStatus(kosId, status) {
-        const switchButton = document.getElementById(`statusToggle${kosId}`);
-        const dot = switchButton.nextElementSibling.querySelector('.dot');
-
-        // Mengirim status baru ke server
-        fetch(`/kos/${kosId}/status`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ status: status })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Geser dot ke kanan saat status diubah
-            if (status === 'available') {
-                dot.style.transform = 'translateX(1.5rem)';  // Dot bergerak ke kanan
-            } else {
-                dot.style.transform = 'translateX(0)';  // Dot kembali ke kiri
+        // Function to close success message
+        function closeSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-      }
-
-      // Fungsi untuk menyesuaikan background color switch berdasarkan status dari database
-      window.onload = function() {
-          // Mendapatkan status dari database (misalnya 'available' atau 'not_available')
-          const statusFromDatabase = '<%= kos.status %>'; // Mengambil nilai status dari database pada server-side
-          const switchButton = document.getElementById('statusToggle<%= kos.id %>');
-          const dot = switchButton.nextElementSibling.querySelector('.dot');
-          const switchBackground = switchButton.nextElementSibling; // Mengambil elemen background dari switch
-
-          // Cek apakah status adalah 'available' dan setel switch sesuai
-          if (statusFromDatabase === 'available') {
-              switchButton.checked = true;
-              dot.style.transform = 'translateX(1.5rem)';  // Geser dot ke kanan
-              switchBackground.style.backgroundColor = '#38a169'; // Warna hijau ketika 'available'
-          } else {
-              switchButton.checked = false;
-              dot.style.transform = 'translateX(0)';  // Geser dot kembali ke kiri
-              switchBackground.style.backgroundColor = '#d1d5db'; // Warna abu-abu ketika 'not_available'
-          }
-      }
-      </script>
+        }
+    </script>
     </body>
 
     </html>

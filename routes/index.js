@@ -13,6 +13,7 @@ const profileController = require('../controllers/profileController');
 const favoritController = require('../controllers/favoritController');
 const searchController = require('../controllers/searchController');
 const adminController = require('../controllers/adminController');
+const exportController = require('../controllers/exportController');
 const { requireAuth } = require('../middlewares/authMiddleware');
 
 // route  untuk menampilkan form tambah kos
@@ -148,5 +149,15 @@ router.get('/admin/bookings', adminController.manageBookings);
 router.post('/admin/bookings/status', adminController.updateBookingStatus);
 router.get('/admin/ratings', adminController.manageRatings);
 router.delete('/admin/ratings/:id', adminController.deleteRating);
+
+// Export routes
+router.get('/admin/export/users/pdf', exportController.exportUsersPDF);
+router.get('/admin/export/users/csv', exportController.exportUsersCSV);
+router.get('/admin/export/kos/pdf', exportController.exportKosPDF);
+router.get('/admin/export/kos/csv', exportController.exportKosCSV);
+router.get('/admin/export/bookings/pdf', exportController.exportBookingsPDF);
+router.get('/admin/export/bookings/csv', exportController.exportBookingsCSV);
+router.get('/admin/export/ratings/pdf', exportController.exportRatingsPDF);
+router.get('/admin/export/ratings/csv', exportController.exportRatingsCSV);
 
 module.exports = router;

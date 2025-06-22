@@ -52,6 +52,13 @@ const ownerDashboard = (req, res) => {
 
         const kos = Object.values(grouped);
 
+        // Debug: Log the kos data to verify status values
+        console.log('=== DEBUG KOS DATA ===');
+        kos.forEach(kosItem => {
+            console.log(`Kos ID: ${kosItem.id}, Name: ${kosItem.name}, Status: ${kosItem.status}`);
+        });
+        console.log('=== END DEBUG ===');
+
         res.render('indexPemilikKos', { kos,
             user: req.session.user,
             success: req.query.success || null ,
@@ -153,36 +160,41 @@ const editKos = (req, res) => {
 // Fungsi untuk memperbarui status kos
 const updateKosStatus = (req, res) => {
     const kosId = req.params.id;
-    let status = req.body.status;  // 'available' or 'not_available'
+    const newStatus = req.body.status;  // 'available' or 'not_available' - this is the desired new status
     const userId = req.session.user?.id;
-    let newStatus;
 
-    if (status == 'available') {
-        newStatus = 'not_available'
-    } else if( status == 'not_available'){
-       newStatus = 'available'
+    console.log('=== DEBUG UPDATE STATUS ===');
+    console.log('kosId:', kosId);
+    console.log('newStatus from frontend:', newStatus);
+    console.log('userId:', userId);
+
+    if (!userId) {
+        return res.status(401).json({ success: false, message: 'User not authenticated' });
     }
 
-    if (!userId) return res.redirect('/login');
-
-    if (!status || (status !== 'available' && status !== 'not_available')) {
+    if (!newStatus || (newStatus !== 'available' && newStatus !== 'not_available')) {
         return res.status(400).json({ success: false, message: 'Status tidak valid' });
     }
 
     Kos.updateKosStatus(kosId, newStatus, (err, result) => {
         if (err) {
             console.error('Error updating kos status:', err);
-            return res.status(500).json({ success: false });
+            return res.status(500).json({ success: false, message: 'Gagal memperbarui status kos' });
         }
 
+        console.log('Status updated successfully to:', newStatus);
+
+        // Check if this is an AJAX request (JSON) or form submission
+        const isAjax = req.get('Content-Type') === 'application/json';
+        
+        if (isAjax) {
+            // Return JSON response for AJAX requests
+            res.json({ success: true, message: 'Status kos berhasil diperbarui', newStatus: newStatus });
+        } else {
+            // Redirect for form submissions
+            res.redirect('/indexPemilikKos?successEdit=true');
+        }
     });
-    // res.json({
-    //     kosId,
-    //     status,
-    //     userId,
-    //     newStatus
-    // })
-    ownerDashboard(req, res)
 };
 
 // Fungsi untuk menghapus kos

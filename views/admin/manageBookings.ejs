@@ -10,11 +10,25 @@
     <section class="py-8 mt-8">
         <div class="max-w-7xl mx-auto px-4">
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">
-                    <i class="fas fa-calendar-check text-blue-600 mr-2"></i>
-                    Kelola Pemesanan
-                </h1>
-                <p class="text-gray-600">Kelola semua pemesanan yang dilakukan oleh pencari</p>
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                            <i class="fas fa-calendar-check text-blue-600 mr-2"></i>
+                            Kelola Pemesanan
+                        </h1>
+                        <p class="text-gray-600">Kelola semua pemesanan yang dilakukan oleh pencari</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <a href="/admin/export/bookings/pdf" class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors">
+                            <i class="fas fa-file-pdf mr-2"></i>
+                            Export PDF
+                        </a>
+                        <a href="/admin/export/bookings/csv" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
+                            <i class="fas fa-file-csv mr-2"></i>
+                            Export CSV
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Bookings Table -->
@@ -72,7 +86,7 @@
                                                     <i class="fas fa-clock mr-1"></i>
                                                     Pending
                                                 </span>
-                                            <% } else if (booking.status === 'completed') { %>
+                                            <% } else if (booking.status === 'completed' || booking.status === 'complete') { %>
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                     <i class="fas fa-check-circle mr-1"></i>
                                                     Selesai
