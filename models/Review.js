@@ -1,37 +1,22 @@
-const mongoose = require('mongoose');
+const db = require('../db');
 
-const reviewSchema = new mongoose.Schema({
-  reviewerName: {
-    type: String,
-    required: true
-  },
-  content: {
-    type: String,
-    required: true
-  },
-  rating: {
-    type: Number,
-    required: true,
-    min: 1,
-    max: 5
-  },
-  reply: {
-    type: String,
-    default: ''
-  },
-  kosId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Kos'
-  },
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+// Ambil semua review milik owner tertentu
+exports.getReviewsByOwnerId = (ownerId, callback) => {
+  const sql = 'SELECT * FROM reviews WHERE ownerId = ?';
+  db.query(sql, [ownerId], callback);
+};
 
-const Review = mongoose.model('Review', reviewSchema);
-module.exports = Review;
+// Balas review
+exports.replyToReview = (reviewId, replyText, callback) => {
+  const sql = 'UPDATE reviews SET reply = ? WHERE id = ?';
+  db.query(sql, [replyText, reviewId], callback);
+};
+
+// Tambah dummy review (untuk dev/test)
+exports.addDummyReview = (callback) => {
+  const sql = `
+    INSERT INTO reviews (reviewerName, content, rating, ownerId)
+    VALUES (?, ?, ?, ?)
+  `;
+  db.query(sql, ['Mahasiswa Uda', 'Kosan bersih dan nyaman', 5, 1], callback); // ownerId = 1 bisa kamu ubah
+};

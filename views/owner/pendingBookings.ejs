@@ -1,0 +1,37 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-4">Bookingan Pending</h2>
+
+  <% if (bookings.length === 0) { %>
+    <p class="text-gray-500">Belum ada bookingan pending.</p>
+  <% } else { %>
+    <table class="min-w-full border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-2 text-left">Nama Kos</th>
+          <th class="px-4 py-2 text-left">Penyewa</th>
+          <th class="px-4 py-2 text-left">Tanggal</th>
+          <th class="px-4 py-2 text-left">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% bookings.forEach(booking => { %>
+          <tr class="border-t hover:bg-gray-50">
+            <td class="px-4 py-2"><%= booking.kosName || '-' %></td>
+            <td class="px-4 py-2"><%= booking.userName || '-' %></td>
+            <td class="px-4 py-2">
+              <%= booking.date ? booking.date.toDateString() : '-' %>
+            </td>
+            <td class="px-4 py-2">
+              <form action="/owner/booking/<%= booking._id %>/accept" method="POST" class="inline">
+                <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">Terima</button>
+              </form>
+              <form action="/owner/booking/<%= booking._id %>/reject" method="POST" class="inline ml-2">
+                <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Tolak</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>

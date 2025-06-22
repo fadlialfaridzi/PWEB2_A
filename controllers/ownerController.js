@@ -1,49 +1,91 @@
-const Booking = require('../models/Booking');
-const Review = require('../models/Review');
-const Kos = require('../models/Kos'); 
+const pool = require('../db'); // koneksi ke database dari db.js
 
+// ========================
+// Booking Kos
+// ========================
+
+// Menampilkan semua booking kos dengan status confirmed, bisa cari berdasarkan nama penyewa atau nama kos
 exports.getAllBookings = async (req, res) => {
-  const bookings = await Booking.find({ ownerId: req.user.id });
-  res.render('owner/bookings', { bookings });
+  const search = req.query.search || '';
+
+  try {
+    const [rows] = await pool.query(`
+      SELECT
+        b.nama_penyewa,
+        b.tanggal_booking,
+        b.status,
+        k.nama AS nama_kos,
+        k.harga,
+        k.info,
+        k.gambar
+      FROM bookings b
+      JOIN kos k ON b.kos_id = k.id
+      WHERE b.status = 'confirmed'
+        AND (b.nama_penyewa LIKE ? OR k.nama LIKE ?)
+    `, [`%${search}%`, `%${search}%`]);
+
+    res.render('owner/booking', {
+      bookings: rows,
+      search
+    });
+  } catch (err) {
+    console.error('Gagal mengambil data booking:', err);
+    res.status(500).send('Terjadi kesalahan saat mengambil data booking.');
+  }
 };
 
-exports.getBookingDetail = async (req, res) => {
-  const booking = await Booking.findById(req.params.id);
-  res.render('owner/bookingDetail', { booking });
-};
+// ========================
+// Daftar Kos + Filter
+// ========================
 
-exports.confirmBooking = async (req, res) => {
-  await Booking.findByIdAndUpdate(req.params.id, { status: 'confirmed' });
-  res.redirect('/owner/bookings');
-};
-
-exports.rejectBooking = async (req, res) => {
-  await Booking.findByIdAndUpdate(req.params.id, { status: 'rejected' });
-  res.redirect('/owner/bookings');
-};
-
-exports.getAllReviews = async (req, res) => {
-  const reviews = await Review.find({ ownerId: req.user.id }); // sesuaikan model jika perlu
-  res.render('owner/reviews', { reviews });
-};
-
-exports.replyReview = async (req, res) => {
-  const { id } = req.params;
-  const { reply } = req.body;
-
-exports.toggleAvailability = async (req, res) => {
-  const kos = await Kos.findById(req.params.id);
-  kos.tersedia = !kos.tersedia;
-  await kos.save();
-  res.redirect('/owner/kos'); // arahkan ke halaman daftar kos pemilik
-};
-  
 exports.getKosList = async (req, res) => {
-  const kosList = await Kos.find({ ownerId: req.user.id });
-  res.render('owner/kos', { kosList });
+  const search = req.query.search || '';
+  const status = req.query.status || '';
+
+  let query = `
+    SELECT id, nama, harga, info, gambar, status
+    FROM kos
+    WHERE nama LIKE ?
+  `;
+  const params = [`%${search}%`];
+
+  if (status === 'tersedia' || status === 'full') {
+    query += ' AND status = ?';
+    params.push(status);
+  }
+
+  try {
+    const [rows] = await pool.query(query, params);
+    res.render('owner/kosList', {
+      daftarKos: rows,
+      search,
+      status
+    });
+  } catch (err) {
+    console.error('Gagal mengambil data kos:', err);
+    res.status(500).send('Terjadi kesalahan saat mengambil data kos.');
+  }
 };
 
+// ========================
+// Toggle Status Kos
+// ========================
 
-  await Review.findByIdAndUpdate(id, { reply: reply });
-  res.redirect('/owner/reviews');
+exports.toggleKosAvailability = async (req, res) => {
+  const kosId = req.params.id;
+
+  try {
+    const [rows] = await pool.query(`SELECT status FROM kos WHERE id = ?`, [kosId]);
+    if (rows.length === 0) return res.status(404).send('Kos tidak ditemukan.');
+
+    const currentStatus = rows[0].status;
+    const newStatus = currentStatus === 'tersedia' ? 'full' : 'tersedia';
+
+    await pool.query(`UPDATE kos SET status = ? WHERE id = ?`, [newStatus, kosId]);
+
+    res.redirect('/owner/list-kos');
+  } catch (err) {
+    console.error('Gagal mengubah status kos:', err);
+    res.status(500).send('Terjadi kesalahan saat memperbarui status kos.');
+  }
 };

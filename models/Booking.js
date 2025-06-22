@@ -1,33 +1,19 @@
-const mongoose = require('mongoose');
+const db = require('../db');
 
-const bookingSchema = new mongoose.Schema({
-  kosId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Kos',
-    required: true,
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  tanggalBooking: {
-    type: Date,
-    default: Date.now,
-  },
-  durasi: {
-    type: Number, // misalnya: 6 bulan, 12 bulan
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'confirmed', 'rejected'],
-    default: 'pending',
-  }
-}, { timestamps: true });
+// Ambil semua booking milik owner tertentu
+exports.getBookingsByOwnerId = (ownerId, callback) => {
+  const sql = 'SELECT * FROM bookings WHERE ownerId = ?';
+  db.query(sql, [ownerId], callback);
+};
 
-module.exports = mongoose.model('Booking', bookingSchema);
+// Ambil detail 1 booking
+exports.getBookingById = (id, callback) => {
+  const sql = 'SELECT * FROM bookings WHERE id = ?';
+  db.query(sql, [id], callback);
+};
+
+// Update status booking
+exports.updateBookingStatus = (id, status, callback) => {
+  const sql = 'UPDATE bookings SET status = ? WHERE id = ?';
+  db.query(sql, [status, id], callback);
+};
