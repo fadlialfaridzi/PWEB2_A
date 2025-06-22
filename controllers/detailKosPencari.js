@@ -1,8 +1,10 @@
 const Kos = require('../models/Kos');
+const Favorit = require('../models/Favorit');
 
 // Menampilkan detail kos untuk pencarikos
 const showDetailKosPencari = (req, res) => {
     const kosId = req.params.id;  // Ambil id kos dari parameter URL
+    const userId = req.session.user?.id;
 
     // Ambil data kos dari database berdasarkan kosId
     Kos.getKosById(kosId, (err, kosItem) => {
