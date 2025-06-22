@@ -1,51 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Kos</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+<%- include('Component/headfix.ejs') %>
+<body class="bg-gray-100 items-center justify-center min-h-screen">
+<%- include('Component/navbarPemilik.ejs') %>
 
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx9UJ53-dhtrJQ0d31MAkwXeNozDcrWOA&callback=initMap&v=weekly" async></script>
-
-    <style>
-        /* Set the size of the map */
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <!-- Navbar -->
-<main class="flex-grow">
-  <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-sm py-3">
-    <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
-      <a class="sm:order-1 flex-none text-xl font-semibold text-white" href="#">KosAnd</a>
-      <div class="sm:order-3 flex items-center gap-x-2">
-        <% if (user) { %>
-          <div class="text-white relative">
-            <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
-              <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white" />
-              <span class="uppercase"><%= user.name %></span>
-            </button>
-            <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
-              <ul class="text-sm text-gray-700">
-                <li class="block px-4 py-2">User ID: <%= user.id %></li>
-                <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
-                <li>
-                  <a href="/logout" class="block px-4 py-2 text-red-500">Logout</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        <% } %>
-      </div>
-    </nav>
-  </header>
     <form class="mr-72 ml-72 mt-8 mb-8 bg-white rounded-2xl px-52 shadow-lg" action="/editKos/<%= kos.id %>" method="POST" enctype="multipart/form-data">
         <h1 class="text-3xl font-semibold pt-4 mb-6 text-center">Edit Kos</h1>
         <div class="mb-4">
@@ -120,12 +78,7 @@
         </button>
         </div>
     </form>
-    <!-- Footer -->
-    <footer class="bg-gray-200 text-gray-500 py-4 mt-8">
-        <div class="max-w-[85rem] w-full mx-auto text-center">
-            <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
-        </div>
-    </footer>
+    <%- include('Component/footer.ejs') %>
 </main>
     <script>
         let map, marker;
@@ -164,6 +117,8 @@
         }
         window.initMap = initMap;
     </script>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx9UJ53-dhtrJQ0d31MAkwXeNozDcrWOA&callback=initMap&v=weekly" async></script>
 </body>
 
 </html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<%- include('Component/headfix.ejs') %>
+
+<body class="bg-gray-50">
+<%- include('Component/navbarPencari.ejs') %>
+
+<section class="py-12 bg-white">
+    <div class="max-w-[85rem] mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Konfirmasi Booking</h2>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+
+            <!-- Grid Layout: Foto Kos dan Peta Lokasi -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                <!-- Menampilkan Foto Kos -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-2">Foto Kos</h4>
+                    <% if (photos.length > 0) { %>
+                        <div class="h-64 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                            <img src="/uploads/<%= photos[0] %>" alt="Foto Kos" class="w-full h-full object-cover rounded-lg shadow-md">
+                        </div>
+                    <% } else { %>
+                        <div class="h-64 bg-gray-300 flex items-center justify-center rounded-lg shadow-md">
+                            <i class="fas fa-home text-white text-6xl"></i>
+                        </div>
+                    <% } %>
+                </div>
+
+                <!-- Menampilkan Peta Lokasi Kos -->
+                <div class="h-64">
+                    <h4 class="text-lg font-semibold mb-2">Lokasi Kos</h4>
+                    <div id="map" style="height: 100%;"></div> <!-- Container for Google Maps -->
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-800"><%= kos.name %></h3>
+            <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt text-blue-500 mr-2"></i><%= kos.address %></p>
+            <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kos.price %> / <%= kos.payment_type %></p>
+            <p class="text-gray-600 mb-4"><%= kos.description %></p>
+
+            <!-- Menambahkan Input Tanggal Booking -->
+            <div class="mb-4">
+                <label for="bookingDate" class="block text-lg font-semibold">Pilih Tanggal Booking</label>
+                <input type="date" id="bookingDate" name="bookingDate" value="<%= bookingDate %>" class="mt-2 w-full p-2 border border-gray-300 rounded-lg">
+            </div>
+
+            <!-- Form untuk Konfirmasi Booking -->
+            <form action="/pemesanan" method="POST" class="mt-6">
+                <input type="hidden" name="kosId" value="<%= kos.id %>">
+                <input type="hidden" name="bookingDate" id="hiddenBookingDate" value="<%= bookingDate %>">
+                <button type="submit" class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-all">Konfirmasi Booking</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<%- include('Component/footer.ejs') %>
+
+<script>
+    // Inisialisasi Google Maps
+    function initMap() {
+        const location = {
+            lat: <%= kos.latitude ? kos.latitude : 'null' %>,  // Set latitude from database
+            lng: <%= kos.longitude ? kos.longitude : 'null' %>  // Set longitude from database
+        };
+
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,  // Set the zoom level
+            center: location,  // Set the center of the map based on latitude and longitude
+        });
+
+        // Add marker to the map at the specified location
+        new google.maps.Marker({
+            position: location,
+            map: map,
+            title: "<%= kos.name %>"  // Optional: Set a title for the marker (e.g., the name of the kos)
+        });
+    }
+
+    // Menjalankan peta setelah halaman dimuat
+    window.initMap = initMap;
+
+    // Update hidden input value when date is selected
+    document.getElementById('bookingDate').addEventListener('change', function() {
+        document.getElementById('hiddenBookingDate').value = this.value;
+    });
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx9UJ53-dhtrJQ0d31MAkwXeNozDcrWOA&callback=initMap" async></script>
+
+</body>
+
+</html>

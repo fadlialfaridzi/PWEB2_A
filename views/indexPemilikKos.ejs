@@ -12,8 +12,33 @@
       <!----preline --->
       <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet" />
       <script src="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.js"></script>
+      <!-- Preline UI CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-      <style>
+    <style>
         /* Mengubah background menjadi hijau ketika switch aktif (checked) */
     input:checked + .bg-green {
       background-color: #38a169; /* Warna hijau */
@@ -46,39 +71,16 @@
     </head>
     <main class="flex-grow">
     <body class="bg-gray-100 flex flex-col min-h-screen"  >
-      <!-- Navbar -->
-      <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 text-sm py-3">
-        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
-          <a class="sm:order-1 flex-none text-xl font-semibold text-white" href="#">KosAnd</a>
-          <div class="sm:order-3 flex items-center gap-x-2">
-            
-            <% if (user) { %>
-              <div class="text-white relative">
-                <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
-                  <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white" />
-                  <span class="uppercase"><%= user.name %></span>
-                </button>
-                <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
-                  <ul class="text-sm text-gray-700">
-                    <li class="block px-4 py-2">User ID: <%= user.id %></li>
-                    <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
-                    <li>
-                      <a href="/logout" class="block px-4 py-2 text-red-500">Logout</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            <% } %>
-          </div>
-        </nav>
-      </header>
+              <%- include('Component/navbarPemilik.ejs') %>
+              <%- include('Component/heroSectionPemilik.ejs') %>
+
 
       <!-- Pesan Sukses -->
       <% if (success) { %>
           <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
             <span class="font-bold">Success:</span> Data Kos Berhasil Ditambahkan!
             <!-- Button Close -->
-            <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+            <button onclick="closeSuccessMessage()" class=" bg-green-100 ml-4 text-black hover:text-gray-300 focus:outline-none">
               Close
             </button>
           </div>
@@ -87,7 +89,7 @@
         <% if (successEdit) { %>
             <div id="successMessage" class="bg-green-100 mt-2 border-4 border-green-200 text-black text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
                 <span class="font-bold">Success:</span> Data Kos Berhasil Diedit!
-                <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+                <button onclick="closeSuccessMessage()" class=" green-100 ml-4 text-black hover:text-gray-300 focus:outline-none">
                 Close
                 </button>
             </div>
@@ -96,11 +98,12 @@
         <% if (successDelete) { %>
             <div id="successMessage" class="bg-red-400 mt-2 border-4 border-red-200 text-white text-sm text-center p-4 mb-6 rounded-lg fixed top-20 right-4 z-50">
                 <span class="font-bold">Success:</span> Data Kos Berhasil Dihapus!
-                <button onclick="closeSuccessMessage()" class=" bg-teal-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
-                Close
+                <button onclick="closeSuccessMessage()" class=" bg-red-400 ml-4 text-black hover:text-gray-300 focus:outline-none">
+                  Close
                 </button>
-            </div>
+              </div>
         <% } %>
+              
 
 
 
@@ -118,17 +121,24 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <% if (kos && kos.length > 0) { %>
         <% kos.forEach(kosItem => { %>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <% if (kosItem.photos.length > 0) { %>
               <img src="/uploads/<%= kosItem.photos[0] %>" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
             <% } else { %>
               <img src="/images/default-kos.jpg" alt="<%= kosItem.name %>" class="w-full h-40 object-cover">
             <% } %>
-            <div class="p-4">
+            <div class="p-6">
               <h4 class="font-semibold text-lg"><%= kosItem.name %></h4>
-              <p class="text-sm text-gray-600">Harga: Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
-              <p class="text-sm text-gray-600">Alamat: <%= kosItem.address %></p>
-              <p class="text-sm text-gray-600">Tipe Kos: Kos <%= kosItem.tipe_kos %></p>
+              <div class="mb-4">
+                <p class="text-gray-600 mb-2 flex items-center">
+                  <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+                  <%= kosItem.address %>
+                </p>
+              </div>
+              <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
+              <!-- Tipe Kos -->
+              <p class="text-sm uppercase text-gray-600">Tipe:  <span class="font-semibold text-blue-600"><%= kosItem.tipe_kos %></span></p> 
+
 
               <div class="border-2 mt-16 rounded-3xl p-4">
                 <!-- Switch Toggle untuk Status Ketersediaan -->
@@ -157,7 +167,7 @@
                     </a>
                   </div>
                 </div>
-              </div>
+            </div>
               
             
           </div>
@@ -167,12 +177,7 @@
       <% } %>
     </div>
     </main>
-    <!-- Footer -->
-    <footer class="bg-gray-200 text-gray-500 py-4 mt-8">
-        <div class="max-w-[85rem] w-full mx-auto text-center">
-            <p class="text-sm">© 2025 Pemrograman Web A - Kelompok 2. All rights reserved.</p>
-        </div>
-    </footer>
+    <%- include('Component/footer.ejs') %>
 
       <script>
         // Menangani toggle dropdown pada navbar
@@ -244,13 +249,13 @@
     //     });
     // } 
 
-      // Menyembunyikan pesan sukses setelah 3 detik
-        function closeSuccessMessage() {
-          const successMessage = document.getElementById('successMessage');
-          if (successMessage) {
-            successMessage.style.display = 'none'; // Menyembunyikan pesan
-          }
-        }
+      // Fungsi untuk menutup pesan sukses
+      function closeSuccessMessage() {
+          const successMessages = document.querySelectorAll('.successMessage');  // Pilih semua elemen dengan kelas .successMessage
+          successMessages.forEach((message) => {
+              display = 'none'; // Menyembunyikan elemen
+          });
+}
 
         // Fungsi untuk mengubah status switch button
       function updateSwitchStatus(kosId, status) {

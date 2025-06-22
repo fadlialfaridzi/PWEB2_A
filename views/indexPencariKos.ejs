@@ -1,116 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda - KOSAND</title>
-    <!-- Preline UI CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/preline@1.0.0/dist/preline.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
+<%- include('Component/headfix.ejs') %>
+
 
 <body class="bg-gray-50">
-
-    <!-- Navbar -->
-    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-blue-500 text-sm py-3 shadow-lg sticky top-0 z-50">
-        <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <div class="bg-white text-blue-700 p-2 rounded-lg">
-                    <i class="fas fa-home text-xl"></i>
-                </div>
-                <a class="sm:order-1 flex-none text-xl font-bold text-white focus:outline-hidden focus:opacity-80" href="#">KOSAND</a>
-            </div>
-            
-            <div class="sm:order-3 flex items-center gap-x-2">
-                <!-- Check if user is logged in -->
-                <% if (user) { %>
-                    <!-- User avatar and name with dropdown -->
-                    <div class="text-white  relative rounded-full hover:bg-white hover:text-blue-800">
-                        <button type="button" class="flex items-center gap-x-2 border-2 border-blue-400 rounded-full px-5 py-1 shadow-lg" id="userDropdownButton">
-                            <!-- User Avatar (replace with actual image URL or path) -->
-                            <img src="/images/user.png" alt="User Avatar" class="w-8 h-8 rounded-full bg-white">
-                            <span class="uppercase"><%= user.name %></span>
-                        </button>
-
-                        <!-- Dropdown content (hidden by default) -->
-                        <div id="userDropdownMenu" class="absolute right-0 w-40 mt-2 bg-white shadow-md rounded-lg hidden">
-                            <ul class="text-sm text-gray-700">
-                                <li><a href="/profile" class="block px-4 py-2">Profile</a></li>
-                                <li><a href="/logout" class="block px-4 py-2">Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                <% } else { %>
-                    <!-- If no user logged in, show nothing (i.e., remove login/register buttons) -->
-                    <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-blue-700 shadow-sm hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none transition-colors">
-                        <i class="fas fa-sign-in-alt"></i>
-                        <a href="login">Login</a>
-                    </button>
-                    <button type="button" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-800 text-white hover:bg-blue-900 focus:outline-hidden focus:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none transition-colors">
-                        <i class="fas fa-user-plus"></i>
-                        <a href="role">Register</a>
-                    </button>
-                <% } %>
-            </div>
-            
-            <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
-                <div class="flex flex-col gap-3 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-                    <a href="/indexPencariKos" class="bg-white text-blue-700 py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-blue-50 transition-colors">
-                        <i class="fas fa-home"></i>
-                        Beranda
-                    </a>
-                    <a href="#katalog" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
-                        <i class="fas fa-list"></i>
-                        Katalog
-                    </a>
-                    <a href="#tentang" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
-                        <i class="fas fa-info-circle"></i>
-                        Tentang
-                    </a>
-                    <a href="#kontak" class="text-white py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-full hover:bg-white hover:text-blue-700 transition-colors">
-                        <i class="fas fa-phone"></i>
-                        Kontak
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-16">
-        <div class="max-w-[85rem] mx-auto px-4 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                Temukan Kost Impianmu di <span class="text-blue-100">Unand</span>
-            </h1>
-            <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-                Platform terpercaya untuk mencari kost berkualitas di sekitar Universitas Andalas
-            </p>
-        </div>
-    </section>
+<%- include('Component/navbarPencari.ejs') %>
+<%- include('Component/heroSectionPencari.ejs') %>
 
     <!-- Search Section -->
     <section class="py-8 mt-8 relative z-10">
@@ -122,13 +18,15 @@
             
             <!-- Search Box and Filters -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <!-- Search Input -->
-                <div class="md:col-span-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Kost</label>
-                    <div class="relative">
-                        <i class="fas fa-map-marker-alt absolute left-3 top-4 text-gray-400"></i>
-                        <input type="text" class="w-full pl-10 pr-4 py-3 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="Cari kost di sini..." />
-                    </div>
+                
+                <!-- Tipe Kos -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Kos</label>
+                    <select class="w-full py-3 px-4 border-2 border-blue-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                        <option value="" disabled selected>Pilih Tipe Kos</option>
+                        <option value="putra">Putra</option>
+                        <option value="putri">Putri</option>
+                    </select>
                 </div>
 
                 <!-- Payment Type Filter -->
@@ -228,7 +126,7 @@
                 </button>
                 <button class="border-2 border-blue-400 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-xl shadow-lg transition-all duration-200 flex items-center justify-center space-x-2">
                     <i class="fas fa-map-marked-alt"></i>
-                    <span>Cari dengan Google Maps</span>
+                    <span><a href="map">Cari dengan Google Maps</a></span>
                 </button>
             </div>
         </div>
@@ -265,7 +163,7 @@
                                     </p>
                                 </div>
                                 <p class="text-2xl font-bold text-blue-600 mb-3">Rp <%= kosItem.price %> / <%= kosItem.payment_type %></p>
-                                <div class="flex items-center mb-3">
+                                <!-- <div class="flex items-center mb-3">
                                     <div class="flex text-yellow-400 mr-2">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -274,7 +172,7 @@
                                         <i class="fas fa-star-half-alt"></i>
                                     </div>
                                     <span class="text-gray-600 text-sm">(4.5)</span>
-                                </div>
+                                </div> -->
                                 <div class="flex flex-wrap gap-1 mb-4">
                                     <% if (kosItem.facilities && kosItem.facilities.length > 0) { %>
                                         <% kosItem.facilities.forEach(facility => { %>
@@ -310,8 +208,9 @@
             </div>
         <% } %>
     </div>
+
     <!-- Show More and Show Less Button -->
-            <!-- About Section -->
+    <!-- About Section -->
     <section id="tentang" class="py-16 bg-white">
         <div class="max-w-[85rem] mx-auto px-4">
             <div class="text-center mb-12">
@@ -372,29 +271,9 @@
         </div>
     </section>
 
-    <section>
-        <!-- Footer Section -->
-        <footer class="bg-gray-200 text-gray-500 py-4 mt-8">
-            <div class="max-w-[85rem] w-full mx-auto text-center">
-                <p class="text-sm">&copy; 2025 KOSAND. All rights reserved.</p>
-                <div class="flex justify-center gap-6 mt-4">
-                    <a href="#home" class="text-blue-600 hover:text-blue-700">Beranda</a>
-                    <a href="#katalog" class="text-blue-600 hover:text-blue-700">Katalog</a>
-                    <a href="#tentang" class="text-blue-600 hover:text-blue-700">Tentang</a>
-                    <a href="#kontak" class="text-blue-600 hover:text-blue-700">Kontak</a>
-                </div>
-                <div class="mt-4">
-                    <p class="text-sm text-gray-600">Follow us on:</p>
-                    <div class="flex justify-center gap-4 mt-2">
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-blue-600 hover:text-blue-700"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </section>
+    <%- include('Component/footer.ejs') %>
+
+    
 
     
 
@@ -415,7 +294,9 @@
                 dropdownMenu.classList.add('hidden'); // Hide dropdown if clicked outside
             }
         });
+    </script>
 
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             const showMoreButton = document.getElementById("showMoreButton");
             const showLessButton = document.getElementById("showLessButton");

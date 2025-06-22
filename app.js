@@ -38,10 +38,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Use auth routes for login, registration, and role selection
 app.use('/', authRoutes);
 app.use('/', indexRouter);
-app.use('/login', indexRouter);
-app.use('/register', indexRouter);
-app.use('/role', indexRouter);
-app.use('/users', usersRouter);
+
+// Route untuk logout
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send("Gagal logout");
+        }
+        // Redirect ke halaman index setelah logout
+        res.redirect('/');
+    });
+});
 
 // Handle 404 errors
 app.use(function(req, res, next) {
